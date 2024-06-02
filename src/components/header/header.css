@@ -1,0 +1,86 @@
+.gogo__header__nav {
+    display: flex;
+    justify-content: center;
+}
+
+.gogo__header__logo {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    align-items: center;
+}
+
+.gogo__header__logo img {
+    width: 4rem;
+    border-radius: 50%;
+}
+
+.gogo__header__logo__text__logo {
+    font-weight: bold;
+    color: rgba(230, 52, 52, 0.932);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.gogo__header__nav__navs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.gogo__header__nav__navs__navbar {
+    margin: 1rem;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 0.9rem;
+    display: flex;
+    border-radius: 0.5rem;
+    height: 2.1rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+}
+
+.gogo__header__nav__navs__navbar span {
+    font-size: 1rem;
+    padding: 0.3rem;
+}
+
+.gogo__header__nav__navs__navbar:active {
+    font-size: 0.9rem;
+    height: 2rem;
+}
+
+.gogo__header__nav__child__navs {
+    position: absolute;
+    bottom: -7rem;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.712);
+
+    height: fit-content;
+    width: 9rem;
+    display: none;
+    transition: 0.3s ease-in-out;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.gogo__header__nav__navs__child__navbar {
+margin-bottom: 0.4rem;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.gogo__header__nav__navs__child__navbar span {
+    font-size: 1rem;
+    padding: 0.3rem;
+}
+
+.gogo__settings:hover .gogo__header__nav__child__navs {
+    display: block;
+}

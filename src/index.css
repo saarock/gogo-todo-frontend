@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* background-color: #1d1e22; */
+  color: rgb(73, 60, 60);
+  /* color: white; */
+  font-size: 0.9rem;
+
+
+}
+
+
+
+:root {
+  --login-and-register-button-backColor: rgb(230, 74, 74);
+  --login-and-register-button-BackColor-hover: rgb(172, 47, 47);
+  --gogo-form-input-back-color: rgba(97, 70, 70, 0.555);
+}
+
+
+
+/* form realated start */
+
+.gogo__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 1rem;
+  padding: 3rem;
+
+}
+
+.gogo__form__inputs {
+  margin: 0.5rem;
+}
+
+
+.gogo__form__inputs__input {
+  height: 2.5rem;
+  width: 22rem;
+  color: black;
+  padding: 0.3rem;
+  border-radius: 0.4rem;
+  margin: 2px 0;
+  outline: 2px solid rgba(253, 107, 107, 0.548);
+
+}
+
+.gogo__form__inputs__input:focus {
+  outline: 3px solid rgba(253, 107, 107, 0.548);
+}
+
+
+.gogo__form__button {
+  margin: 1rem;
+}
+
+.gogo__form__button__login__and__register__button {
+  background-color: var(--login-and-register-button-backColor);
+  height: 2.6rem;
+  width: 15rem;
+  color: white;
+  border-radius: 0.4rem;
+}
+
+.gogo__form__button__login__and__register__button:hover {
+  background-color: var(--login-and-register-button-BackColor-hover);
+}
+
+.gogo__form__button__login__and__register__button:active {
+  width: 14.7rem;
+  height: 2.5rem;
+}
+
+.gogo__form__button__login__and__register__button__make__not__clickable {
+  cursor: not-allowed;
+}
+
+.gogo__form__button__login__and__register__button__make__not__clickable:hover {
+  background-color: var(--login-and-register-button-backColor);
+}
+
+.gogo__form__button__login__and__register__button__make__not__clickable:active {
+  height: 2.6rem;
+  width: 15rem;
+}
+
+
+/* form realated end */
+
+
+
+
+/*  error related css start */
+.gogo__error__message {
+  color: rgb(248, 134, 134);
+  margin: 0.2rem;
+}
+
+/*  error related sss end */
+
+
+
+/*  Logout button css start */
+
+.gogo__logout__btn {
+  padding: 0.5rem;
+  color: white;
+  /* box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; */
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Loutout button css end */
