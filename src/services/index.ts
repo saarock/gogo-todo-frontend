@@ -1,2 +1,3 @@
 import serverAuth from "./authServer";
-export {serverAuth}
+import authClient from "./authClient";
+export {serverAuth, authClient}

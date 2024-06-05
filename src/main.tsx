@@ -20,14 +20,15 @@ import {
 } from "./pages/index.ts";
 import { ProtectedRoute } from "./components";
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index path="" element={<HomePage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/about" element={<AboutPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<ProtectedRoute children={<LoginPage />} />} />
+      <Route path="/register" element={<ProtectedRoute children={<RegisterPage />} />} />
       <Route
         path="/dash"
         element={<ProtectedRoute children={<DashBoard />} />}

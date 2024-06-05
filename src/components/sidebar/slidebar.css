@@ -1,0 +1,52 @@
+.gogo__side__navbar {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /* position: fixed; */
+    width: 7rem;
+    height: 100vh;
+    position: sticky;
+    top: 12rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  
+}
+
+.gogo__side__navbar .gogo__side__nav__child {
+    display: flex;
+    flex-direction: column;
+}
+.gogo__side__nav {
+    /* background-color: var(--login-and-register-button-backColor); */
+    /* margin: 1rem; */
+    margin-top: 1rem;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    color: black;
+    padding: 0.4rem;
+    cursor: pointer;
+    /* border-radius: 2rem; */
+
+}
+.gogo__side__nav:hover {
+    background-color: var(--login-and-register-button-backColor);
+    color: white;
+}
+.gogo__side__nav span {
+    margin: 0.2rem;
+}
+
+.gogo__side__navbar__toggle {
+    position: absolute;
+    top: 0;
+    right: -2rem;
+    background-color: rgb(170, 36, 36);
+    color: white;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+    border: 1px solid white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.gogo__side__navbar__responsive {
+    width: 2rem;
+}

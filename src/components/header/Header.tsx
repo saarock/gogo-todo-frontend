@@ -99,7 +99,7 @@ const Header = () => {
                 {nav.children && (
                   <ul className="gogo__header__nav__child__navs" key={nav.name}>
                     {nav.children.map((childNav) => (
-                      <li className="gogo__header__nav__navs__child__navbar">
+                      <li className="gogo__header__nav__navs__child__navbar" key={childNav.name}>
                         <span>{nav.icon}</span>
 
                         {childNav.name}
