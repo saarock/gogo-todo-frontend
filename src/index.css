@@ -4,7 +4,7 @@
 
 body {
   /* background-color: #1d1e22; */
-  color: rgb(73, 60, 60);
+  /* color: rgb(73, 60, 60); */
   /* color: white; */
   font-size: 0.9rem;
   position: relative;
@@ -16,6 +16,7 @@ body {
 :root {
   --login-and-register-button-backColor: rgb(230, 74, 74);
   --login-and-register-button-BackColor-hover: rgb(172, 47, 47);
+  --border--color: rgb(172, 47, 47);
   --gogo-form-input-back-color: rgba(97, 70, 70, 0.555);
 }
 
@@ -119,3 +120,20 @@ body {
 }
 
 /* Loutout button css end */
+
+
+
+/*  gogo save button start */
+.gogo__submit__btn {
+  background-color: rgba(3, 112, 214, 0.603);
+  color: white;
+  padding: 0.5rem;
+  width: 7rem;
+  border-radius: 0.5rem;
+}
+
+.gogo__submit__btn:active {
+  padding: 0.4rem;
+}
+
+/* gogo save button end */

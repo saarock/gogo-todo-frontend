@@ -1,6 +1,7 @@
 .gogo__header__nav {
     display: flex;
     justify-content: center;
+    z-index: -1;
 }
 
 .gogo__header__logo {
@@ -56,10 +57,9 @@
 
 .gogo__header__nav__child__navs {
     position: absolute;
-    bottom: -7rem;
+    bottom: -6rem;
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.712);
-
     height: fit-content;
     width: 9rem;
     display: none;
@@ -84,4 +84,9 @@ align-items: center;
 
 .gogo__settings:hover .gogo__header__nav__child__navs {
     display: block;
+}
+.darkmode {
+     background-color: #1d1e22;
+    /* color: rgb(73, 60, 60); */
+    color: white;
 }

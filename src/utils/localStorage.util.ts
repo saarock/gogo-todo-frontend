@@ -1,12 +1,13 @@
 import { USER_LOCALSTORAGE_DATA_NAME } from "../constant";
-import { User } from "../types";
+import { Project, User } from "../types";
 
 class LocalStorage {
-  setData(storageName: string, data: User) {
+  setData(storageName: string, data: User |Project[]) {
+    localStore.deleteLocalStoreData(storageName);
     localStorage.setItem(storageName, JSON.stringify(data));
   }
 
-  getData(storageName: string): User | null {
+  getData(storageName: string): User | null | Project[] {
     const data = localStorage.getItem(storageName);
     if (data) {
       const parseData = JSON.parse(data);

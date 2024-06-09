@@ -1,0 +1,40 @@
+.gogo___profile__container {
+    height: 32rem;
+    width: 32rem;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 7rem;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    align-items: center;
+}
+
+.gogo__profile__container__child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 22rem;
+    width: 22rem;
+}
+
+.gogo__profile__pic {
+    background-color: rgb(243, 227, 227);
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gogo__profile__name {
+    padding: 0.5rem;
+}
+.gogo__profile__name h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.gogo__profile__email {
+    padding: 0.5rem;
+}

@@ -1,0 +1,31 @@
+.gogo__create__project {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    border-radius: 2rem;
+    position: relative;
+    cursor: pointer;
+   
+}
+
+.gogo__create__project:active .gogo__create__project__icon {
+    font-size: 3.8rem;
+}
+.gogo__create__project__child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: rgb(0, 130, 216);
+}
+.gogo__create__project__icon {
+    font-size: 4rem;
+    font-weight: bold;
+
+}
+.gogo__project__title{
+    font-size: 1.3rem;
+    font-weight: bold;
+}

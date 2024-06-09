@@ -20,7 +20,7 @@ class JwtUtil {
     for (let i = 0; i < cookieArray.length; i++) {
       let cookie = cookieArray[i].trim();
       if (cookie.indexOf(tokenName) === 0) {
-        return cookie.substring(tokenName.length, cookie.length);
+        return cookie.substring(tokenName.length+1, cookie.length);
       }
     }
     return null;

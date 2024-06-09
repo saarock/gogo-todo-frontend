@@ -15,10 +15,13 @@ import {
   ContactPage,
   LoginPage,
   AboutPage,
+  Project,
   DashBoard,
   RegisterPage,
+  Product,
 } from "./pages/index.ts";
 import { ProtectedRoute } from "./components";
+
 
 
 const router = createBrowserRouter(
@@ -29,10 +32,19 @@ const router = createBrowserRouter(
       <Route path="/about" element={<AboutPage />} />
       <Route path="/login" element={<ProtectedRoute children={<LoginPage />} />} />
       <Route path="/register" element={<ProtectedRoute children={<RegisterPage />} />} />
+      <Route path="/register" element={<ProtectedRoute children={<RegisterPage />} />} />
+      <Route path="/dash/projects/" element={<ProtectedRoute children={<Project />} />} />
       <Route
         path="/dash"
         element={<ProtectedRoute children={<DashBoard />} />}
       />
+
+      <Route
+        path="/dash/projects/:productname"
+
+        element={<ProtectedRoute children={<Product />} />}
+      />
+
     </Route>
   )
 );

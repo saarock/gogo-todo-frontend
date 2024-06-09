@@ -1,0 +1,35 @@
+.gogo__product {
+    height: 16rem;
+    cursor: pointer;
+    width: 16rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 0.6rem;
+    margin: 0.4rem;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+.gogo__product:hover {
+    outline: 2px solid var(--border--color)
+}
+
+.gogo__product__name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gogo__product__name h2 {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: rgba(31, 8, 8, 0.945);
+}
+
+.gogo__product__icon {
+    font-size: 1.6rem;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    color: rgba(51, 50, 50, 0.555);
+}

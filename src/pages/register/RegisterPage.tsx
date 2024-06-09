@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../features/authSlice";
 import Toast from "../../components/toast/Toast";
 import { useNavigate } from "react-router-dom";
-import { Email, User } from "../../types";
+import { Email, OtpResponse, RegisterResponseSuccess, User } from "../../types";
 import { jwtUtil, localStore } from "../../utils";
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN__NAME, USER_LOCALSTORAGE_DATA_NAME } from "../../constant";
 import toast, { Toaster } from "react-hot-toast";
@@ -24,7 +24,7 @@ const RegisterPage = () => {
   const [isOtpSend, setIsOtpSend] = useState<boolean>(false);
 
 
-  //This state is notthing but just helps to track after user reigster HE/SHE get logged in or not and show the toast message 
+  //This state is notThing but just helps to track after user reigster HE/SHE get logged in or not and show the toast message 
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
 
   // after otp sent this helps to set the time 
@@ -69,21 +69,27 @@ const RegisterPage = () => {
    * method to send the otp
    */
   const sendOtp: SubmitHandler<FieldValues> = async (data): Promise<void> => {
-    setRegisterButtonText("Sending...");
-    setRegisterButtonDisable(true);
-    const userEmailForOtp: Email = {
-      email: data.email
-    }
-    const responseMessage = await serverAuth.sendMailForOtp(userEmailForOtp);
-    console.log(responseMessage)
-    if (responseMessage.type == "success") {
-      toast.success(responseMessage.message)
-      setIsOtpSend(true);
-      setRegisterButtonDisable(false);
-      setRegisterButtonText("send OTP");
-    } else if (responseMessage.type === "error") {
-      // alert(responseMessage.message)
-      toast.error(responseMessage.message)
+    try {
+      setRegisterButtonText("Sending...");
+      setRegisterButtonDisable(true);
+      const userEmailForOtp: Email = {
+        email: data.email
+      }
+      const responseMessage: OtpResponse | null = await serverAuth.sendMailForOtp(userEmailForOtp);
+      if (responseMessage?.type == "success") {
+        toast.success(responseMessage.message)
+        setIsOtpSend(true);
+        setRegisterButtonDisable(false);
+        setRegisterButtonText("send OTP");
+      } else if (responseMessage?.type === "error") {
+        throw new Error(responseMessage.message);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
       setIsOtpSend(false)
       setRegisterButtonDisable(false)
       setRegisterButtonText("Register")
@@ -91,69 +97,91 @@ const RegisterPage = () => {
     }
   };
 
+
+
+
+
   /**
    *
    * @param data userForm data
    * Method for register the user after user verify the otp
    */
 
-  const signup: SubmitHandler<FieldValues> = async (data): Promise<void> => {
-
-    if (!data.otp && remainingTime === 0) {
-      setIsOtpSend(false);
-      setRemainingTime(61);
-      sendOtp(data);
-      return;
-    }
-
-    if (!data.otp) {
-      toast.error("Otp is requried!")
-
-      return;
-    }
-
-    if (remainingTime === 0) {
-      setIsOtpSend(false);
-      setRemainingTime(61);
-      sendOtp(data);
-      return;
-    }
-
-    setRegisterButtonText("Processing...");
-    setRegisterButtonDisable(true);
-    const userFormData: User = {
-      email: data.email,
-      password: data.password,
-      fullName: data.fullName
-    }
-    const otp: bigint = data.otp;
-    const userData = await serverAuth.register(userFormData, otp);
-    if (userData.type === "error") {
-      // alert(userData.message)
-      toast.error(userData.message)
-      setRegisterButtonText("sent");
-      setRegisterButtonDisable(false);
-      setIsOtpSend(false)
-      reset()
-      setRemainingTime(61)
-      setRegisterButtonText("Register");
-
-    } else if (userData.type === "success") {
-      const isAccessTokenSaved = jwtUtil.storeToken(ACCESS_TOKEN_NAME, userData.tokens.accessToken);
-      const isRefreshTokenSaved = jwtUtil.storeToken(REFRESH_TOKEN__NAME, userData.tokens.refreshToken);
-      if (isAccessTokenSaved && isRefreshTokenSaved) {
-        dispatch(login({ user: userData.user, refreshToken: userData.tokens.refreshToken, accessToken: userData.tokens.accessToken }))
-        localStore.setData(USER_LOCALSTORAGE_DATA_NAME, userData.user);
+  const signup: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      if (!data.otp && remainingTime === 0) {
+        setIsOtpSend(false);
+        setRemainingTime(61);
+        sendOtp(data);
+        return;
       }
-      setIsUserLoggedIn(true);
-      navigate("/dash");
-    }
 
+      if (!data.otp) {
+        toast.error("Otp is required!");
+        return;
+      }
+
+      if (remainingTime === 0) {
+        setIsOtpSend(false);
+        setRemainingTime(61);
+        sendOtp(data);
+        return;
+      }
+
+      setRegisterButtonText("Processing...");
+      setRegisterButtonDisable(true);
+      const userFormData: User = {
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+      };
+      const otp: bigint = data.otp;
+      const userData: RegisterResponseSuccess | null = await serverAuth.register(userFormData, otp);
+
+
+      if (!userData) {
+        throw new Error("Something went wrong, try again");
+      }
+
+      console.log("UserData:", userData); // Debugging: Log the response
+
+      if (userData.type === "error") {
+        throw new Error(userData.message);
+      } else if (userData.type === "success") {
+
+        if (!userData.user || !userData.tokens) {
+          throw new Error("Invalid response structure");
+        }
+
+        const isAccessTokenSaved = jwtUtil.storeToken(ACCESS_TOKEN_NAME, userData.tokens.accessToken);
+        const isRefreshTokenSaved = jwtUtil.storeToken(REFRESH_TOKEN__NAME, userData.tokens.refreshToken);
+
+        if (isAccessTokenSaved && isRefreshTokenSaved) {
+          dispatch(login({ user: userData.user, refreshToken: userData.tokens.refreshToken, accessToken: userData.tokens.accessToken }));
+          localStore.setData(USER_LOCALSTORAGE_DATA_NAME, userData.user);
+        }
+
+        setIsUserLoggedIn(true);
+        navigate("/dash");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+      setRegisterButtonText("Register");
+      setRegisterButtonDisable(false);
+      setIsOtpSend(false);
+      reset();
+      setRemainingTime(61);
+    }
   };
+
 
   return (
     <div className="register__page flex items-center justify-center">
-      <Toaster position="top-right" />
+  
       <form
         className="gogo__form"
         onSubmit={isOtpSend ? handleSubmit(signup) : handleSubmit(sendOtp)}

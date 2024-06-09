@@ -7,26 +7,32 @@ import {
 } from "../constant";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../features/authSlice";
+import { authClient } from "../services";
+import { Project, User } from "../types";
 
 const useWhenPageMount = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const userData = localStore.getData(USER_LOCALSTORAGE_DATA_NAME);
-    const refreshToken = jwtUtil.getToken(REFRESH_TOKEN__NAME);
-    const accessToken = jwtUtil.getToken(ACCESS_TOKEN_NAME);
-  
-    if (userData && accessToken && refreshToken) {
-      dispatch(
-        login({
-          user: userData,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        })
+    (() => {
+      const userData: User | null | Project[] = localStore.getData(
+        USER_LOCALSTORAGE_DATA_NAME
       );
-    } else {
-      dispatch(logout())
-      //Clear all the cache
-    }
+      const refreshToken = jwtUtil.getToken(REFRESH_TOKEN__NAME);
+      const accessToken = jwtUtil.getToken(ACCESS_TOKEN_NAME);
+
+      if (userData && !Array.isArray(userData) && accessToken && refreshToken) {
+        dispatch(
+          login({
+            user: userData as User,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          })
+        );
+      } else {
+        dispatch(logout());
+        authClient.logout();
+      }
+    })();
   }, []);
 };
 

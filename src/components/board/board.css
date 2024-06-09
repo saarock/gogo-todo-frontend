@@ -1,0 +1,71 @@
+/*  board */
+.gogo__boards {
+    overflow: scroll;
+    margin: 1rem;
+    display: flex;
+    overflow: scroll;
+    height: 80vh;
+
+}
+
+.gogo__board {
+    /* width: 22rem; */
+    flex-shrink: 0;
+    scroll-behavior: smooth;
+    overflow: scroll;
+    margin: 1rem;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    width: fit-content;
+    background-color: rgb(175, 179, 184);
+    border-radius: 0.2rem;
+    padding: 1rem;
+    cursor: grab;
+    height: fit-content;
+}
+
+.gogo__board:active {
+    cursor: grab;
+
+}
+
+.gogo__board__title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.gogo__board__add__task {
+    border: 2px solid rgba(0, 0, 0, 0.158);
+    text-align: center;
+    width: 10rem;
+    margin: 0.5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+
+
+}
+
+.gogo__board__task {
+    background-color: white;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    overflow: scroll;
+}
+
+.gogo__board__task__top {
+    display: flex;
+    padding: 0.4rem;
+    justify-content: space-between;
+}
+
+.gogo__board__task__top__title {}
+
+.gogo__board__task__top__title h3 {
+    font-size: 1.2rem;
+}
+
+.gogo__board__task__top__options {
+    font-size: 1.4rem;
+    cursor: pointer;
+}

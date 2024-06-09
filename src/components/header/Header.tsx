@@ -63,7 +63,7 @@ const Header = () => {
       icon: <MdDashboardCustomize />,
       children: [
         {
-          name: "Manage details",
+          name: "Dark Mode",
           slug: "/settings/child1",
           active: authStates,
           icon: <MdDashboardCustomize />,
@@ -71,6 +71,12 @@ const Header = () => {
       ],
     },
   ];
+
+
+  const darkMode = () => {
+    document.body.classList.toggle("darkmode")
+
+  }
   return (
     <header className="gogo__header">
       <nav className="gogo__header__nav">
@@ -99,9 +105,8 @@ const Header = () => {
                 {nav.children && (
                   <ul className="gogo__header__nav__child__navs" key={nav.name}>
                     {nav.children.map((childNav) => (
-                      <li className="gogo__header__nav__navs__child__navbar" key={childNav.name}>
+                      <li className="gogo__header__nav__navs__child__navbar" key={childNav.name} onClick={childNav.name === "Dark Mode"? darkMode: undefined}>
                         <span>{nav.icon}</span>
-
                         {childNav.name}
                       </li>
                     ))}
