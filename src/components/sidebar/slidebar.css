@@ -1,12 +1,14 @@
 .gogo__side__navbar {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     /* position: fixed; */
-    width: 7rem;
+    /* width: 7rem; */
     height: 100vh;
     position: sticky;
     top: 12rem;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    /* border-top-right-radius: 1rem; */
+    /* border-bottom-right-radius: 1rem; */
+    top: 0;
+    /* background-color: white; */
   
 }
 
@@ -37,22 +39,11 @@
 .gogo__side__navbar__toggle {
     position: absolute;
     /* top: 50%; */
-    right: 0rem;
-    background-color: rgb(29, 26, 26);
-    color: white;
-    padding: 0.4rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    bottom: 0;
-    border: 3px solid rgba(255, 111, 111, 0.63);
-    /* border-top-left-radius: 2rem; */
-    height: 10rem;
-    border-top-right-radius: 1rem;
-    font-size: 1.5rem;
+    right: -2rem;
+    font-size: 2rem;
+    color: var(--gogo--primary--color);
     cursor: pointer;
-    border: none;
 }
 .gogo__side__navbar__responsive {
-    width: 2rem;
+    /* width: 2rem; */
 }

@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Spicy+Rice&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Signika:wght@300..700&family=Spicy+Rice&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Rubik+Mono+One&family=Signika:wght@300..700&family=Spicy+Rice&display=swap');
+
+.gogo__login__content {
+    border-radius: 1rem red;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    position: relative;
+}
+
+.gogo__login__content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url(https://cdn.pixabay.com/photo/2019/03/15/15/42/work-4057334_1280.jpg) center/cover no-repeat;
+    filter: blur(6px);
+    /* Adjust the blur value as needed */
+    z-index: -1;
+    /* Ensures the pseudo-element is behind the content */
+}
+
+.gogo__login__content h1 {
+    font-size: 4.4rem;
+    font-weight: bold;
+    color: var(--gogo--primary--color);
+    letter-spacing: -1px;
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.gogo__login__content h3 {
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+    margin: 0.5rem;
+    font-family: "Signika", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+        "GRAD" 0;
+
+
+}
+
+.gogo__login__content p {
+    letter-spacing: -1px;
+    font-size: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    animation: text-animation 2s linear;
+    transition: ease-in-out;
+    font-size: 2rem;
+    font-family: "Rubik Mono One", monospace;
+    font-weight: 400;
+    font-style: normal;
+    color: rgb(0, 129, 0);
+    text-shadow: 0 0 10px rgb(255, 255, 255);
+    position: relative;
+    /* border: 2px solid rgb(0, 129, 0); */
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+
+}
+
+.gogo__login__content p::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.3rem;
+    /* background-color: var(--gogo--primary--color); */
+    filter: blur(1px);
+    left: -5rem;
+    top: 0;
+    }
+    
+
+.gogo__login__content p::after {
+content: "";
+position: absolute;
+width: 100%;
+height: 0.3rem;
+background-color: green;
+filter: blur(1px);
+right: -5rem;
+bottom: 0;
+animation: increase-border 2s;
+}
+
+@keyframes increase-border {
+    0% {
+        width: 0;
+    }
+}
+
+@keyframes text-animation {
+    0% {
+        font-size: 0.5rem;
+    }
+
+    25% {
+        font-size: 1rem;
+    }
+
+    50% {
+        font-size: 1.5rem;
+    }
+
+    100% {
+        font-size: 2rem;
+    }
+}

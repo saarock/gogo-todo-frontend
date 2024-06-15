@@ -12,7 +12,7 @@
     /* width: 22rem; */
     flex-shrink: 0;
     scroll-behavior: smooth;
-    overflow: scroll;
+    /* overflow: scroll; */
     margin: 1rem;
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     width: fit-content;
@@ -20,6 +20,7 @@
     border-radius: 0.2rem;
     padding: 1rem;
     cursor: grab;
+    position: relative;
     height: fit-content;
 }
 
@@ -68,4 +69,165 @@
 .gogo__board__task__top__options {
     font-size: 1.4rem;
     cursor: pointer;
+}
+
+/* 
+task container start */
+
+.gogo__task__container {
+    position: relative;
+}
+
+.gogo__task__options {
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    height: 10rem;
+    top: -7em;
+    color: white;
+    padding: 1rem;
+    right: -9rem;
+    z-index: 999;
+}
+/* task container end */
+
+
+/*  css by chagpt  for testing purpose*/
+.gogo__board {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    transition: all 0.3s ease;
+}
+
+.gogo__board__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gogo__board__title:hover {
+    background-color: #e9ecef;
+}
+
+.gogo__board__title h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #343a40;
+}
+
+.gogo__board__add__task {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.gogo__board__add__task button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gogo__board__add__task button:hover {
+    background-color: #0056b3;
+}
+
+.gogo__board__title input, .gogo__board__title button {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+.gogo__board__title button {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gogo__board__title button:hover {
+    background-color: #218838;
+}
+
+.gogo__board__title button:last-child {
+    background-color: #dc3545;
+}
+
+.gogo__board__title button:last-child:hover {
+    background-color: #c82333;
+}
+
+.gogo__task__container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.gogo__task__container:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gogo__task__options {
+    background-color: #f1f3f5;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 0 0 4px 4px;
+}
+
+.no-board-message {
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.2em;
+}
+
+@media (max-width: 768px) {
+    .gogo__board {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .gogo__board__title h2 {
+        font-size: 1.2em;
+    }
+
+    .gogo__board__title input, .gogo__board__title button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .gogo__board__add__task button {
+        width: 100%;
+    }
+
+    .gogo__task__container {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gogo__board__title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gogo__board__title h2 {
+        margin-bottom: 10px;
+    }
 }

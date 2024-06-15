@@ -1,10 +1,15 @@
 import React from "react";
 import { ChildrenProps } from "../../types";
+import "./container.css"
 
 const Container: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <>
-      <div className="gogo_kan_home_container">{children}</div>
+      <main className="gogo_kan_main_container">
+        {/* <div className="gogo__container__for__child"> */}
+          {children}
+        {/* </div> */}
+      </main>
     </>
   );
 };

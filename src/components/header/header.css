@@ -1,13 +1,14 @@
 .gogo__header__nav {
     display: flex;
-    justify-content: center;
+    padding: 1rem;
+    justify-content: space-around;
     z-index: -1;
 }
 
 .gogo__header__logo {
     display: flex;
     justify-content: center;
-    padding: 1rem;
+    /* padding: rem; */
     align-items: center;
 }
 
@@ -18,7 +19,7 @@
 
 .gogo__header__logo__text__logo {
     font-weight: bold;
-    color: rgba(230, 52, 52, 0.932);
+    color: var(--gogo--primary--color);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -86,7 +87,12 @@ align-items: center;
     display: block;
 }
 .darkmode {
-     background-color: #1d1e22;
+     background-color: #080707f1;
     /* color: rgb(73, 60, 60); */
     color: white;
+}
+.register__nav {
+    background-color: var(--gogo--primary--color);
+    color: white;
+    padding: 1rem;
 }

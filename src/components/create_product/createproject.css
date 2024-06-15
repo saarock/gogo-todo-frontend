@@ -6,7 +6,9 @@
     width: 20rem;
     border-radius: 2rem;
     position: relative;
+    height: 15rem;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
    
 }
 

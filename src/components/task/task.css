@@ -1,0 +1,81 @@
+/* task.css */
+
+.gogo__board__task {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    padding: 15px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.gogo__board__task:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.gogo__board__task__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.gogo__board__task__top__title h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #343a40;
+}
+
+.gogo__board__task__top__options {
+    font-size: 1.5em;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.gogo__board__task__top__options:hover {
+    color: #343a40;
+}
+
+.gogo__board__task__content {
+    font-size: 1em;
+    color: #495057;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .gogo__board__task {
+        padding: 10px;
+    }
+
+    .gogo__board__task__top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gogo__board__task__top__title h3 {
+        font-size: 1.1em;
+    }
+
+    .gogo__board__task__content {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .gogo__board__task {
+        padding: 8px;
+    }
+
+    .gogo__board__task__top__title h3 {
+        font-size: 1em;
+    }
+
+    .gogo__board__task__content {
+        font-size: 0.9em;
+    }
+}

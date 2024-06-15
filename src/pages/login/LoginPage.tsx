@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input } from "../../components"
+import { Button, Input, LoginAndRegisterSideDiv } from "../../components"
 import { useForm } from "react-hook-form";
 import "./login.css";
 import serverAuth from "../../services/authServer";
@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN__NAME, USER_LOCALSTORAGE_DATA_NAME } from "../../constant";
 import { login as Login } from "../../features/authSlice";
+import { motion } from "framer-motion"
+
 const LoginPage = () => {
   const [loginButtonText, setLoginButtonText] = useState<string>("login");
   const [isloginButtonDisable, setLoginButtonDisable] = useState<boolean>(false);
@@ -27,7 +29,7 @@ const LoginPage = () => {
       setLoginButtonText("Processing...");
       setLoginButtonDisable(true);
       const { email, password } = formData;
-      const userResponseData  = await serverAuth.login(email, password);
+      const userResponseData = await serverAuth.login(email, password);
       if (!userResponseData) {
         throw new Error("Something went wrong, try again");
       }
@@ -50,8 +52,8 @@ const LoginPage = () => {
           localStore.setData(USER_LOCALSTORAGE_DATA_NAME, userResponseData.user);
         }
       }
-  
-        navigate("/dash");
+
+      navigate("/dash");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message)
@@ -65,8 +67,10 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="login__page">
-      <form className="gogo__form" onSubmit={handleSubmit(login)}>
+    <div className="login__page" 
+    >
+      <LoginAndRegisterSideDiv />
+      <motion.form className="gogo__form" onSubmit={handleSubmit(login)}  whileHover={{ scale: 1.1 }} >
         <div className="gogo__form__inputs">
           <label htmlFor="email">Email</label>
           <br />
@@ -127,7 +131,7 @@ const LoginPage = () => {
           </i>
 
         </p>
-      </form>
+      </motion.form>
     </div>
   );
 };

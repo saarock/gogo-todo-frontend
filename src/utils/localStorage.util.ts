@@ -19,11 +19,16 @@ class LocalStorage {
     }
     return null;
   }
+
   deleteLocalStoreData(storageName: string) {
     const data = localStorage.getItem(storageName);
     if (data && JSON.parse(data)) {
       localStorage.removeItem(storageName);
     }
+  }
+
+  updateLocalStorageData(storageName:string) {
+    // const data = localStore.getData(storageName) || [];
   }
 }
 

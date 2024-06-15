@@ -25,8 +25,7 @@ const useTokenValidation = () => {
           return;
         }
         if (
-          userDataWithNewAccessToken.tokens?.accessToken === undefined ||
-          userDataWithNewAccessToken === null
+          userDataWithNewAccessToken.tokens?.accessToken === undefined
         ) {
           authClient.logout();
           return;

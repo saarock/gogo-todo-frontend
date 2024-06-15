@@ -1,5 +1,6 @@
 .gogo__dash__container {
     display: flex;
+    position: relative;
     /* z-index: -1; */
 
   

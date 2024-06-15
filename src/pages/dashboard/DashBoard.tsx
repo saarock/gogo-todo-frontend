@@ -16,7 +16,7 @@ const DashBoard: React.FC = () => {
 
   return (
     <div className="gogo__dash__container">
-      <div style={{ position: "sticky", top: 0 }}>
+      <div className='gogo__side__bar'>
         <SideBar />
       </div>
       {

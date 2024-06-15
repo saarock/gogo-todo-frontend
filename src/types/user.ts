@@ -1,3 +1,11 @@
+/**
+ * @note : At this file we can found all the types related to the user, include product, boards and task also;
+ */
+
+
+/**
+ * User types for register, login , Request and Resposne start.
+ */
 export interface User {
   id?: string;
   fullName: string;
@@ -28,7 +36,6 @@ export interface RegisterRequest {
   otp: bigint;
 }
 
-// helper
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
@@ -50,36 +57,53 @@ export interface RegisterResponseSuccess extends GlobalResponseHelper {
   tokens?: Tokens;
 }
 
+/**
+ * @note : User types for register, login and Request and Response end.
+ */
 
+/**
+ * (CLIENT TYPES)
+ *  @note : types for product include board and task start
+ * 
+ */
 // Define the Task interface
 export interface Task {
-  taskId?: string;
-  name?: string;
+  taskId?: number;
+  name: string;
   content? :string;
-  boardId?: string;
+  boardId: number;
   taskIndex?: number;
   boardIndex: number;
   projectIndex: number;
+  index?: number;
+  createdAt? : string;
+  updatedAt?:string;
 
   // Define properties for a task
 }
 
 // Define the Board interface which contains tasks
 export interface Board {
-  boardId? : string;
-  projectId?: string;
+  boardId? : number;
+  projectId?: number;
   name: string;
   tasks: Task[];
   projectIndex? :number;
   boardIndex?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  // projectName?: string;
 }
 
 // Define the Project interface which contains boards
 export interface Project {
-  id?:string;
-  name?:string;
+  id?: number;
+  name:string;
   boards: Board[];
   index? :number;
+  createdDate?: string;
+  updatedAt?:string;
+  userId?:string;
 }
 
 // // Define the UserProject interface which extends Project
@@ -91,3 +115,32 @@ export interface Project {
 export interface UserProject {
   projects?: Project[];
 }
+
+
+// productUpdateTypes
+export interface ProductUpdateTypes {
+  id: number,
+  name: string,
+}
+
+
+/**
+ * (CLIENT TYPES)
+ *  @note : types for product include board and task end
+ * 
+ */
+
+
+
+
+/**
+ * (SERVER MODELS)
+ *  @note : types for product include board and task start
+ */
+
+
+/**
+ * (SERVER TYPES)
+ * @note : types for product include board and task end
+ */
+

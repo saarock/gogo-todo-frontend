@@ -1,0 +1,9 @@
+.gogo__text__animation {
+    font-size: 10rem;
+    white-space: nowrap;
+    background-color: yellow;
+    height: 52rem;
+    color: green;
+    font-weight: bold;
+    text-transform: uppercase;
+}

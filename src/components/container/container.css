@@ -1,0 +1,10 @@
+.gogo_kan_main_container {
+    /* height: 110vh; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.gogo__container__for__child {
+    width: 90%;
+}

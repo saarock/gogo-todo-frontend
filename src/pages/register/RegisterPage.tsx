@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Input, Button } from "../../components";
+import React, { useCallback, useEffect, useState } from "react";
+import { Input, Button, LoginAndRegisterSideDiv } from "../../components";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import "./register.css";
 import serverAuth from "../../services/authServer";
@@ -12,6 +12,7 @@ import { Email, OtpResponse, RegisterResponseSuccess, User } from "../../types";
 import { jwtUtil, localStore } from "../../utils";
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN__NAME, USER_LOCALSTORAGE_DATA_NAME } from "../../constant";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion"
 
 const RegisterPage = () => {
   const [registerButtonText, setRegisterButtonText] =
@@ -63,6 +64,49 @@ const RegisterPage = () => {
     return () => clearInterval(interval);
   }, [isOtpSend, remainingTime]);
 
+
+
+  /**
+   * valiadate passoword
+   */
+
+    // Custom validation function for password strength
+    const validatePassword = (value:string) => {
+      if (!value) {
+        return "Password is required";
+      }
+      
+      // Check for minimum length
+      if (value.length < 8) {
+        return "Password must be at least 8 characters long";
+      }
+  
+      // Check for uppercase letters
+      if (!/[A-Z]/.test(value)) {
+        return "Password must contain at least one uppercase letter";
+      }
+  
+      // Check for lowercase letters
+      if (!/[a-z]/.test(value)) {
+        return "Password must contain at least one lowercase letter";
+      }
+  
+      // Check for numbers
+      if (!/\d/.test(value)) {
+        return "Password must contain at least one number";
+      }
+  
+      // Check for special characters
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+        return "Password must contain at least one special character";
+      }
+  
+      return true; // Password is strong
+    };
+  
+
+
+
   /**
    *
    * @param data userForm data
@@ -70,6 +114,10 @@ const RegisterPage = () => {
    */
   const sendOtp: SubmitHandler<FieldValues> = async (data): Promise<void> => {
     try {
+      if (data.password !== data.confirmPassword) {
+        throw new Error("Password and Confirm Password doesnot match");
+      }
+
       setRegisterButtonText("Sending...");
       setRegisterButtonDisable(true);
       const userEmailForOtp: Email = {
@@ -128,6 +176,11 @@ const RegisterPage = () => {
         return;
       }
 
+
+      if (data.password !== data.confirmPassword) {
+        throw new Error("Password and Confirm Password doesnot match");
+      }
+
       setRegisterButtonText("Processing...");
       setRegisterButtonDisable(true);
       const userFormData: User = {
@@ -178,13 +231,13 @@ const RegisterPage = () => {
     }
   };
 
-
   return (
     <div className="register__page flex items-center justify-center">
-  
-      <form
+      <LoginAndRegisterSideDiv />
+      <motion.form
         className="gogo__form"
         onSubmit={isOtpSend ? handleSubmit(signup) : handleSubmit(sendOtp)}
+        whileHover={{ scale: 1.1 }}
       >
         <div className="gogo__form__inputs">
           <label htmlFor="fullName">Full Name</label>
@@ -232,7 +285,32 @@ const RegisterPage = () => {
             type="password"
             placeholder="Password..."
             disabled={isOtpSend}
-            {...register("password", { required: "Password is required" })}
+            {...register("password", { required: "Password is required",minLength: {
+              value: 8,
+              message: "Password must have at least 8 characters",
+            }, validate: validatePassword})}
+          />
+        </div>
+
+        <div className="gogo__form__inputs">
+          <label htmlFor="password">Confirm Password</label>
+          <br />
+          {errors.confirmPassword && (
+            <p className="gogo__error__message">
+              {errors.confirmPassword.message + "***"}
+
+            </p>
+          )}
+          <Input
+            className="gogo__form__inputs__input"
+            type="password"
+            placeholder="Password..."
+            disabled={isOtpSend}
+    
+            {...register("confirmPassword", { required: "ConfirmPassword is required" ,   minLength: {
+              value: 8,
+              message: "Password must have at least 8 characters",
+            }, validate: validatePassword})}
           />
         </div>
 
@@ -279,7 +357,7 @@ const RegisterPage = () => {
           </i>
 
         </p>
-      </form>
+      </motion.form>
 
       {/* toast */}
       {isUserLoggedIn ? (

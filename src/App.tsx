@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import { AboutPage, ContactPage, DashBoard, HomePage, LoginPage, Product, Project, RegisterPage } from "./pages";
+import Layout from "./Layout";
+import { ProtectedRoute } from "./components";
 
-function App() {
-  const [count, setCount] = useState(0)
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index path="" element={<HomePage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/login" element={<ProtectedRoute children={<LoginPage />} />} />
+      <Route path="/register" element={<ProtectedRoute children={<RegisterPage />} />} />
+      <Route path="/register" element={<ProtectedRoute children={<RegisterPage />} />} />
+      <Route path="/dash/projects/" element={<ProtectedRoute children={<Project />} />} />
+      <Route
+        path="/dash"
+        element={<ProtectedRoute children={<DashBoard />} />}
+      />
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <Route
+        path="/dash/projects/:productname"
+
+        element={<ProtectedRoute children={<Product />} />}
+      />
+
+    </Route>
   )
-}
+);
 
-export default App
+export default router;

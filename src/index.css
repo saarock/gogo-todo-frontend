@@ -1,10 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
 
 body {
   /* background-color: #1d1e22; */
   /* color: rgb(73, 60, 60); */
+  background: linear-gradient(rgba(211, 0, 0, 0.123));
   /* color: white; */
   font-size: 0.9rem;
   position: relative;
@@ -14,6 +16,7 @@ body {
 
 
 :root {
+  --gogo--primary--color: rgb(228, 49, 78);
   --login-and-register-button-backColor: rgb(230, 74, 74);
   --login-and-register-button-BackColor-hover: rgb(172, 47, 47);
   --border--color: rgb(172, 47, 47);
@@ -122,6 +125,24 @@ body {
 /* Loutout button css end */
 
 
+/* gogo updated button and update input statr */
+
+.gogo__update__button {
+  background-color: #28a745; 
+  padding: 0.7rem;
+  margin: 0.5rem;
+  color: white;
+  border-radius: 1rem;
+}
+
+.gogo__update__input {
+  height: 3rem;
+  width: 39rem;
+  border-radius: 1rem;
+
+}
+/*  gogo updated button and update input end */
+
 
 /*  gogo save button start */
 .gogo__submit__btn {
@@ -137,3 +158,15 @@ body {
 }
 
 /* gogo save button end */
+
+
+/* gogo side bar start */
+.gogo__side__bar {
+  z-index: 999;
+  position: relative;
+  width: fit-content;
+  /* width: 9rem; */
+}
+
+
+/* gogo side bar end */

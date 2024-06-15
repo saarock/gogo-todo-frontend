@@ -1,5 +1,9 @@
 import { User } from "./user";
 
+
+/**
+ * types of the reudux authSlice;
+ */
 export interface AuthState {
     isAuthenticated: boolean;
     user: User | null;

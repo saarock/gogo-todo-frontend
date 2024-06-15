@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 import { axiosInstance1, axiosInstance2 } from "../api/axiosInstance";
 import {
   Email,
@@ -27,7 +26,9 @@ class AuthServer {
       const response = await axiosInstance1.post("/register", {
         ...reigsterData,
       });
+
       const responseData = await response.data;
+      if (responseData.status !== "OK") throw new Error(responseData.message);
       return responseData;
     } catch (error) {
       throw new Error("Register failed");
@@ -36,8 +37,9 @@ class AuthServer {
 
   async sendMailForOtp(email: Email): Promise<OtpResponse | null> {
     try {
-      const resposne = await axiosInstance1.post("/send-mail", { ...email });
-      const data = await resposne.data;
+      const response = await axiosInstance1.post("/send-mail", { ...email });
+      const data = await response.data;
+      if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
       throw new Error("Cannot send OTP");
@@ -49,10 +51,10 @@ class AuthServer {
       const response = await axiosInstance1.post("/login", { email, password });
       const data = await response.data;
       console.log(data);
+      if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
         throw new Error(error.message);
       }
     }
@@ -62,14 +64,10 @@ class AuthServer {
     try {
       const response = await axiosInstance1.post("/is-token-valid");
       const data = await response.data;
-      console.log(data);
 
-      if (data.type === "success") {
-        return true;
-      }
-      return false;
+      if (data.status !== "OK") throw new Error(data.message);
+      return data.status === "OK";
     } catch (error) {
-      console.error(error);
       throw new Error("Access Token expired");
     }
   }
@@ -85,12 +83,11 @@ class AuthServer {
         }
       );
       const data = await response.data;
-      if (data.type === "error") {
+      if (data.status !== "OK") {
         throw new Error("Token Needed");
       }
       return data;
     } catch (error) {
-      console.error(error);
       throw new Error("Token expired");
     }
   }

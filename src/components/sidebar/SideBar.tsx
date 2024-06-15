@@ -3,7 +3,10 @@ import "./slidebar.css"
 import { MdDashboardCustomize } from 'react-icons/md'
 import { ImMenu } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';
-
+import { FaChevronCircleLeft } from "react-icons/fa";
+import { FaCircleChevronRight } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
+import { FaDochub } from "react-icons/fa6";
 const SideBar = () => {
     const [responsive, setResponsive] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -13,7 +16,7 @@ const SideBar = () => {
             name: "Profile",
             slug: "/dash",
             active: responsive,
-            icon: <MdDashboardCustomize />,
+            icon: <CgProfile />,
         },
 
         {
@@ -34,7 +37,7 @@ const SideBar = () => {
             name: "Doc",
             slug: "/doc",
             active: responsive,
-            icon: <MdDashboardCustomize />,
+            icon: <FaDochub />,
         },
 
     ]
@@ -60,7 +63,15 @@ const SideBar = () => {
                 }
 
                 <div className="gogo__side__navbar__toggle" onClick={() => setResponsive(!responsive)}>
-                    <span><ImMenu /></span>
+                    <span>
+                        {responsive? (
+                            <FaCircleChevronRight/>
+
+                        ): (
+                        <FaChevronCircleLeft />
+
+                        )}
+                        </span>
                 </div>
 
             </div>

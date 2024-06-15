@@ -197,12 +197,13 @@
 
 
 
-// improved the code with the help of Ai ;
+
 
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { Project, Board, Task } from "../types";
+import { Project, Board, Task, ProductUpdateTypes } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
+import { productServerService } from "../services";
 
 // Initial state
 const initialState: Project[] = [];
@@ -289,21 +290,67 @@ export const userProjectSlice = createSlice({
         throw new Error("Project name already exist");
       }
 
+
+  // insertion in the database
+
+  // ; (async () => {
+  //   try {
+  //     const responseData = await productServerService.createNewTask(task);
+  //     const createdTask: Task = await responseData.data;
+  //     task = {
+  //       ...task,
+  //       taskId: createdTask.taskId,
+  //     }
+  //     dispatch(addTaskUnderTheBoard(task));
+  //     toast.success("Task Added");
+  //     taskDispatch({
+  //       type: TaskActionTypes.SET_TASK_NAME,
+  //       payload: "",
+  //     });
+  //     taskDispatch({
+  //       type: TaskActionTypes.SET_TASK_DESC,
+  //       payload: "",
+  //     });
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       toast.error(error.message);
+  //       return;
+  //     }
+  //     toast.error("Unknown error");
+  //   } 
+  // })();
+
+
+
+  // insertion in the database end
+
       const newProject: Project = {
-        id: uuidv4(),
-        name: currentProjectName,
+        ...action.payload,
         index: state.length,
-        boards: [],
+   
       };
       state.push(newProject);
     },
     addProducts: (state, action: PayloadAction<Project[]>) => {
-      state.push(...action.payload);
+
+      // let index =0;
+      action.payload.forEach((project) => {
+        project.index = state.length;
+      state.push(project);
+        
+      })
     },
-    deleteProject: (state, action: PayloadAction<string>) => {
+    deleteProject: (state, action: PayloadAction<number>) => {
       return state.filter((project) => project.id !== action.payload);
     },
-
+    updateProduct : (state , action: PayloadAction<ProductUpdateTypes>) => {
+      const product =  state.filter((project) => project.id === action.payload.id);
+      product[0].name = action.payload.name;
+  
+    },
+    deleteProjects: (state) => {
+      state.length = 0;
+    },
     updateProject: (state, action: PayloadAction<Project>) => {
       const { id, boards } = action.payload;
       const project = state.find((project) => project.id === id);
@@ -315,11 +362,15 @@ export const userProjectSlice = createSlice({
     },
 
     addTaskUnderTheBoard : (state, action: PayloadAction<Task>) => {
+      
       const newTask = action.payload;
+  
       if (newTask.name === "") {
         throw new Error("Task Name Required")
       }
       const project = state[newTask.projectIndex];
+      console.log("strting")
+      console.log(project)
       if (!project) {
         throw new Error("Project not found")
       }
@@ -329,7 +380,6 @@ export const userProjectSlice = createSlice({
       }
         
       const task:Task = {
-        taskId: uuidv4(),
         taskIndex: board.tasks.length,
         ...newTask
 
@@ -347,11 +397,9 @@ export const userProjectSlice = createSlice({
       if (board.projectIndex === undefined) return;
       const project = state[board.projectIndex];
       if (project) {
-        const boardUniqueID = uuidv4();
         const newBoard:Board = {
           ...board,
-          boardIndex: project.boards.length,
-          boardId: board.boardId || boardUniqueID,
+          boardIndex: project.boards.length ,
         };
         project.boards.push(newBoard);
       }
@@ -373,7 +421,7 @@ export const userProjectSlice = createSlice({
   },
 });
 
-export const { addProject, deleteProject, updateProject, addProducts,  addTaskUnderTheBoard } =
+export const { addProject, deleteProject, updateProduct, updateProject, addProducts,  addTaskUnderTheBoard, deleteProjects } =
   userProjectSlice.actions;
 
 export default userProjectSlice.reducer;

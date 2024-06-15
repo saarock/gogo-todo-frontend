@@ -1,19 +1,20 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
   Board,
+  Loader,
   ProductHead,
   ProjectProductContainer,
   SideBar,
 } from "../../components";
 import "./product.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addProject } from "../../features/ProductSlice";
 import {
   addBoardUnderTheProject,
   addTaskUnderTheBoard,
 } from "../../features/ProductSlice";
-import { Board as TypeBoard, Project, Task } from "../../types";
+import { Board as TypeBoard, Project, Task, RootState } from "../../types";
 import toast from "react-hot-toast";
 import useCheckProductsAndReturnIfExist from "../../hooks/useCheckProductsAndReturnIfExist";
 import { TaskActionTypes, taskReducer } from "../../reducer/task.reducer";
@@ -21,24 +22,27 @@ import {
   ProductActionTypes,
   productReducer,
 } from "../../reducer/product.reducer";
+import { productServerService } from "../../services";
 
 const Product = () => {
   const dispatch = useDispatch();
   const { productname } = useParams();
   const navigate = useNavigate();
+  const userID = useSelector((state: RootState) => state.auth.user?.id);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [boardName, setBoardName] = useState<string>("");
   const [taskState, taskDispatch] = useReducer(taskReducer, {
     taskName: "",
     taskDesc: "",
-    isUserWantToAddTask: "",
+    isUserWantToAddTask: "" /** track when user click the add task button */,
   });
   const [productState, productDispatch] = useReducer(productReducer, {
     productTitleOrName: "",
     isUserWantToCreateTheProduct: false,
   });
 
-  // this effect will run when user want to create the new project
+  // This effect will run when user want to create the new project
   useEffect(() => {
     if (productname === "new-project") {
       productDispatch({
@@ -56,7 +60,6 @@ const Product = () => {
   }, []);
 
   const cancleAddTask = useCallback(() => {
-    // setIsUserWantToAddTask("");
     taskDispatch({
       type: TaskActionTypes.DOES_USER_WANT_TO_ADD_TASK,
       payload: "",
@@ -82,73 +85,109 @@ const Product = () => {
   );
 
   const createNewTask = useCallback(
-    (boardIndex: number, projectIndex: number, boardId: string) => {
-      try {
-        if (boardIndex <= -1 && projectIndex <= -1) return;
-        const task: Task = {
-          name: taskState.taskName,
-          content: taskState.taskDesc,
-          boardId: boardId,
-          boardIndex: boardIndex,
-          projectIndex: projectIndex,
-        };
+    (boardIndex: number, projectIndex: number, boardId: number) => {
 
-        dispatch(addTaskUnderTheBoard(task));
-        // setTaskName("")
-        taskDispatch({
-          type: TaskActionTypes.SET_TASK_NAME,
-          payload: "",
-        });
-        taskDispatch({
-          type: TaskActionTypes.SET_TASK_DESC,
-          payload: "",
-        });
-        toast.success("Task Added");
-      } catch (error) {
-        if (error instanceof Error) {
-          toast.error(error.message);
-          return;
-        }
-        toast.error("Unknown error");
-      }
+      if (boardIndex <= -1 && projectIndex <= -1) return;
+      if (taskState.taskName.trim() === "") throw new Error("Task Name requried");
+      let task: Task = {
+        name: taskState.taskName,
+        content: taskState.taskDesc,
+        boardId: boardId,
+        boardIndex: boardIndex,
+        projectIndex: projectIndex,
+      };
+
+
+      ; (async () => {
+        try {
+          const responseData = await productServerService.createNewTask(task);
+          const createdTask: Task = await responseData.data;
+          task = {
+            ...task,
+            taskId: createdTask.taskId,
+          }
+          dispatch(addTaskUnderTheBoard(task));
+          toast.success("Task Added");
+          taskDispatch({
+            type: TaskActionTypes.SET_TASK_NAME,
+            payload: "",
+          });
+          taskDispatch({
+            type: TaskActionTypes.SET_TASK_DESC,
+            payload: "",
+          });
+        } catch (error) {
+          if (error instanceof Error) {
+            toast.error(error.message);
+            return;
+          }
+          toast.error("Unknown error");
+        } 
+      })();
+
     },
-    [taskState.taskName, taskState.taskDesc]
+    [taskState.taskName, taskState.taskDesc, dispatch]
   );
 
   const saveProject = useCallback(() => {
-    try {
-      const newProject: Project = {
-        name: productState.productTitleOrName,
-        boards: [],
-      };
-      // setProjectOrProductTitle("");
-      productDispatch({
-        type: ProductActionTypes.CREATE_NEW_PRODUCT,
-        payload: "",
-      });
-      dispatch(addProject(newProject));
-      // setIsUserWantToCreateTheProduct(false);
-      productDispatch({
-        type: ProductActionTypes.IS_USER_WANT_TO_CREATE_PRODUCT,
-        payload: false,
-      });
-      (() => {
+    if (!userID) {
+      window.location.reload();
+      return;
+    }
+
+
+    if (productState.productTitleOrName === undefined) throw new Error("Title Name requried");
+    const newProject: Project = {
+      name: productState.productTitleOrName,
+      userId: userID.toString(),
+      boards: [],
+    };
+
+
+    setLoading(true);
+
+
+
+    // first send the Project to the data base
+    ; (async () => {
+      try {
         if (!productState.productTitleOrName) return;
         const currentCreatedUserProjectName = productState.productTitleOrName
           .trim()
           .toLowerCase()
           .toString();
         if (!currentCreatedUserProjectName) return;
-        navigate("/dash/projects/" + currentCreatedUserProjectName);
-      })();
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-        console.error(error.message);
-      } else {
-        toast.error("Unknown  Error came while creating the project");
+        const projectDetails: Project = await productServerService.createNewProduct(newProject);
+        console.log(projectDetails)
+        // then change the state
+
+        await dispatch(addProject(projectDetails));
+          navigate("/dash/projects/" + currentCreatedUserProjectName);
+        productDispatch({
+          type: ProductActionTypes.CREATE_NEW_PRODUCT,
+          payload: "",
+        });
+
+        productDispatch({
+          type: ProductActionTypes.IS_USER_WANT_TO_CREATE_PRODUCT,
+          payload: false,
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+          console.error(error.message);
+        }
+
+      } finally {
+        setLoading(false);
+
       }
-    }
+    })();
+
+
+  
+
+
   }, [productState.productTitleOrName]);
 
   const onChangeTitle = useCallback(
@@ -171,6 +210,7 @@ const Product = () => {
   }, []);
 
   const [currentUserProject] = useCheckProductsAndReturnIfExist();
+  console.log(currentUserProject);
 
   const boardInputOnChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,28 +220,54 @@ const Product = () => {
   );
 
   const addBoard = useCallback(() => {
-    try {
-      const projectId = currentUserProject?.id;
-      if (projectId === undefined || boardName === "") return;
-      const board: TypeBoard = {
-        projectId: projectId,
-        name: boardName,
-        projectIndex: currentUserProject?.index,
-        tasks: [],
-      };
+    if (!currentUserProject) throw new Error("Current user doesn't exist");
+    const projectId = currentUserProject.id;
+    const projectName = currentUserProject.name;
+    console.log(currentUserProject)
 
-      // have to improve here more;
-      dispatch<any>(addBoardUnderTheProject(board));
 
-      setBoardName("");
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Some thing wrong");
+
+    if (projectId == undefined || boardName.trim() === "" || projectName == undefined || projectName.trim() === "") return;
+   
+
+    let board: TypeBoard = {
+      projectId: projectId,
+      name: boardName,
+      projectIndex: currentUserProject?.index,
+      boardIndex: currentUserProject?.boards.length,
+      tasks: [],
+    };
+
+    ; (async () => {
+      try {
+        const createdBoardResponse = await productServerService.createNewBoard(board);
+        const createBoard: TypeBoard = createdBoardResponse.data;
+        console.log("this is created board")
+        console.log(createBoard)
+
+        // have to improve here more;
+        board = {
+          ...board,
+          boardId: createBoard.boardId
+        }
+        await dispatch<any>(addBoardUnderTheProject(board));
+        setBoardName("");
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("Some thing wrong");
+        }
       }
-    }
+    })();
+
+
   }, [boardName]);
+
+
+
+
+
 
   return (
     <div className="gogo__product__container">
@@ -209,12 +275,15 @@ const Product = () => {
         <SideBar />
       </div>
       {
+        loading && <Loader/>
+      }
+      {
         <ProjectProductContainer>
           <div className="gogo__product__page">
             <div className="product__header">
               <ProductHead
                 isUserWantToCreateTheProduct={
-                  productState.isUserWantToCreateTheProduct
+                  productState.isUserWantToCreateTheProduct || false
                 }
                 saveProject={saveProject}
                 onChangeTitle={onChangeTitle}
@@ -227,24 +296,31 @@ const Product = () => {
               />
             </div>
             <div className="gogo__boards">
-              {currentUserProject?.boards.map((board) => (
-                <Board
-                  key={board.boardId}
-                  onClickListenerToAddTask={addTask}
-                  // passing the board name which is unique where user want to create the task
-                  onWhichBoardUserWantToAddTheTask={
-                    taskState.isUserWantToAddTask
-                  }
-                  onClickListenerToCancelTheAddTask={cancleAddTask}
-                  userProjectDetails={currentUserProject}
-                  board={board}
-                  createNewTask={createNewTask}
-                  userNewTaskName={taskState.taskName}
-                  whenUserTextForCreatingNewTask={onChangeTask}
-                  whenUserTextForCreatingNewTaskDesc={onChangeTaskDesc}
-                  userNewTaskDescName={taskState.taskDesc}
-                />
-              ))}
+            
+              {
+                currentUserProject?.boards &&
+                currentUserProject?.boards.map((board) => (
+                  <Board
+                    key={board.boardId}
+                    onClickListenerToAddTask={addTask}
+                    // passing the board name which is unique where user want to create the task
+                    onWhichBoardUserWantToAddTheTask={
+                      taskState.isUserWantToAddTask
+                    }
+                    onClickListenerToCancelTheAddTask={cancleAddTask}
+                    userProjectDetails={currentUserProject}
+                    board={board}
+                    createNewTask={createNewTask}
+                    userNewTaskName={taskState.taskName}
+                    whenUserTextForCreatingNewTask={onChangeTask}
+                    whenUserTextForCreatingNewTaskDesc={onChangeTaskDesc}
+                    userNewTaskDescName={taskState.taskDesc}
+                  />
+
+                ))
+
+              }
+
             </div>
           </div>
         </ProjectProductContainer>

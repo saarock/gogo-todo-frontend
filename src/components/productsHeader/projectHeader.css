@@ -1,0 +1,21 @@
+.gogo__project__search {
+    /* border: 2px solid var(--gogo--primary--color); */
+    
+}
+.gogo__logo {
+    /* color: var(--gogo--primary--color);; */
+}
+.gogo__project__level__header {
+    /* color: rgb(0, 130, 216); */
+    border-radius: 4rem;
+    /* background-color: rgb(0, 130, 216); */
+    /* background-color: gray; */
+    position: sticky;
+    margin-left: 1rem;
+    top: 0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-color: #ece9f0;
+    border: 2px solid #ece9f0;
+    /* background: url(https://cdn.pixabay.com/photo/2017/06/08/17/09/background-2384187_640.jpg); */
+    left: 0;
+}

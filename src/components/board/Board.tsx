@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import "./board.css";
 import Task from "../task/Task";
 import { BoardProps } from "../../types";
@@ -18,8 +18,22 @@ const Board: React.FC<BoardProps> = ({
     whenUserTextForCreatingNewTaskDesc,
     userNewTaskDescName,
 }) => {
+
+    const [isTaskOptionOpened, setTaskOption] = useState(false);
+    const [taskId, setTaskId] = useState<number>(-1);
+    const showTaskOptions = useCallback((taskId: number | undefined) => {
+        if (taskId == undefined) return;
+        setTaskOption(isTaskOptionOpened ? false : true);
+        setTaskId(taskId);
+    }, [isTaskOptionOpened])
+
+    console.log("haha")
+    console.log(board)
+
+
     return (
         <div className="gogo__board">
+
             {userProjectDetails ? (
                 <div>
                     <div className="gogo__board__title" onClick={onBoardTitleClick}>
@@ -29,8 +43,8 @@ const Board: React.FC<BoardProps> = ({
                         <div className="gogo__board__title">
                             <Input onChange={whenUserTextForCreatingNewTask} value={userNewTaskName} />
                             <br />
-                            <Input onChange={whenUserTextForCreatingNewTaskDesc} value={userNewTaskDescName} placeholder="desc..."/>
-                            <button onClick={() => createNewTask(board.boardIndex || 0 , board.projectIndex || 0 , board.boardId || "")}>Add</button>
+                            <Input onChange={whenUserTextForCreatingNewTaskDesc} value={userNewTaskDescName} placeholder="desc..." />
+                            <button onClick={() => createNewTask(board.boardIndex || 0, board.projectIndex || 0, board.boardId || -1)}>Add</button>
                             <button onClick={onClickListenerToCancelTheAddTask}>Cancel</button>
                         </div>
                     )}
@@ -41,7 +55,14 @@ const Board: React.FC<BoardProps> = ({
                     )}
                     {
                         board.tasks.map((task) =>
-                        <Task taskName={task.name || "Loading..."}taskContent={task.content}/>
+                            <div className="gogo__task__container">
+                                <Task task={task || "Loading..."} taskContent={task.content} onClickEvent={showTaskOptions} />
+                                {
+                                    isTaskOptionOpened && (
+                                        taskId === task.taskId ? <div className="gogo__task__options">taskOptions</div> : ""
+                                    )
+                                }
+                            </div>
                         )
                     }
                 </div>

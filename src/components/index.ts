@@ -8,11 +8,16 @@ import SideBar from "./sidebar/SideBar";
 import Profile from "./profile/Profile";
 import Product from "./product/Product";
 import CreateProduct from "./create_product/CreateProject";
-import ProductHeader from "./products_header/ProductHeader";
+import ProductHeader from "./productsHeader/ProductsHeader";
 import CreateProductInputField from "./create_product/CreateProductInputField";
 import Board from "./board/Board";
-import ProductHead from "./product_header/ProductHeader";
+import ProductHead from "./productHeader/ProductHeader";
+import Loader from "./loader/Loader";
 import ProjectProductContainer from "./ProjectProductContainer/ProjectProductContainer";
+import LoginAndRegisterSideDiv from "./loginAndRegisterSideDiv/LoginAndRegisterSideDiv";
+import MainTop from "./mainTop/MainTop";
+import Update from "./update/Update";
+
 export {
   Header,
   Container,
@@ -28,5 +33,9 @@ export {
   ProductHeader,
   Board,
   ProductHead,
-  ProjectProductContainer
+  ProjectProductContainer,
+  Loader,
+  LoginAndRegisterSideDiv,
+  MainTop,
+  Update,
 };

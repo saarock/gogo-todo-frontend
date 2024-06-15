@@ -1,0 +1,89 @@
+
+.gogo__main__top {
+    display: flex;
+    justify-content: center;
+    padding: 5rem;
+    position: relative;    
+    /* background-color: red; */
+}
+.gogo__main__top::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+.gogo__main__top__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.gogo__main__top__left__content {
+    font-size: 1.3rem;
+    color: green;
+    font-weight: bold;
+}
+.gogo__main__top__left__title h1 {
+    font-size: 3.7rem;
+    font-weight: 600;
+    line-height: 5rem;
+
+}
+.gogo__main__top__left__title h1 span {
+    color: var(--gogo--primary--color);
+}
+
+.gogo__main__top__left__para p {
+    font-size: 1.2rem;
+
+}
+.gogo__main__top__left__buttons {
+    display: flex;
+}
+.gogo__main__top__left__buttons button:nth-child(1) {
+    background-color: green;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin: 1rem;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+}
+
+.gogo__play__button  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gogo__play__button span {
+    margin: 1rem;
+    font-size: 2.5rem;
+    color: var(--gogo--primary--color);
+}
+.gogo__main__top__right {
+    position: relative;
+}
+.gogo__animation {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    filter: blur(10px);
+
+}
+.gogo__main__top__right img {
+
+}
+
+.shadow {
+    /* background: linear-gradient(rgba(255, 0, 0, 0.062), rgba(255, 192, 203, 0.452)); */
+    height: 40rem;
+    position: absolute;
+    top: 0;
+    width: 42rem;
+    left: 0;
+    /* right: 0; */
+
+}
+

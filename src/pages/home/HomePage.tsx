@@ -1,10 +1,16 @@
 import React from "react";
-import { Container } from "../../components";
+import { Container, MainTop } from "../../components";
+import About from "../../components/about/About";
+import TextScroll from "../../components/textscroll/TextScroll";
 
 const HomePage = () => {
   return (
     <Container>
-      <h1>Home</h1>
+      <MainTop />
+      <section>
+        <About />
+        <TextScroll/>
+      </section>
     </Container>
   );
 };

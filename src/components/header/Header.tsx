@@ -10,6 +10,8 @@ import {
   MdDashboardCustomize,
 } from "react-icons/md";
 import { FcAbout } from "react-icons/fc";
+import { IoSettings } from "react-icons/io5"
+import { MdOutlineAddHomeWork } from "react-icons/md";
 
 const Header = () => {
   const authStates = useSelector(
@@ -50,17 +52,17 @@ const Header = () => {
       icon: <MdFollowTheSigns />,
     },
     {
-      name: "Dash",
+      name: "Work Station",
       slug: "/dash",
       active: authStates,
-      icon: <MdDashboardCustomize />,
+      icon: <MdOutlineAddHomeWork /> ,
       
     },
     {
       name: "settings",
       slug: "#settings",
       active: authStates,
-      icon: <MdDashboardCustomize />,
+      icon: <IoSettings />,
       children: [
         {
           name: "Dark Mode",
@@ -93,7 +95,7 @@ const Header = () => {
               <li
                 key={nav.name}
                 onClick={() => navigate(nav.slug)}
-                className={`gogo__header__nav__navs__navbar ${nav.children && "gogo__settings"
+                className={`gogo__header__nav__navs__navbar ${nav.name.toLowerCase()}__nav ${nav.children && "gogo__settings"
                   }`}
               >
                 <span>{nav.icon}</span>

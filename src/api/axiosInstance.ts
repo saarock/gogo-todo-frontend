@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_NAME, REFRESH_TOKEN__NAME } from "../constant";
 
 
 const axiosInstance1 = axios.create({
-  baseURL: "http://localhost:8001"
+  baseURL: "http://localhost:8002"
 })
 // Add a request interceptors
 axiosInstance1.interceptors.request.use(
@@ -22,7 +22,7 @@ axiosInstance1.interceptors.request.use(
   );
 
   const axiosInstance2 = axios.create({
-    baseURL: "http://localhost:8001"
+    baseURL: "http://localhost:8002"
   })
   // Add a request interceptors
   axiosInstance2.interceptors.request.use(
