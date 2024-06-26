@@ -144,3 +144,25 @@ export interface ProductUpdateTypes {
  * @note : types for product include board and task end
  */
 
+
+export interface ProductNameandId {
+  productName: string;
+  productId: number;
+
+}
+export interface DeleteProduct {
+  productId: number;
+
+}
+
+export interface BoardIdAndName {
+  boardId: number;
+  boardName: string;
+  projectIndex: number;
+}
+
+
+export interface BoardIdAndProjectIndex {
+  boardId:number;
+  projectIndex: number;
+}

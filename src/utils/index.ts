@@ -1,3 +1,4 @@
 import jwtUtil from "./jwt.util";
 import localStore from "./localStorage.util";
-export {jwtUtil, localStore}
+import color from "./color.utils";
+export {jwtUtil, localStore, color}

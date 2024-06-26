@@ -20,17 +20,22 @@ import {
   Project as UserProjectType,
   UserProject,
   ProductUpdateTypes,
+  ProductNameandId,
+  RootState,
+  DeleteProduct,
 } from "../../types";
 
 import { TrophySpin } from "react-loading-indicators";
 import { AiOutlineReload } from "react-icons/ai";
 import { productServerService } from "../../services";
-import { addProducts } from "../../features/ProductSlice";
+import { addProducts, updateProductName as UpdateProductInBothClientAndServer, deleteProduct as DeleteProductInBothClientAndServer } from "../../features/ProductSlice";
 import {
   ProductActionTypes,
   productReducer,
 } from "../../reducer/product.reducer";
 import { updateProduct as updatedProduct } from "../../features/ProductSlice";
+import toast from "react-hot-toast";
+import { Root } from "react-dom/client";
 
 const Project = () => {
   const [wantToCreateProduct, setwantToCreateProduct] =
@@ -39,6 +44,7 @@ const Project = () => {
   const projects: UserProjectType[] | undefined = useSelector(
     (state: UserProject) => state.projects
   );
+  const user = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [userDatas, setUserDatas] = useState<UserProjectType[] | undefined>(
     projects
@@ -53,6 +59,10 @@ const Project = () => {
     },
   });
 
+
+  // update state
+  const [productName, setProductName] = useState<string>("");
+  const [productId, setProductId] = useState<number>(-1);
   useEffect(() => {
     setUserDatas(projects);
   }, [projects]);
@@ -79,7 +89,9 @@ const Project = () => {
   const search = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUserDatas(
-        projects?.filter((project) => project.name.includes(e.target.value))
+        projects?.filter((project) =>
+          project.name.toLowerCase().includes(e.target.value.toLowerCase())
+        )
       );
     },
     [userDatas]
@@ -109,10 +121,21 @@ const Project = () => {
     ]
   );
 
-  const deleteProduct = (
+  const deleteProduct = useCallback(async (
     e: React.MouseEvent<HTMLSpanElement>,
     productId: number
-  ) => {};
+  ) => {
+    e.stopPropagation();
+  try {
+    const deleteProductObject: DeleteProduct = {
+      productId
+    }
+    await dispatch<any>(DeleteProductInBothClientAndServer(deleteProductObject))
+  } catch(error) {
+    toast.error(error instanceof Error ? error.message : "Cannot delete the project try again");
+  }
+
+  }, []);
 
   const commitUpdate = (
     e: React.ChangeEvent<HTMLSpanElement>,
@@ -129,6 +152,7 @@ const Project = () => {
         type: ProductActionTypes.IS_USER_WANT_TO_SEE_THE_OPTIONS_OF_THE_PRODUCT,
         payload: { isUserWantToUpdate: true },
       });
+      setProductId(productId);
       // commitUpdate(e, productId)
     },
     []
@@ -145,10 +169,44 @@ const Project = () => {
     });
   }, []);
 
+  const getNewProductName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setProductName(value);
+    },
+    [productName, productId]
+  );
+
+  const updateProductName = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (!productName.trim()) {
+        toast.error("New Product Name required");
+        return;
+      }
+
+      const updatedDetailsWithIdAndNewName:ProductNameandId = {
+        productId,
+        productName,
+      }
+      try {
+      await dispatch<any>( UpdateProductInBothClientAndServer(updatedDetailsWithIdAndNewName));
+      } catch(error) {
+        toast.error(error instanceof Error ? error.message : "Unknown eror while updating the product");
+      }
+      setProductName("");
+    },
+    [productName, productId]
+  );
   return (
     <>
       {productState.isUserWantToSeeOptions?.isUserWantToUpdate && (
-        <Update hideUpdateComp={hideUpdateComp} />
+        <Update
+          hideUpdateComp={hideUpdateComp}
+          onChangeEventForUpdateTheProductName={getNewProductName}
+          productName={productName}
+          updateClick={updateProductName}
+        />
       )}
       <div className="gogo__projects__container">
         <div className="gogo__side__bar">

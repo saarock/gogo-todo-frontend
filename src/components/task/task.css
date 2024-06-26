@@ -79,3 +79,30 @@
         font-size: 0.9em;
     }
 }
+
+.gogo__options__of__task {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: -6rem;
+    z-index: 999;
+    height: 10rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+.gogo__board__task button {
+    background-color: red;
+}
+.task__option {
+    margin: 0.1rem;
+    padding: 0.3rem;
+}
+.task__option:hover {
+    background-color: var(--gogo--primary--color);
+    border-radius: 0.5rem;
+}

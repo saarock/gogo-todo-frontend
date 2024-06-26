@@ -1,8 +1,12 @@
+.gogo__header {
+
+}
+
 .gogo__header__nav {
     display: flex;
     padding: 1rem;
     justify-content: space-around;
-    z-index: -1;
+    /* z-index: -1; */
 }
 
 .gogo__header__logo {

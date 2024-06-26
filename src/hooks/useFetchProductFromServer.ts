@@ -1,17 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { productServerService } from "../services";
 import { Project, RootState, UseFetchProductFromServerParameterTypes } from "../types";
-import { addProducts, deleteProjects } from "../features/ProductSlice";
+import { addProducts } from "../features/ProductSlice";
 import toast from "react-hot-toast";
-import React, { useEffect, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 
 let onlyOneTimeRun = false;
 
 export default function useFetchProductFromServer(useFetchParams: UseFetchProductFromServerParameterTypes ) {
   const dispatch = useDispatch();
-  const onlyOneTimeRef = useRef(false);
   const userID = useSelector((state: RootState) => state.auth.user?.id);
 
 
@@ -35,8 +33,6 @@ export default function useFetchProductFromServer(useFetchParams: UseFetchProduc
     }
 
     return () => {
-      // alert(location.pathname)
-    // dispatch(deleteProjects());
     }
   }, [userID]); 
 

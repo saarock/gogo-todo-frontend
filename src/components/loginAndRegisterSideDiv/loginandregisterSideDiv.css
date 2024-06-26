@@ -5,7 +5,7 @@
 .gogo__login__content {
     border-radius: 1rem red;
     height: 100%;
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

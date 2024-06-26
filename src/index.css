@@ -170,3 +170,58 @@ body {
 
 
 /* gogo side bar end */
+
+
+
+/* gogo bs three dots start*/
+.gogo-bs-three-dots {
+  display: inline-block;
+  font-size: 1.9rem;
+  cursor: pointer;
+  color:gray;
+  transition: 0.2s ease-in-out;
+} 
+.gogo-bs-three-dots:hover {
+  border-radius: 1rem;
+  background-color: gray;
+  color: white;
+}
+.gogo-bs-three-dots:active {
+  font-size: 1.8rem;
+}
+
+/* gogo bas three dots end */
+.gogo__add__button {
+  background-color: rgba(151, 146, 146, 0.178);
+  padding: 0.3rem;
+  width: 100%;
+  color: black;
+  font-weight: bold;
+  border-radius: 0.7rem;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  box-shadow: 0.3rem 0.4rem black;
+  margin: 0.4rem;
+
+
+}
+
+.gogo__delete__button {
+
+}
+
+
+
+/*  gogo back icons start */
+
+.gogo__back__icon {
+  font-size: 1.5rem;
+  color: #28a745;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.gogo__back__icon:active {
+  font-size: 1.4rem;
+}
+/* gogo back icon end */

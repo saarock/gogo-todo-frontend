@@ -1,6 +1,12 @@
-import React, {  } from 'react'; // Import forwardRef from 'react'
-import { ProductHeaderProps } from '../../types';
-import Input from '../input/Input';
+import React, { useMemo } from "react"; // Import forwardRef from 'react'
+import { ProductHeaderProps } from "../../types";
+import Input from "../input/Input";
+import "./productheader.css";
+import Button from "../button/Button";
+import { IoIosCreate } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { BiLeftArrow, BiLeftArrowCircle } from "react-icons/bi";
+import { color } from "../../utils";
 /**
  * @note (Don't get confuse between the ProductHeader and ProductHeaders file one (## ProductHeaders ## ) is for when user visit at the project level where user can see
  *  all the Product/ Project and get the pagination, search features and another ProductHeader is for the only individual product where user can create the new Project/ Product
@@ -9,55 +15,70 @@ import Input from '../input/Input';
  * @param props
  * @returns ProductHeader for more information read the @note section;
  */
-const ProductHeader: React.FC<ProductHeaderProps> = ({boardInputOnChange,
-                                                         boardName,  addBoard,
-                                                         value, addProduct,
-                                                         isUserWantToCreateTheProduct, saveProject,
-                                                         onChangeTitle, userProject }) => {
-
+const ProductHeader: React.FC<ProductHeaderProps> = ({
+  boardInputOnChange,
+  boardName,
+  addBoard,
+  value,
+  addProduct,
+  isUserWantToCreateTheProduct,
+  saveProject,
+  onChangeTitle,
+  userProject,
+}) => {
+  const navigate = useNavigate();
+  const colorCache = useMemo(() => color.generateRandomColor(), [])
   return (
-    <div> {/* Forward the ref to the div element */}
-      {
-        userProject ? (
-          <div className="bg-gray-800 p-4 flex justify-between items-center w-fit">
-            <div className="text-white text-lg">
-              {userProject.name || "Project Title"}
-            </div>
-            <div className="flex items-center space-x-4">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="px-4 py-2 rounded-md text-gray-800"
-              />
-              <Input
-                onChange={boardInputOnChange}
-                placeholder='Add Boards'
-                value={boardName}
-              />
-              <button
-                onClick={() => addBoard()}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-              >
-                Add Board
-              </button>
-            </div>
-          </div>
-        ) : (
-
+    <div>
+      {/* Forward the ref to the div element */}
+      {userProject ? (
+        <div className="gogo__product__level__header">
           <div>
-            <button className='gogo__add__button' onClick={addProduct}>Create New Project</button>
-            {
-              isUserWantToCreateTheProduct ? (
-                <div className="gogo__create__new__product">
-                  <Input onChange={onChangeTitle} value={value} />
-                  <button onClick={saveProject}>Save</button>
-                </div>
-              ) : ""
-            }
+            <button className="gogo__product__header__nav">
+              <span
+                onClick={() => navigate("/dash/projects")}
+                className="gogo__back__icon"
+              >
+                <BiLeftArrowCircle/> Back
+              </span>
+            </button>
           </div>
-        )
-      }
-
+          <div className="gogo__product__title" style={{color: colorCache}}>
+            {userProject.name || "Project Title"}
+          </div>
+          <div className="gogo__product__create__div">
+            <Input
+              className="gogo__create__product__input"
+              onChange={boardInputOnChange}
+              placeholder="Add Boards"
+              value={boardName}
+            />
+            <button
+              onClick={() => addBoard()}
+              className="gogo__create__product__button"
+            >
+              <span className="gogo__create__icon">
+                <IoIosCreate />
+              </span>
+              Add Board
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="gogo__create__new__product__container">
+          <button className="gogo__show__to__create__newproduct__button" onClick={addProduct}>
+            Create New Project
+          </button>
+          {isUserWantToCreateTheProduct ? (
+            <div className="gogo__create__new__product">
+              <Input onChange={onChangeTitle} value={value} placeholder="New Unique Project Name..." />
+              <button onClick={saveProject} className="gogo__new__project__save__button">Save</button>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
     </div>
   );
 };

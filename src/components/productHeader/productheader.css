@@ -1,0 +1,75 @@
+.gogo__product__level__header {
+    border-radius: 4rem;
+    display: flex;
+    padding: 0.6rem 1rem;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    
+}
+
+.gogo__product__title {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    font-weight: 600;
+    /* color: green; */
+}
+.gogo__product__title::before {
+    content: "Product Name: ";
+}
+
+.gogo__product__create__div {
+    /* float: right; */
+    display: flex;
+}
+
+.gogo__create__product__input {
+    height: 2.4rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    outline: 2px solid rgb(0, 0, 0);
+    margin: 0 1rem;
+}
+
+.gogo__create__product__button {
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gogo__create__icon {
+    font-size: 1.3rem;
+}
+.gogo__create__new__product__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 68vh;
+
+
+}
+.gogo__show__to__create__newproduct__button {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.gogo__create__new__product__container input {
+    height: 2rem;
+    outline: 2px solid var(--gogo--primary--color);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 0.3rem;
+    box-shadow: 0.3rem 0.3rem 0.4rem var(--gogo--primary--color);
+}
+
+.gogo__new__project__save__button {
+    margin: 0.3rem;
+    outline: 2px solid var(--gogo--primary--color);
+    padding: 0.4rem;
+    width: 7rem;
+    border-radius: 1rem;
+    box-shadow: 0.3rem 0.3rem 0.4rem var(--gogo--primary--color);
+
+}

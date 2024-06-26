@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosInstance1, axiosInstance2 } from "../api/axiosInstance";
 import {
   Email,
@@ -30,9 +31,20 @@ class AuthServer {
       const responseData = await response.data;
       if (responseData.status !== "OK") throw new Error(responseData.message);
       return responseData;
-    } catch (error) {
-      throw new Error("Register failed");
+    }  catch(error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          return null;
+        } else if (error.request) {
+          return null;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
     }
+   
   }
 
   async sendMailForOtp(email: Email): Promise<OtpResponse | null> {
@@ -42,7 +54,7 @@ class AuthServer {
       if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
-      throw new Error("Cannot send OTP");
+      return null;
     }
   }
 
@@ -50,13 +62,23 @@ class AuthServer {
     try {
       const response = await axiosInstance1.post("/login", { email, password });
       const data = await response.data;
-      console.log(data);
       if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          throw new Error(error.response.data.message)
+
+        } else if (error.request) {
+          throw new Error(error.request.data.message)
+    
+        } else {
+          throw new Error("Cannot login contact gogo teams")
+        }
+       
+     
+      } 
+      
     }
   }
 
@@ -64,11 +86,24 @@ class AuthServer {
     try {
       const response = await axiosInstance1.post("/is-token-valid");
       const data = await response.data;
-
-      if (data.status !== "OK") throw new Error(data.message);
+      if (data.status !== "ACCEPTED") throw new Error(data.message);
       return data.status === "OK";
     } catch (error) {
-      throw new Error("Access Token expired");
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          throw new Error(error.response.data.message || "Token validation failed");
+        } else if (error.request) {
+
+          throw new Error("No response received from the server");
+        } else {
+  
+          throw new Error("Error setting up the request");
+        }
+      } else {
+        // Handle non-Axios errors
+        console.error('Unexpected error:', error);
+        throw new Error("Unexpected error occurred hah");
+      }
     }
   }
 

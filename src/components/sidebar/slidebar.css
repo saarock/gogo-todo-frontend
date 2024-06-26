@@ -1,15 +1,13 @@
 .gogo__side__navbar {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: rgb(247, 243, 243);
     /* position: fixed; */
-    /* width: 7rem; */
     height: 100vh;
+    padding: 1rem;
     position: sticky;
     top: 12rem;
-    /* border-top-right-radius: 1rem; */
-    /* border-bottom-right-radius: 1rem; */
     top: 0;
-    /* background-color: white; */
-  
+    border-top-right-radius: 2rem;
+
 }
 
 .gogo__side__navbar .gogo__side__nav__child {
@@ -25,7 +23,7 @@
     align-items: center;
     padding: 0.4rem;
     cursor: pointer;
-    /* border-radius: 2rem; */
+    border-radius: 1rem;
 
 }
 .gogo__side__nav:hover {
@@ -43,6 +41,9 @@
     font-size: 2rem;
     color: var(--gogo--primary--color);
     cursor: pointer;
+}
+.gogo__side__navbar__toggle:active  {
+    outline: 2px dotted green;
 }
 .gogo__side__navbar__responsive {
     /* width: 2rem; */

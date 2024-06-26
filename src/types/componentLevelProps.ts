@@ -1,4 +1,5 @@
 import React from "react";
+import { IconBaseProps, IconType } from "react-icons";
 
 /**
  * All the component level props types are found here Accept product, board and task related props ;
@@ -9,14 +10,15 @@ export interface ChildrenProps {
   children: React.ReactNode;
 }
 
-export interface ButtonProps {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   text?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  icon?: IconType;
 }
 
-export interface InputProps {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   type?: string;
   placeholder?: string;
@@ -27,4 +29,9 @@ export interface InputProps {
 
 export interface UpdateCompProps {
   hideUpdateComp: (e:React.MouseEvent<HTMLDivElement>) => void;
+  onChangeEventForUpdateTheProductName: (e:React.ChangeEvent<HTMLInputElement>) => void;
+  productName: string;
+  updateClick: (e:React.MouseEvent<HTMLButtonElement>)=> void;
+
+
 }

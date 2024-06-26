@@ -1,9 +1,36 @@
 .gogo__product__container {
     display: flex;
+
 }
 .gogo__product__page {
-    /* background-color: rgb(248, 215, 215); */
-    width: 100%;
-
+    width: 100vw;
+    overflow: hidden;
 }
 
+.gogo__product__boards{
+    display: flex;
+    height: fit-content;
+    overflow: scroll;
+    background-color: white;
+    padding: 2rem;
+}
+
+.gogo__product__boards::-webkit-scrollbar {
+    background-color: white;
+    height: 0.5rem;
+   
+}
+.gogo__product__boards::-webkit-scrollbar-thumb {
+    /* background-color: pink; */
+    border-radius: 1rem;
+
+}
+.gogo__product__boards::-webkit-scrollbar-thumb:hover {
+    background-color: var(--gogo--primary--color);
+}
+.gogo__no__board__found__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

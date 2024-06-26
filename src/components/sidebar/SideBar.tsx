@@ -19,12 +19,12 @@ const SideBar = () => {
             icon: <CgProfile />,
         },
 
-        {
-            name: "Home",
-            slug: "/dash/console",
-            active: responsive,
-            icon: <MdDashboardCustomize />,
-        },
+        // {
+        //     name: "Home",
+        //     slug: "/dash/console",
+        //     active: responsive,
+        //     icon: <MdDashboardCustomize />,
+        // },
 
         {
             name: "Projects",
@@ -33,12 +33,12 @@ const SideBar = () => {
             icon: <MdDashboardCustomize />,
         },
 
-        {
-            name: "Doc",
-            slug: "/doc",
-            active: responsive,
-            icon: <FaDochub />,
-        },
+        // {
+        //     name: "Doc",
+        //     slug: "/doc",
+        //     active: responsive,
+        //     icon: <FaDochub />,
+        // },
 
     ]
     return (

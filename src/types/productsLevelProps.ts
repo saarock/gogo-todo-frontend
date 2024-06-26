@@ -46,6 +46,16 @@ export interface BoardProps {
     e: React.ChangeEvent<HTMLInputElement>
   ) => void;
   userNewTaskDescName?: string;
+  openBoardOptions: (boardId: number) => void;
+  isWantToSeeOptions:boolean;
+  whichBoardOptionsUserWantToSee : number;
+  updateBoardName: (boardId: number) => void;
+  isUserWantToUpdateTheBoardName: boolean;
+  cancleUpdateBoardName: () => void;
+  onChangeEventOfBoardName: (e:React.ChangeEvent<HTMLInputElement>) => void;
+  saveNewBoardName: () => void;
+  deleteBoard:(boardId: number) => void; 
+
 }
 
 export interface ProductHeaderProps {
