@@ -12,7 +12,6 @@
     height: fit-content;
     overflow: scroll;
     background-color: white;
-    padding: 2rem;
 }
 
 .gogo__product__boards::-webkit-scrollbar {

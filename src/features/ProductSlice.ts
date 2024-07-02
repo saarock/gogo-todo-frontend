@@ -200,11 +200,10 @@ import {
   DeleteProduct,
   BoardIdAndName,
   BoardIdAndProjectIndex,
+  TaskUpdateDetails,
+  TaskDeleteDetails,
 } from "../types";
-import { v4 as uuidv4 } from "uuid";
-import toast from "react-hot-toast";
 import { productServerService } from "../services";
-import { RootState } from "@reduxjs/toolkit/query";
 
 // Initial state
 const initialState: Project[] = [];
@@ -434,6 +433,45 @@ export const deleteBoardById = createAsyncThunk(
   }
 )
 
+export const updateTaskById = createAsyncThunk(
+  "task-update",
+  async (taskUpdateDetails: TaskUpdateDetails, thunkAPI) => {
+    try {
+      const task: Task = await productServerService.updateTask(taskUpdateDetails);
+
+      if (task) {
+        return {...task};
+      }
+  
+      throw new Error("Some thing wrong while updating the task");
+    } catch(error) {
+      return thunkAPI.rejectWithValue(
+        error instanceof Error ? error.message : "Something wrong while updating the task"
+      )
+    }
+  }
+)
+
+
+export const deleteTaskById = createAsyncThunk(
+  "delete-task",
+  async (taskDetails: TaskDeleteDetails, thunkAPI) => {
+    try {
+    if (taskDetails.taskId <= -1) throw new Error("Invalid task id");
+    const isTaskDeleted = await productServerService.deleteTask(taskDetails.taskId);
+    if (isTaskDeleted) {
+      return {taskDetails};
+    }
+    throw new Error("Cann't deleted the task");
+  } catch(error) {
+    return thunkAPI.rejectWithValue(
+      error instanceof Error? error.message : "Something wrong while deleting the task"
+    )
+  }
+  }
+)
+
+
 export const userProjectSlice = createSlice({
   name: "projects",
   initialState,
@@ -570,13 +608,7 @@ export const userProjectSlice = createSlice({
     builder.addCase(deleteBoardById.fulfilled, (state, action) => {
       const {projectIndex, boardId} = action.payload;
       const project = state[projectIndex];
-      console.log(project);
-      
-      alert(project);
-      
-      const a =project.boards.filter((board) => board.boardId !== boardId);
-      console.log(a);
-      
+      project.boards = project.boards.filter((board) => board.boardId !== boardId);
       return state;
     });
     builder.addCase(deleteBoardById.rejected, (state, action) => {
@@ -584,6 +616,52 @@ export const userProjectSlice = createSlice({
         action.payload?
         action.payload.toString()
         : "Sorry can't delete the board try again"
+      )
+    });
+
+    builder.addCase(updateTaskById.fulfilled, (state, action) => {
+      const task = action.payload;
+      const projectNameFromPath =window.location.pathname.trim();
+      const projectName = projectNameFromPath.split("/").pop();
+      if (!projectName) throw new Error("Cannot found the project wiht name")
+      const project = state.find((project) => project.name.toLowerCase().trim() === projectName.trim().toLowerCase());
+      if (!project) throw new Error("Project doesnot found or index is not correct");
+      const board = project.boards[task.boardIndex];
+      if(!board) throw new Error("Board not found or incorrect board index");
+      const oldTask = board.tasks.find((t) => t.taskId === task.taskId);
+      if (!oldTask) throw new Error("Task not found or index is incorrect");      
+      oldTask.name = task.name;
+      oldTask.content = task.content;
+
+    });
+
+    builder.addCase(updateTaskById.rejected, (state, action) => {
+      throw new Error(
+        action.payload?
+        action.payload.toString()
+        : "Sorry can't update the task try again"
+      )
+    });
+
+    builder.addCase(deleteTaskById.fulfilled, (state, action) => {
+      const {taskDetails} = action.payload;
+      const projectNameFromPath =window.location.pathname.trim();
+      const projectName = projectNameFromPath.split("/").pop();
+      if (!projectName) throw new Error("Cannot found the project wiht name");
+      const project = state.find((project) => project.name.toLowerCase().trim() === projectName.trim().toLowerCase());
+      if (!project) throw new Error("Project doesnot found or index is not correct");
+      const findBoardById = project.boards.find((board) => board.boardId === taskDetails.boardId);
+      if (!findBoardById) throw new Error("Can't found baord");
+      findBoardById.tasks = findBoardById.tasks.filter((task) => task.taskId !== taskDetails.taskId);
+      return state;
+
+    });
+
+    builder.addCase(deleteTaskById.rejected , (state,action) => {
+      throw new Error(
+        action.payload?
+        action.payload.toString()
+        : "Sorry can't delete the task try again"
       )
     })
   },

@@ -1,4 +1,4 @@
-import { Footer, Header } from './components'
+import { Footer, GoToTop, Header } from './components'
 import { Outlet } from 'react-router-dom'
 import useWhenPageMount from './hooks/useWhenPageMount'
 import useTokenValidation from './hooks/useTokenValidation'
@@ -17,6 +17,7 @@ const Layout = () => {
   return (
     <>
       <Header />
+      <GoToTop/>
       <Toaster position="top-right" />
       <Outlet />
       <Footer />

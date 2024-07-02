@@ -1,89 +1,120 @@
+/* maintop.css */
 
-.gogo__main__top {
+/* Banner Style */
+.gogo-main-banner {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
     display: flex;
     justify-content: center;
+    padding: 1rem;
+    width: 100%;
+  }
+  .gogo-container {
     padding: 5rem;
-    position: relative;    
-    /* background-color: red; */
-}
-.gogo__main__top::before {
-    content: "";
+  }
+  
+  .gogo-main-banner:after {
+    content: '';
+    background-image: url(../images/baner-dec-left.png);
+    background-repeat: no-repeat;
     position: absolute;
     left: 0;
     top: 0;
-    right: 0;
-    bottom: 0;
+    width: 193px;
+    height: 467px;
+    z-index: 10000;
   }
-
-.gogo__main__top__left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.gogo__main__top__left__content {
-    font-size: 1.3rem;
-    color: green;
-    font-weight: bold;
-}
-.gogo__main__top__left__title h1 {
-    font-size: 3.7rem;
-    font-weight: 600;
-    line-height: 5rem;
-
-}
-.gogo__main__top__left__title h1 span {
-    color: var(--gogo--primary--color);
-}
-
-.gogo__main__top__left__para p {
-    font-size: 1.2rem;
-
-}
-.gogo__main__top__left__buttons {
-    display: flex;
-}
-.gogo__main__top__left__buttons button:nth-child(1) {
-    background-color: green;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 5px;
-    margin: 1rem;
-    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-}
-
-.gogo__play__button  {
+  
+  .gogo-main-banner .gogo-row {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.gogo__play__button span {
-    margin: 1rem;
-    font-size: 2.5rem;
+  }
+  
+  .gogo-main-banner:before {
+    content: '';
+    background-image: url(../images/baner-dec-right.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 0;
+    top: 100px;
+    width: 98px;
+    height: 290px;
+  }
+  
+  .gogo-main-banner .gogo-left-content {
+    margin-right: 45px;
+  }
+  
+  .gogo-main-banner .gogo-left-content h6 {
+    text-transform: uppercase;
+    font-size: 18px;
     color: var(--gogo--primary--color);
-}
-.gogo__main__top__right {
+    margin-bottom: 15px;
+  }
+  
+  .gogo-main-banner .gogo-left-content h2 {
+    font-size: 55px;
+    font-weight: bold;
+    color: #2a2a2a;
+    line-height: 72px;
+  }
+  
+  .gogo-main-banner .gogo-left-content h2 em {
+    color: green;
+    font-style: normal;
+  }
+  
+  .gogo-main-banner .gogo-left-content h2 span {
+    color: var(--gogo--primary--color);
+  }
+  
+  .gogo-main-banner .gogo-left-content p {
+    margin: 20px 0px;
+  }
+  
+  .gogo-main-banner .gogo-left-content form {
+    margin-top: 30px;
+    width: 470px;
+    height: 66px;
     position: relative;
-}
-.gogo__animation {
+  }
+  
+  .gogo-main-banner .gogo-left-content form button {
     position: absolute;
-    top: 0;
-    z-index: -1;
-    filter: blur(10px);
-
-}
-.gogo__main__top__right img {
-
-}
-
-.shadow {
-    /* background: linear-gradient(rgba(255, 0, 0, 0.062), rgba(255, 192, 203, 0.452)); */
-    height: 40rem;
-    position: absolute;
-    top: 0;
-    width: 42rem;
-    left: 0;
-    /* right: 0; */
-
-}
-
+    right: 10px;
+    top: 10px;
+    display: inline-block;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gogo--primary--color);
+    text-transform: capitalize;
+    padding: 12px 25px;
+    border-radius: 23px;
+    letter-spacing: 0.25px;
+    outline: none;
+    border: none;
+  }
+  
+  .gogo-main-banner .gogo-left-content form input {
+    width: 470px;
+    height: 66px;
+    background-color: green;
+    border-radius: 33px;
+    border: none;
+    outline: none;
+    padding: 0px 25px;
+    color: #fff;
+    letter-spacing: 0.25px;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  
+  .gogo-main-banner .gogo-left-content form input::placeholder {
+    color: #fff;
+  }
+  

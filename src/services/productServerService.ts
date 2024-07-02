@@ -7,8 +7,10 @@ import {
   ProductNameandId,
   Project,
   Task,
+  TaskUpdateDetails,
 } from "../types";
 import axios from "axios";
+import { Primitive } from "react-hook-form";
 
 //  handel all the error very correctly;
 class ProductServerService {
@@ -170,6 +172,50 @@ class ProductServerService {
         } else {
           throw new Error("Failed to delete the board try again");
         }
+      }
+    }
+  }
+
+  public async updateTask(taskDetails: TaskUpdateDetails): Promise<Task> {
+    try {
+    const response = await axiosInstance1.put(`/update-task/${taskDetails.taskId}`, {...taskDetails});
+    const data = await response.data;
+    console.log(data);
+    
+    if (data.status !== "OK") throw new Error(data.message);
+    return data.data;
+    } catch(error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+        throw new Error(error.response?.data.message);
+        } else if (error.request) {
+        throw new Error(error.request.error);
+        } else {
+          throw new Error("Unknown exception error");
+        }
+      } else {
+        throw new Error(error instanceof Error ? error.message : "Unknown error while updating the task");
+      }
+    }
+  }
+
+  public async deleteTask(taskId: number): Promise<boolean | Error> {
+    try {
+      const response = await axiosInstance1.delete(`/delete-task/${taskId}`);
+      const data = await response.data;
+      if (data.status !== "OK") throw new Error(data.message);
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+        throw new Error(error.response?.data.message);
+        } else if (error.request) {
+        throw new Error(error.request.error);
+        } else {
+          throw new Error("Unknown exception error");
+        }
+      } else {
+        throw new Error(error instanceof Error ? error.message : "Unknown error while deleting the task");
       }
     }
   }

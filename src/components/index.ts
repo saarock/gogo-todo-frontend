@@ -17,6 +17,8 @@ import ProjectProductContainer from "./ProjectProductContainer/ProjectProductCon
 import LoginAndRegisterSideDiv from "./loginAndRegisterSideDiv/LoginAndRegisterSideDiv";
 import MainTop from "./mainTop/MainTop";
 import Update from "./update/Update";
+import ServiceComp from "./service/ServiceComp";
+import GoToTop from "./gotoTop/GoToTop";
 
 export {
   Header,
@@ -38,4 +40,6 @@ export {
   LoginAndRegisterSideDiv,
   MainTop,
   Update,
+  ServiceComp,
+  GoToTop
 };

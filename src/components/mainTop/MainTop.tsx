@@ -1,36 +1,41 @@
-import React from 'react'
-import "./maintop.css"
-import { FaPlayCircle } from "react-icons/fa";
+import React from 'react';
+import './maintop.css'; // Import your CSS file
+
 const MainTop = () => {
-    return (
-        <div className='gogo__main__top'>
-            <div className='gogo__main__top__left'>
-                <div className="gogo__main__top__left__content">
-                    <p>BEST DESTINATION FOR THE TASK MANAGEMENT SYSTEM</p>
+  return (
+    <div className="gogo-main-banner" id="top">
+      <div className="gogo-container">
+        <div className="gogo-row">
+          <div className="gogo-col-lg-12">
+            <div className="gogo-row">
+              <div className="gogo-col-lg-6 gogo-align-self-center">
+                <div className="gogo-left-content header-text wow fadeInLeft">
+                  <h6>Welcome to Space Dynamic</h6>
+                  <h2>We Make <em>Project Ideas</em> <br /> &amp; <span>Lorem</span> Kanban</h2>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda laudantium veritatis soluta sint vta 2. 
+                    <br />
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, labore! <a rel="nofollow" href="https://templatemo.com/page/1" target="_parent">GOGO</a>.</p>
+                  <form id="search" action="#" method="GET">
+                    <fieldset>
+                      <input type="address" name="address" className="gogo-email" placeholder="Search project...." autoComplete="on" required />
+                    </fieldset>
+                    <fieldset>
+                      <button type="submit" className="gogo-main-button">Search PRrject</button>
+                    </fieldset>
+                  </form>
                 </div>
-                <div className="gogo__main__top__left__title">
-                    <h1>Travel, enjoy and live a new project life with <span> gogo.com  </span> </h1>
+              </div>
+              <div className="gogo-col-lg-6">
+                <div className="gogo-right-image wow fadeInRight">
+                  <img src="/images/banner-right-image.png" alt="team meeting" />
                 </div>
-                <div className="gogo__main__top__left__para">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, facere?</p>
-                </div>
-
-                <div className="gogo__main__top__left__buttons">
-                    <button>Find out more</button>
-                    <div className="gogo__play__button">
-                        <span><FaPlayCircle /></span><button>Play demo</button>
-                    </div>
-                </div>
+              </div>
             </div>
-
-            <div className='gogo__main__top__right'>
-                <div className="goog__main__top__right__image">
-                    <img src="
-                  ./images/a.png" alt="man" height={100} width={1000} />
-                </div>
-            </div>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default MainTop
+export default MainTop;

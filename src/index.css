@@ -1,7 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+
 
 body {
   /* background-color: #1d1e22; */
@@ -10,6 +11,9 @@ body {
   /* color: white; */
   font-size: 0.9rem;
   position: relative;
+  /* font-family: WF Visual Sans, sans-serif; */
+  font-family: 'Poppins', sans-serif;
+
 
 }
 
@@ -32,7 +36,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 1rem;
   padding: 3rem;
@@ -225,3 +228,56 @@ body {
   font-size: 1.4rem;
 }
 /* gogo back icon end */
+
+
+/* gogo dash container  css start */
+.gogo__dash__container {
+
+}
+.gogo__dash__child {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* gogo dashcontainer css end */
+
+
+/* gogo make change button and input start */
+.gogo__make__change__button {
+  background-color: var(--gogo--primary--color);
+  padding: 0.4rem;
+  margin: 1rem;
+  border-radius: 0.3rem;
+}
+.gogo__make__change__input {
+  height: 3rem;
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+  color: black;
+}
+
+/* gogo make change button and input end */
+
+
+
+/*  gogo section heading start */
+.gogo__section-heading h2 {
+  font-size: 30px;
+  text-transform: capitalize;
+  color: #2a2a2a;
+  font-weight: 700;
+  letter-spacing: 0.25px;
+  position: relative;
+  z-index: 2;
+  line-height: 44px;
+}
+.gogo__section-heading h2 em {
+  font-style: normal;
+  color: green;
+}
+.gogo__section-heading h2 span {
+  font-style: normal;
+  color: green;
+}
+/*  gogo section heading end */

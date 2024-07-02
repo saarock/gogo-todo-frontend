@@ -1,19 +1,18 @@
 .gogo__dash__container {
     display: flex;
-    position: relative;
-    /* z-index: -1; */
-
+    /* position: relative; */
+    width: 100%;
   
 }
-
-.gogo__dash__container .gogo__profile {
+.gogo__profile__container {
     width: 100%;
-}
-
-.gogo__profile {
-    /* width: 22rem; */
+    /* background-color: red; */
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+}
+
+ .gogo__profile {
+    width: 100%;
 }

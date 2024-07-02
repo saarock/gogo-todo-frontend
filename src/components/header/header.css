@@ -1,5 +1,8 @@
 .gogo__header {
-
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 999;
 }
 
 .gogo__header__nav {

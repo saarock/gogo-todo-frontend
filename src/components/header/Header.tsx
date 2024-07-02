@@ -35,7 +35,7 @@ const Header = () => {
 
     {
       name: "About",
-      slug: "/about",
+      slug: "#gogo__about",
       active: true,
       icon: <FcAbout />,
     },
@@ -79,6 +79,18 @@ const Header = () => {
     document.body.classList.toggle("darkmode")
 
   }
+  const handleNavigate = (slug:string) => {
+    if (slug.startsWith("#")) {
+      // Handle internal link navigation
+      const element = document.querySelector(slug);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // Handle external or route-based navigation
+      navigate(slug);
+    }
+  };
   return (
     <header className="gogo__header">
       <nav className="gogo__header__nav">
@@ -94,7 +106,7 @@ const Header = () => {
             nav.active ? (
               <li
                 key={nav.name}
-                onClick={() => navigate(nav.slug)}
+                onClick={() => handleNavigate(nav.slug)}
                 className={`gogo__header__nav__navs__navbar ${nav.name.toLowerCase()}__nav ${nav.children && "gogo__settings"
                   }`}
               >

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import "./slidebar.css"
 import { MdDashboardCustomize } from 'react-icons/md'
 import { ImMenu } from "react-icons/im";
@@ -79,4 +79,4 @@ const SideBar = () => {
     )
 }
 
-export default SideBar
+export default React.memo(SideBar)

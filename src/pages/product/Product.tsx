@@ -51,6 +51,8 @@ const Product = () => {
     taskName: "",
     taskDesc: "",
     isUserWantToAddTask: "" /** track when user click the add task button */,
+    isUserWantToUpdateTheTaskTitle: false,
+     isUserWantToUpdateTheTaskDesc: false
   });
 
   const [boardState, boardDispatch] = useReducer(

@@ -130,26 +130,7 @@ task container start */
 
 
 
-.gogo__task__container {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-    margin-top: 10px;
-    transition: box-shadow 0.3s ease;
-}
 
-.gogo__task__container:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.gogo__task__options {
-    background-color: #f1f3f5;
-    border-top: 1px solid #ddd;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 0 0 4px 4px;
-}
 
 .no-board-message {
     text-align: center;

@@ -28,7 +28,11 @@ import {
 import { TrophySpin } from "react-loading-indicators";
 import { AiOutlineReload } from "react-icons/ai";
 import { productServerService } from "../../services";
-import { addProducts, updateProductName as UpdateProductInBothClientAndServer, deleteProduct as DeleteProductInBothClientAndServer } from "../../features/ProductSlice";
+import {
+  addProducts,
+  updateProductName as UpdateProductInBothClientAndServer,
+  deleteProduct as DeleteProductInBothClientAndServer,
+} from "../../features/ProductSlice";
 import {
   ProductActionTypes,
   productReducer,
@@ -36,6 +40,7 @@ import {
 import { updateProduct as updatedProduct } from "../../features/ProductSlice";
 import toast from "react-hot-toast";
 import { Root } from "react-dom/client";
+import DashContainer from "../../components/DashContainer";
 
 const Project = () => {
   const [wantToCreateProduct, setwantToCreateProduct] =
@@ -58,7 +63,6 @@ const Project = () => {
       isUserWantToUpdate: false,
     },
   });
-
 
   // update state
   const [productName, setProductName] = useState<string>("");
@@ -121,21 +125,26 @@ const Project = () => {
     ]
   );
 
-  const deleteProduct = useCallback(async (
-    e: React.MouseEvent<HTMLSpanElement>,
-    productId: number
-  ) => {
-    e.stopPropagation();
-  try {
-    const deleteProductObject: DeleteProduct = {
-      productId
-    }
-    await dispatch<any>(DeleteProductInBothClientAndServer(deleteProductObject))
-  } catch(error) {
-    toast.error(error instanceof Error ? error.message : "Cannot delete the project try again");
-  }
-
-  }, []);
+  const deleteProduct = useCallback(
+    async (e: React.MouseEvent<HTMLSpanElement>, productId: number) => {
+      e.stopPropagation();
+      try {
+        const deleteProductObject: DeleteProduct = {
+          productId,
+        };
+        await dispatch<any>(
+          DeleteProductInBothClientAndServer(deleteProductObject)
+        );
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "Cannot delete the project try again"
+        );
+      }
+    },
+    []
+  );
 
   const commitUpdate = (
     e: React.ChangeEvent<HTMLSpanElement>,
@@ -185,14 +194,20 @@ const Project = () => {
         return;
       }
 
-      const updatedDetailsWithIdAndNewName:ProductNameandId = {
+      const updatedDetailsWithIdAndNewName: ProductNameandId = {
         productId,
         productName,
-      }
+      };
       try {
-      await dispatch<any>( UpdateProductInBothClientAndServer(updatedDetailsWithIdAndNewName));
-      } catch(error) {
-        toast.error(error instanceof Error ? error.message : "Unknown eror while updating the product");
+        await dispatch<any>(
+          UpdateProductInBothClientAndServer(updatedDetailsWithIdAndNewName)
+        );
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "Unknown eror while updating the product"
+        );
       }
       setProductName("");
     },
@@ -209,9 +224,14 @@ const Project = () => {
         />
       )}
       <div className="gogo__projects__container">
-        <div className="gogo__side__bar">
+        {/* <div className="gogo__side__bar">
           <SideBar />
-        </div>
+        </div> */}
+
+
+<DashContainer>
+
+
         <div className="gogo__products">
           <div className="gogo__product__nav">
             <ProductHeader next={search} />
@@ -261,6 +281,9 @@ const Project = () => {
             )}
           </div>
         </div>
+
+        </DashContainer>
+
       </div>
     </>
   );

@@ -1,12 +1,17 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import "./board.css";
 import Task from "../task/Task";
-import { BoardProps } from "../../types";
+import { BoardProps, TaskUpdateDetails } from "../../types";
 import Input from "../input/Input";
 import { color } from "../../utils";
 import { BsThreeDots } from "react-icons/bs";
 import Button from "../button/Button";
 import { FiDelete } from "react-icons/fi";
+import { TaskActionTypes, taskReducer } from "../../reducer/task.reducer";
+import { updateTaskById } from "../../features/ProductSlice";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import Loader from "../loader/Loader";
 
 const Board: React.FC<BoardProps> = ({
   onWhichBoardUserWantToAddTheTask,
@@ -33,11 +38,30 @@ const Board: React.FC<BoardProps> = ({
   const [isTaskOptionOpened, setTaskOption] = useState(false);
   const [taskId, setTaskId] = useState<number>(-1);
   const [beingDragged, setBeingDragged] = useState<HTMLElement | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [taskState, taskDispatch] = useReducer(taskReducer, {
+    taskName: "",
+    taskDesc: "",
+    isUserWantToAddTask: "" /** track when user click the add task button */,
+    isUserWantToUpdateTheTaskTitle: false,
+     isUserWantToUpdateTheTaskDesc: false
+  });
+
+  const dispatch = useDispatch();
 
   const showTaskOptions = (taskId: number | undefined) => {
     if (taskId === undefined) return;
     setTaskOption(isTaskOptionOpened ? false : true);
     setTaskId(taskId);
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_UPDATE_TASK_TITLE,
+      payload : true
+    });
+
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_UPDATE_TASK_DESC,
+      payload : false
+    });
   };
 
   const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
@@ -83,7 +107,105 @@ const Board: React.FC<BoardProps> = ({
 
   const randomColor = useMemo(() => {
     return color.generateRandomColor();
-  }, [])
+  }, []);
+
+
+
+  const updateTaskTitle = useCallback( async (taskId: number) => {
+    try {
+      setLoading(true);
+    const updateDetails: TaskUpdateDetails = {
+      taskTitle: taskState.taskName,
+      taskContent: taskState.taskDesc,
+      taskId: taskId
+    }
+
+    await dispatch<any>(updateTaskById(updateDetails));
+    toast.success("Task title updated successfully")
+    
+    
+  } catch(error) {
+    toast.error(error instanceof Error ? error.message : "Something wrong while updating the task details");
+  } finally {
+    setTaskOption(false);
+    setLoading(false);
+    taskDispatch({
+      type: TaskActionTypes.SET_TASK_NAME,
+      payload : ""
+    })
+  }
+  }, [taskState.taskName, taskState.taskDesc]);
+
+
+
+  const updateTaskDesc = useCallback( async (taskId: number) => {
+    try {
+      setLoading(true);
+    const updateDetails: TaskUpdateDetails = {
+      taskTitle: taskState.taskName,
+      taskContent: taskState.taskDesc,
+      taskId: taskId
+    }
+
+    await dispatch<any>(updateTaskById(updateDetails));
+    toast.success("Task content updated successfully");
+  
+  } catch(error) {
+    toast.error(error instanceof Error ? error.message : "Something wrong while updating the task details");
+  } finally {
+    setTaskOption(false);
+    setLoading(false);
+    taskDispatch({
+      type: TaskActionTypes.SET_TASK_DESC,
+      payload : ""
+    })
+  }
+  }, [taskState.taskDesc, taskState.taskName]);
+
+  const clickForUpdateTaskTitle = useCallback(() => {
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_UPDATE_TASK_DESC,
+      payload: false
+    });
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_UPDATE_TASK_TITLE,
+      payload: true
+    });
+
+
+  },[taskState.isUserWantToUpdateTheTaskTitle, taskState.isUserWantToUpdateTheTaskDesc]);
+  const clickForUpdateTaskDesc = useCallback(() => {
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_UPDATE_TASK_TITLE,
+      payload: false
+    });
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_UPDATE_TASK_DESC,
+      payload: true
+    });
+  },[taskState.isUserWantToUpdateTheTaskTitle, taskState.isUserWantToUpdateTheTaskDesc]);
+
+  const onChangeNewTaskTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    taskDispatch({
+      type: TaskActionTypes.SET_TASK_NAME,
+      payload: e.target.value
+    });
+  }, [taskState.taskName]);
+
+  const onChangeTaskNewDesc = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    taskDispatch({
+      type: TaskActionTypes.SET_TASK_DESC,
+      payload: e.target.value
+    });
+  }, [taskState.taskDesc]);
+  
+  const hideTaskOption = useCallback(() => {
+    setTaskOption(false)
+  }, [isTaskOptionOpened])
+
+ 
+  if (loading) return <Loader/>
+
 
   return (
     <div
@@ -100,7 +222,7 @@ const Board: React.FC<BoardProps> = ({
       {whichBoardOptionsUserWantToSee == board.boardId &&
         isWantToSeeOptions && (
           <div className="gogo__options__of__board">
-            <Button onClick={() => updateBoardName(board.boardId || -1)} text="Update" />
+            <Button onClick={() => updateBoardName(board.boardId || -1)} text="Update"/>
             <Button text="Delete" onClick={() => deleteBoard(board.boardId || -1)}/>
           </div>
         )}
@@ -132,15 +254,23 @@ const Board: React.FC<BoardProps> = ({
                   task={task || "Loading..."}
                   taskContent={task.content}
                   onClickEvent={showTaskOptions}
+                  isTaskOptionOpen={isTaskOptionOpened}
+                  taskId={taskId}
+                  updateTaskTitle={updateTaskTitle}
+                  clickForUpdateTaskDesc={clickForUpdateTaskDesc}
+                  clickForUpdateTaskTitle={clickForUpdateTaskTitle}
+                  updateTaskDesc={updateTaskDesc}
+                  taskNewTitle= {taskState.taskName}
+                  taskNewDesc= {taskState.taskDesc}
+                  isUserWantToChangeTheTaskDesc = {taskState.isUserWantToUpdateTheTaskDesc}
+                  isUserWantToChangeTheTaskTitle = {taskState.isUserWantToUpdateTheTaskTitle}
+                  onChangeNewTaskTitle={onChangeNewTaskTitle}
+                  onChangeTaskNewDesc={onChangeTaskNewDesc}
+                  hideOption={hideTaskOption}
+
                 />
-                {isTaskOptionOpened && taskId === task.taskId && (
-                  <div className="gogo__options__of__task">
-                    <Button text="Update Title" className="task__option" />
-                    <Button text="Update Desc" className="task__option" />
-                    <Button text="Delete" className="task__option"/>
-                  </div>
-                )}
               </div>
+              
             ))}
           {onWhichBoardUserWantToAddTheTask === board.name && (
             <div className="gogo__board__title">

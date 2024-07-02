@@ -166,3 +166,17 @@ export interface BoardIdAndProjectIndex {
   boardId:number;
   projectIndex: number;
 }
+
+
+
+export interface TaskUpdateDetails {
+  taskTitle: string;
+  taskContent: string;
+  taskId: number;
+}
+
+
+export interface TaskDeleteDetails {
+  boardId: number;
+  taskId: number
+}
