@@ -26,6 +26,8 @@ export interface TaskProps {
   taskContent?: string;
   isTaskOptionOpen: boolean;
   taskId: number;
+  deleteTask: (boardId:number) => void;
+  boardId: number;
 }
 export interface BoardProps {
   onClickListenerToAddTask: (boardName: string) => void;

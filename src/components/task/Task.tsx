@@ -21,7 +21,9 @@ const Task: React.FC<TaskProps & TaskToptions> = ({
   taskId,
   clickForUpdateTaskDesc,
   clickForUpdateTaskTitle,
-  hideOption
+  hideOption,
+  deleteTask,
+  boardId
   
 }) => {
   if (!task.taskId) return;
@@ -84,7 +86,7 @@ const Task: React.FC<TaskProps & TaskToptions> = ({
               className={`task__option ${isUserWantToChangeTheTaskDesc && "active__task__option"}`}
               onClick={clickForUpdateTaskDesc}
             />
-            <Button text="Delete" className="task__option" />
+            <Button text="Delete" className="task__option"  onClick={ () => deleteTask(boardId)}/>
           </div>
         </div>
       )}

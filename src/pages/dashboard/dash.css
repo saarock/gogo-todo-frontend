@@ -6,13 +6,17 @@
 }
 .gogo__profile__container {
     width: 100%;
-    /* background-color: red; */
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
  .gogo__profile {
     width: 100%;
+}
+
+.gogo__profile__details__dash {
+    padding: 2em;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
 }

@@ -333,7 +333,10 @@ export const createTask = createAsyncThunk(
         throw new Error("Project not found");
       }
 
+    
+
       const board = project.boards[task.boardIndex];
+      // const board = project.boards.find((board) => board.boardId === tas)
       if (!board) {
         throw new Error("Board not found");
       }

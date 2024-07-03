@@ -231,9 +231,10 @@ const Product = () => {
       boardName.trim() === "" ||
       projectName == undefined ||
       projectName.trim() === ""
-    )
-      return;
-
+    ) {
+      toast.error("Details are fulfilled properly")
+      return
+    }
     let board: TypeBoard = {
       projectId: projectId,
       name: boardName,

@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import "./board.css";
 import Task from "../task/Task";
-import { BoardProps, TaskUpdateDetails } from "../../types";
+import { BoardProps, TaskDeleteDetails, TaskUpdateDetails } from "../../types";
 import Input from "../input/Input";
 import { color } from "../../utils";
 import { BsThreeDots } from "react-icons/bs";
 import Button from "../button/Button";
 import { FiDelete } from "react-icons/fi";
 import { TaskActionTypes, taskReducer } from "../../reducer/task.reducer";
-import { updateTaskById } from "../../features/ProductSlice";
+import { deleteBoardById, deleteTaskById, updateTaskById } from "../../features/ProductSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import Loader from "../loader/Loader";
@@ -158,9 +158,30 @@ const Board: React.FC<BoardProps> = ({
     taskDispatch({
       type: TaskActionTypes.SET_TASK_DESC,
       payload : ""
-    })
+    });
+    setTaskOption(false)
+
   }
   }, [taskState.taskDesc, taskState.taskName]);
+
+
+  const deleteTask = useCallback( async (boardId:number) => {
+    try {
+      setLoading(true);
+      if (boardId <= -1) throw new Error("Invalid board id pleased referesh the page and try again");
+      const taskDeleteDetails: TaskDeleteDetails = {
+        taskId: taskId,
+        boardId: boardId
+      }
+      await dispatch<any>(deleteTaskById(taskDeleteDetails));
+    } catch (error) {
+      toast.error(error  instanceof Error ? error.message : "Cannot delete  the task pleased refresh and try again");
+
+    } finally {
+      setLoading(false);
+      setTaskOption(false)
+    }
+  }, [taskId])
 
   const clickForUpdateTaskTitle = useCallback(() => {
     taskDispatch({
@@ -267,6 +288,8 @@ const Board: React.FC<BoardProps> = ({
                   onChangeNewTaskTitle={onChangeNewTaskTitle}
                   onChangeTaskNewDesc={onChangeTaskNewDesc}
                   hideOption={hideTaskOption}
+                  deleteTask={deleteTask}
+                  boardId={board.boardId || -1}
 
                 />
               </div>
