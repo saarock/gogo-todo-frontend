@@ -44,7 +44,7 @@ class ProductServerService {
       const userNumberId = Number(userID);
       // Make the API request to fetch products
       const response = await axiosInstance1.get(
-        `get-products?page=${page}&size=2&sortBy=updatedAt&direction=desc&userId=${userNumberId}`
+        `get-products?page=${page}&size=2&sortBy=updatedAt&direction=aesc&userId=${userNumberId}`
       );
       const data = await response.data;
 
@@ -70,7 +70,6 @@ class ProductServerService {
       const data = await response.data;
       if (data.status !== "OK")
         throw new Error("Error while creating board: " + data.message);
-      toast.success(data.message);
       return data.data;
 
       // if ()

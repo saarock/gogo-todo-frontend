@@ -53,7 +53,7 @@ const Header = () => {
     },
     {
       name: "Work Station",
-      slug: "/dash",
+      slug: "/dash/projects",
       active: authStates,
       icon: <MdOutlineAddHomeWork /> ,
       
@@ -77,7 +77,6 @@ const Header = () => {
 
   const darkMode = () => {
     document.body.classList.toggle("darkmode")
-
   }
   const handleNavigate = (slug:string) => {
     if (slug.startsWith("#")) {

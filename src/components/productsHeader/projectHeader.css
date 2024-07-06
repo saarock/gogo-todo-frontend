@@ -1,12 +1,5 @@
-.gogo__project__search {
-    /* border: 2px solid var(--gogo--primary--color); */
-    
-}
-.gogo__logo {
-    /* color: var(--gogo--primary--color);; */
-}
+
 .gogo__project__level__header {
-    /* color: rgb(0, 130, 216); */
     border-radius: 0.4rem;
     position: sticky;
     margin-left: 2rem;

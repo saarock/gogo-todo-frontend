@@ -1,195 +1,3 @@
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { Project, Board, Task } from "../types";
-// import { v4 as uuidv4 } from "uuid";
-
-// const initialState: Project[] = [];
-
-// export const userProjectSlice = createSlice({
-//   name: "projects",
-//   initialState,
-//   reducers: {
-//     addProject: (state, action: PayloadAction<Project>) => {
-//       const currentProjectName = action.payload.name;
-//       if (currentProjectName?.trim() === "") {
-//         throw new Error("Project Name Required");
-//       }
-//       const isSame = state.findIndex(
-//         (currentProject) =>
-//           currentProject.name?.toLowerCase().trim() ===
-//           currentProjectName?.toLowerCase().trim()
-//       );
-
-//       if (isSame !== -1) {
-//         throw new Error("Project name already exist");
-//       }
-
-//       const newIndex = state.length;
-
-//       const newProject: Project = {
-//         id: uuidv4(),
-//         name: currentProjectName,
-//         index: newIndex,
-//         boards: [],
-//       };
-//       state.push(newProject);
-//     },
-//     addProducts: (state, action: PayloadAction<Project[]>) => {
-//       state.push(...action.payload);
-//     },
-
-//     // adding board
-//     addBoardUnderTheProject: (state, action: PayloadAction<Board>) => {
-//       try {
-//         const board = action.payload;
-
-//         if (board.projectIndex === undefined) {
-//           throw new Error("Project Index Not Found");
-//         }
-
-//         // works on the O(1) beacuse of the index
-//         const isExist = state[board.projectIndex];
-
-//         if (!isExist) {
-//           throw new Error("Project doesnot exist");
-//         }
-
-//         const foundBoard = isExist.boards;
-
-//         async function search(): Promise<boolean> {
-//           for (
-//             let index = Math.ceil(foundBoard.length / 2);
-//             index <= isExist.boards.length;
-//             index++
-//           ) {
-//             if (
-//               foundBoard[index].name.trim().toLowerCase() ===
-//               board.name.trim().toLowerCase()
-//             )
-//               return true;
-//           }
-//           return false;
-//         }
-
-//         // Have to improve the timeCOmplexity by using the mutlithreads and async programming concept
-//         if (foundBoard.length > 4) {
-
-//         //first search
-//           const searchPromises = new Promise<boolean>((resolve, reject) => {
-//             search()
-//               .then((result) => {
-//                 resolve(result);
-//               })
-//               .catch((error) => {
-//                 reject(error);
-//               });
-//           });
-
-//           searchPromises
-//             .then((trueOrFalse) => {
-//               if (trueOrFalse) {
-//                 for (let index =foundBoard.length-1; index>=0; index--) {
-//                   if (foundBoard[index].name.trim().toLowerCase() === board.name.trim().toLowerCase() && foundBoard[index-1].name.trim().toLowerCase() === board.name.trim().toLowerCase()) {
-//                     alert("yes")
-//                     foundBoard.splice(0, index-1)
-//                   }else {
-//                     alert("no")
-//                   }
-//                 }
-//                 alert("what")
-//                 throw new Error("Board Name Already Exists from async");
-//               }
-//             })
-//             .catch((error) => {
-//               // Handle promise rejection error
-//               throw new Error(`Error during asynchronous operation: ${error}`);
-//             });
-
-//             //second search
-//           (() => {
-//             for (
-//               let index = 0;
-//               index <= Math.floor(foundBoard.length) / 2;
-//               index++
-//             ) {
-//               if (
-//                 foundBoard[index].name.trim().toLowerCase() ===
-//                 board.name.trim().toLowerCase()
-//               ) {
-//                 throw new Error("Board Name Already Exist");
-//               }
-//             }
-//           })();
-//         } else {
-//           const isSame = foundBoard.find(
-//             (currentBoard) =>
-//               currentBoard.name.trim().toLowerCase() ===
-//               board.name.trim().toLowerCase()
-//           );
-
-//           if (isSame) {
-//             throw new Error("Board Name Already Exist");
-//           }
-//         }
-
-//         const boardUniqueID = uuidv4();
-//         const newIndex = foundBoard.length;
-
-//         const {
-//           projectId,
-//           boardId = boardUniqueID,
-//           boardIndex = newIndex,
-//           ...newBoard
-//         } = action.payload;
-
-//         const project = state.find((project) => project.id === projectId);
-
-//         if (project) {
-//           project.boards.push(newBoard);
-//         } else {
-//           throw new Error("Project Not found");
-//         }
-//       } catch (error) {
-//         if (error instanceof Error) {
-
-//           throw new Error(error.message);
-//         }
-//       }
-//     },
-
-//     // adding board end;
-
-//     addTaskUnderTheBoard: (state, action: PayloadAction<Task>) => {
-//       // const isSame = state.find(currentProject)
-//     },
-
-//     deleteProject: (state, action: PayloadAction<string>) => {
-//       return state.filter((project) => project.id !== action.payload);
-//     },
-
-//     updateProject: (state, action: PayloadAction<Project>) => {
-//       const { id, boards } = action.payload;
-//       const project = state.find((project) => project.id === id);
-//       if (project) {
-//         project.boards = boards;
-//       } else {
-//         throw new Error("Project not found while updating it");
-//       }
-//     },
-//   },
-// });
-
-// export const {
-//   addProject,
-//   addBoardUnderTheProject,
-//   deleteProject,
-//   updateProject,
-//   addProducts,
-// } = userProjectSlice.actions;
-
-// export default userProjectSlice.reducer;
-
-// // Define the addBoardUnderTheProject slice
-
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   Project,
@@ -204,71 +12,12 @@ import {
   TaskDeleteDetails,
 } from "../types";
 import { productServerService } from "../services";
+import { productUtil } from "../utils";
 
 // Initial state
 const initialState: Project[] = [];
 
-// Async function to search for a duplicate board name (For the future use)
-const searchBoard = async (
-  boards: Board[],
-  boardName: string
-): Promise<boolean> => {
-  for (
-    let index = Math.ceil(boards.length / 2);
-    index < boards.length;
-    index++
-  ) {
-    if (
-      boards[index].name.trim().toLowerCase() === boardName.trim().toLowerCase()
-    ) {
-      return true;
-    }
-  }
-  return false;
-};
-
-// Async thunk to handle adding a board
-export const addBoardUnderTheProject = createAsyncThunk(
-  "projects/addBoardUnderTheProject",
-  async (board: Board, thunkAPI) => {
-    try {
-      // Extract the project index from the board payload
-      const { projectIndex } = board;
-
-      // Retrieve the current state
-      const currentState = thunkAPI.getState() as { projects: Project[] };
-      const state = currentState.projects;
-
-      // Check if the project index is valid
-      if (projectIndex === undefined || !state[projectIndex]) {
-        throw new Error("Invalid project index");
-      }
-
-      const project = state[projectIndex];
-
-      // Check for duplicate board names
-      const isDuplicateName = await project.boards.some(
-        (currentBoard) =>
-          currentBoard.name.trim().toLowerCase() ===
-          board.name.trim().toLowerCase()
-      );
-
-      if (isDuplicateName) {
-        throw new Error("Board Name Already Exists");
-      }
-
-      const savedBoard = await productServerService.createNewBoard(board);
-
-      return { savedBoard, projectIndex };
-    } catch (error) {
-      if (error instanceof Error) {
-        return thunkAPI.rejectWithValue(error.message);
-      }
-      return thunkAPI.rejectWithValue("Unknown error whiel creating the board");
-    }
-  }
-);
-
+// Async thunks for projects
 export const createProject = createAsyncThunk(
   "projects/createProject",
   async (project: Project, thunkAPI) => {
@@ -284,14 +33,13 @@ export const createProject = createAsyncThunk(
           currentProject.name?.toLowerCase().trim() ===
           currentProjectName?.toLowerCase().trim()
       );
+
       if (isSame !== -1) {
         throw new Error("Project name already exist");
       }
 
-      // alert(state.length)
       const updatedProject: Project = {
         ...project,
-        // index: state.length
       };
 
       let projectDetails: Project = await productServerService.createNewProduct(
@@ -314,6 +62,47 @@ export const createProject = createAsyncThunk(
   }
 );
 
+
+
+export const addBoardUnderTheProject = createAsyncThunk(
+  "projects/addBoardUnderTheProject",
+  async (board: Board, thunkAPI) => {
+    try {
+      const productName = productUtil.getCurrentProductName();
+      if (productName === "") throw new Error("Product Doesn't exist");
+      if (board.name.trim() === "") throw new Error("Board Name requried");
+      // Retrieve the current state
+      const currentState = thunkAPI.getState() as { projects: Project[] };
+      const state = currentState.projects;
+
+      // const project = state[projectIndex];
+      const project = state.find(
+        (project) => project.name.trim().toLowerCase() === productName
+      );
+      if (!project) throw new Error("Product doesnot exist");
+      // Check for duplicate board names
+      const isDuplicateName = await project.boards.some(
+        (currentBoard) =>
+          currentBoard.name.trim().toLowerCase() ===
+          board.name.trim().toLowerCase()
+      );
+
+      if (isDuplicateName) {
+        throw new Error("Board Name Already Exists");
+      }
+
+      const savedBoard = await productServerService.createNewBoard(board);
+ 
+
+      return { savedBoard, productName };
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue("Unknown error whiel creating the board");
+    }
+  }
+);
 export const createTask = createAsyncThunk(
   "projects/board/createTask",
   async (task: Task, thunkAPI) => {
@@ -323,23 +112,26 @@ export const createTask = createAsyncThunk(
         throw new Error("Task Name Required");
       }
 
+
+      // get the currentprojectName
+      const productName = productUtil.getCurrentProductName();
+      if (!productName) throw new Error("Product doesn't exist");
       // Retrieve the current state
       const currentState = thunkAPI.getState() as { projects: Project[] };
       const state = currentState.projects;
 
       // Find the project and board
-      const project = state[task.projectIndex];
-      if (!project) {
-        throw new Error("Project not found");
-      }
+      const project = state.find(
+        (product) => product.name.trim().toLowerCase() === productName
+      );
+      if (!project) throw new Error("Product doesn't exist");
 
-    
+      // const board = project.boards[task.boardIndex];
+      const board = project.boards.find(
+        (board) => board.boardId === board.boardId
+      );
 
-      const board = project.boards[task.boardIndex];
-      // const board = project.boards.find((board) => board.boardId === tas)
-      if (!board) {
-        throw new Error("Board not found");
-      }
+      if (!board) throw new Error("Board doesnot exist");
 
       // Create the new task object
       const newTask: Task = {
@@ -355,6 +147,8 @@ export const createTask = createAsyncThunk(
         ...savedTask,
         projectIndex: task.projectIndex,
         boardIndex: task.boardIndex,
+        boardId: task.boardId,
+        
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -401,79 +195,95 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
-
 export const updateBoardName = createAsyncThunk(
   "board-update",
   async (boardIdAndName: BoardIdAndName, thunkAPI) => {
     try {
-      
+      const productName = productUtil.getCurrentProductName();
+      if (!productName) throw new Error("Product doesnot exist");
       const board = await productServerService.updateBoardName(boardIdAndName);
       if (!board) throw new Error("Cannot updated the board");
-      return {...board, projectIndex: boardIdAndName.projectIndex };
+      return { ...board, productName };
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error instanceof Error? error.message : "Error while updating the boardName"
-      )
+        error instanceof Error
+          ? error.message
+          : "Error while updating the boardName"
+      );
     }
   }
 );
 
 export const deleteBoardById = createAsyncThunk(
   "board-delete",
-  async (boardIdAndProjectIndex:BoardIdAndProjectIndex, thunkAPI) => {
+  async (boardIdAndProjectIndex: BoardIdAndProjectIndex, thunkAPI) => {
     try {
-
-      const isDeleted = await productServerService.deleteBoard(boardIdAndProjectIndex.boardId);
+      const isDeleted = await productServerService.deleteBoard(
+        boardIdAndProjectIndex.boardId
+      );
       if (isDeleted) {
-        return {...boardIdAndProjectIndex}
-      } 
+        return { ...boardIdAndProjectIndex };
+      }
       throw new Error("Some thing wrong while deleting the board");
-    } catch(error) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(
-        error instanceof Error ? error.message : "Something wrong while deleting the board"
-      )
+        error instanceof Error
+          ? error.message
+          : "Something wrong while deleting the board"
+      );
     }
   }
-)
+);
 
+
+
+// from here to improve;
 export const updateTaskById = createAsyncThunk(
   "task-update",
   async (taskUpdateDetails: TaskUpdateDetails, thunkAPI) => {
     try {
-      const task: Task = await productServerService.updateTask(taskUpdateDetails);
+      const task: Task = await productServerService.updateTask(
+        taskUpdateDetails
+      );
+    
+  
 
       if (task) {
-        return {...task};
+        return { ...task, boardId: taskUpdateDetails.boardId };
       }
-  
+
       throw new Error("Some thing wrong while updating the task");
-    } catch(error) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(
-        error instanceof Error ? error.message : "Something wrong while updating the task"
-      )
+        error instanceof Error
+          ? error.message
+          : "Something wrong while updating the task"
+      );
     }
   }
-)
-
+);
 
 export const deleteTaskById = createAsyncThunk(
   "delete-task",
   async (taskDetails: TaskDeleteDetails, thunkAPI) => {
     try {
-    if (taskDetails.taskId <= -1) throw new Error("Invalid task id");
-    const isTaskDeleted = await productServerService.deleteTask(taskDetails.taskId);
-    if (isTaskDeleted) {
-      return {taskDetails};
+      if (taskDetails.taskId <= -1) throw new Error("Invalid task id");
+      const isTaskDeleted = await productServerService.deleteTask(
+        taskDetails.taskId
+      );
+      if (isTaskDeleted) {
+        return { taskDetails };
+      }
+      throw new Error("Cann't deleted the task");
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error instanceof Error
+          ? error.message
+          : "Something wrong while deleting the task"
+      );
     }
-    throw new Error("Cann't deleted the task");
-  } catch(error) {
-    return thunkAPI.rejectWithValue(
-      error instanceof Error? error.message : "Something wrong while deleting the task"
-    )
   }
-  }
-)
-
+);
 
 export const userProjectSlice = createSlice({
   name: "projects",
@@ -517,11 +327,10 @@ export const userProjectSlice = createSlice({
   // handel async
   extraReducers: (builder) => {
     builder.addCase(addBoardUnderTheProject.fulfilled, (state, action) => {
-      const { projectIndex, ...board } = action.payload;
-
-      if (projectIndex === undefined) return;
-
-      const project = state[projectIndex];
+      const { productName, ...board } = action.payload;
+      const project = state.find((product) => product.name.trim().toLowerCase() === productName);
+      if (!project)
+        throw new Error("Cann't create the board because board doesnot exist");
 
       if (project) {
         const boardWithIndex: Board = {
@@ -555,12 +364,14 @@ export const userProjectSlice = createSlice({
     });
 
     builder.addCase(createTask.fulfilled, (state, action) => {
-      const { projectIndex, boardIndex, ...task } = action.payload;
-      const project = state[projectIndex];
-      if (!project) return;
-      const board = project.boards[boardIndex];
+      const {boardId } = action.payload;
+      const projectName = productUtil.getCurrentProductName();
+      if (!projectName.trim()) throw new Error("No product name found");
+      const project = state.find((product) => product.name.trim().toLowerCase() === projectName);
+      if (!project) throw new Error("Product doesnot exist");
+      const board = project.boards.find((board) => board.boardId === boardId);
       if (!board) return;
-      board.tasks.push(task);
+      board.tasks.push(action.payload);
     });
 
     builder.addCase(updateProductName.fulfilled, (state, action) => {
@@ -580,93 +391,106 @@ export const userProjectSlice = createSlice({
 
     builder.addCase(deleteProduct.fulfilled, (state, action) => {
       const { productId } = action.payload;
-      return state.filter((product) => product.id !== productId );
+      return state.filter((product) => product.id !== productId);
     });
 
     builder.addCase(deleteProduct.rejected, (state, action) => {
       throw new Error(
-        action.payload
-          ? action.payload.toString()
-          : "Cannot delete the pro"
+        action.payload ? action.payload.toString() : "Cannot delete the pro"
       );
     });
 
-
+    // when updateBoardName success
     builder.addCase(updateBoardName.fulfilled, (state, action) => {
-      const {name, boardId, projectIndex}  = action.payload;
-      if (projectIndex === undefined) throw new Error("Project Error not found");
-      const project = state[projectIndex];  
+      const { name, boardId, productName } = action.payload;
+      const project = state.find(
+        (product) => product.name.trim().toLowerCase() === productName
+      );
+      if (!project) throw new Error("Product doesnot exist");
       const board = project.boards.filter((board) => board.boardId === boardId);
       board[0].name = name;
     });
 
-
+    // when updateBoardName failed
     builder.addCase(updateBoardName.rejected, (state, action) => {
       throw new Error(
         action.payload
-        ? action.payload.toString()
-        : "Cannot update the boardName"
-      )
+          ? action.payload.toString()
+          : "Cannot update the boardName"
+      );
     });
+
     builder.addCase(deleteBoardById.fulfilled, (state, action) => {
-      const {projectIndex, boardId} = action.payload;
+      const { projectIndex, boardId } = action.payload;
       const project = state[projectIndex];
-      project.boards = project.boards.filter((board) => board.boardId !== boardId);
+      project.boards = project.boards.filter(
+        (board) => board.boardId !== boardId
+      );
       return state;
     });
     builder.addCase(deleteBoardById.rejected, (state, action) => {
       throw new Error(
-        action.payload?
-        action.payload.toString()
-        : "Sorry can't delete the board try again"
-      )
+        action.payload
+          ? action.payload.toString()
+          : "Sorry can't delete the board try again"
+      );
     });
 
     builder.addCase(updateTaskById.fulfilled, (state, action) => {
       const task = action.payload;
-      const projectNameFromPath =window.location.pathname.trim();
-      const projectName = projectNameFromPath.split("/").pop();
-      if (!projectName) throw new Error("Cannot found the project wiht name")
-      const project = state.find((project) => project.name.toLowerCase().trim() === projectName.trim().toLowerCase());
-      if (!project) throw new Error("Project doesnot found or index is not correct");
-      const board = project.boards[task.boardIndex];
-      if(!board) throw new Error("Board not found or incorrect board index");
+      const projectName = productUtil.getCurrentProductName();
+      if (!projectName) throw new Error("Cannot found the project wiht name");
+      const project = state.find(
+        (project) =>
+          project.name.toLowerCase().trim() === projectName.trim().toLowerCase()
+      );
+      if (!project)
+        throw new Error("Project doesnot found or incorrect project name");
+      // const board = project.boards[task.boardIndex];
+      const board = project.boards.find((currentBoard ) => currentBoard.boardId === task.boardId);
+      if (!board) throw new Error("board doesn't exist")
+      if (!board)  throw new Error("Board not found or incorrect board index");
       const oldTask = board.tasks.find((t) => t.taskId === task.taskId);
-      if (!oldTask) throw new Error("Task not found or index is incorrect");      
+      if (!oldTask) throw new Error("Task not found or index is incorrect");
       oldTask.name = task.name;
       oldTask.content = task.content;
-
     });
 
     builder.addCase(updateTaskById.rejected, (state, action) => {
       throw new Error(
-        action.payload?
-        action.payload.toString()
-        : "Sorry can't update the task try again"
-      )
+        action.payload
+          ? action.payload.toString()
+          : "Sorry can't update the task try again"
+      );
     });
 
     builder.addCase(deleteTaskById.fulfilled, (state, action) => {
-      const {taskDetails} = action.payload;
-      const projectNameFromPath =window.location.pathname.trim();
-      const projectName = projectNameFromPath.split("/").pop();
+      const { taskDetails } = action.payload;
+      const projectName = productUtil.getCurrentProductName();
       if (!projectName) throw new Error("Cannot found the project wiht name");
-      const project = state.find((project) => project.name.toLowerCase().trim() === projectName.trim().toLowerCase());
-      if (!project) throw new Error("Project doesnot found or index is not correct");
-      const findBoardById = project.boards.find((board) => board.boardId === taskDetails.boardId);
+      const project = state.find(
+        (project) =>
+          project.name.toLowerCase().trim() === projectName.trim().toLowerCase()
+      );
+      if (!project)
+        throw new Error("Project doesnot found or incorrect project name");
+      const findBoardById = project.boards.find(
+        (board) => board.boardId === taskDetails.boardId
+      );
       if (!findBoardById) throw new Error("Can't found baord");
-      findBoardById.tasks = findBoardById.tasks.filter((task) => task.taskId !== taskDetails.taskId);
+      findBoardById.tasks = findBoardById.tasks.filter(
+        (task) => task.taskId !== taskDetails.taskId
+      );
       return state;
-
     });
 
-    builder.addCase(deleteTaskById.rejected , (state,action) => {
+    builder.addCase(deleteTaskById.rejected, (state, action) => {
       throw new Error(
-        action.payload?
-        action.payload.toString()
-        : "Sorry can't delete the task try again"
-      )
-    })
+        action.payload
+          ? action.payload.toString()
+          : "Sorry can't delete the task try again"
+      );
+    });
   },
 });
 

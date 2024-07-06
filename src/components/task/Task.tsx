@@ -53,7 +53,7 @@ const Task: React.FC<TaskProps & TaskToptions> = ({
               <Button
                 text="Update title"
                 className="gogo__make__change__button"
-                onClick={ () => updateTaskTitle(task.taskId || -1)}
+                onClick={ () => updateTaskTitle(task.taskId || -1, boardId)}
               />
             </div>
 
@@ -71,7 +71,7 @@ const Task: React.FC<TaskProps & TaskToptions> = ({
               <Button
                 text="Update desc"
                 className="gogo__make__change__button"
-                onClick={ () => updateTaskDesc(task.taskId || -1)}
+                onClick={ () => updateTaskDesc(task.taskId || -1, boardId)}
               />
             </div>
           </div>

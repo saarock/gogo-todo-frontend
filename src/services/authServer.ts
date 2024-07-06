@@ -29,7 +29,7 @@ class AuthServer {
       });
 
       const responseData = await response.data;
-      if (responseData.status !== "OK") throw new Error(responseData.message);
+      if (responseData.status !== "CREATED") throw new Error(responseData.message);
       return responseData;
     }  catch(error) {
       if (axios.isAxiosError(error)) {

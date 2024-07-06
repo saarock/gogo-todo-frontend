@@ -173,6 +173,7 @@ export interface TaskUpdateDetails {
   taskTitle: string;
   taskContent: string;
   taskId: number;
+  boardId: number;
 }
 
 

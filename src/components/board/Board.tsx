@@ -111,13 +111,14 @@ const Board: React.FC<BoardProps> = ({
 
 
 
-  const updateTaskTitle = useCallback( async (taskId: number) => {
+  const updateTaskTitle = useCallback( async (taskId: number, boardId: number) => {
     try {
       setLoading(true);
     const updateDetails: TaskUpdateDetails = {
       taskTitle: taskState.taskName,
       taskContent: taskState.taskDesc,
-      taskId: taskId
+      taskId: taskId,
+      boardId: boardId,
     }
 
     await dispatch<any>(updateTaskById(updateDetails));
@@ -138,13 +139,14 @@ const Board: React.FC<BoardProps> = ({
 
 
 
-  const updateTaskDesc = useCallback( async (taskId: number) => {
+  const updateTaskDesc = useCallback( async (taskId: number, boardId: number) => {
     try {
       setLoading(true);
     const updateDetails: TaskUpdateDetails = {
       taskTitle: taskState.taskName,
       taskContent: taskState.taskDesc,
-      taskId: taskId
+      taskId: taskId,
+      boardId: boardId
     }
 
     await dispatch<any>(updateTaskById(updateDetails));

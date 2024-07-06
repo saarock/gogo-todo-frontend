@@ -75,74 +75,7 @@ const Product = () => {
     }
   }, [productname && navigate]);
 
-  const addTask = useCallback((name: string) => {
-    taskDispatch({
-      type: TaskActionTypes.DOES_USER_WANT_TO_ADD_TASK,
-      payload: name,
-    });
-  }, []);
 
-  const cancleAddTask = useCallback(() => {
-    taskDispatch({
-      type: TaskActionTypes.DOES_USER_WANT_TO_ADD_TASK,
-      payload: "",
-    });
-  }, []);
-
-  const onChangeTask = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    // setTaskName(e.target.value);
-    taskDispatch({
-      type: TaskActionTypes.SET_TASK_NAME,
-      payload: e.target.value,
-    });
-  }, []);
-
-  const onChangeTaskDesc = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      taskDispatch({
-        type: TaskActionTypes.SET_TASK_DESC,
-        payload: e.target.value,
-      });
-    },
-    []
-  );
-
-  const createNewTask = useCallback(
-    (boardIndex: number, projectIndex: number, boardId: number) => {
-      if (boardIndex <= -1 && projectIndex <= -1) return;
-      if (taskState.taskName.trim() === "")
-        throw new Error("Task Name requried");
-      let task: Task = {
-        name: taskState.taskName,
-        content: taskState.taskDesc,
-        boardId: boardId,
-        boardIndex: boardIndex,
-        projectIndex: projectIndex,
-      };
-
-      (async () => {
-        try {
-          await dispatch<any>(createTask(task));
-          toast.success("Task Added");
-          taskDispatch({
-            type: TaskActionTypes.SET_TASK_NAME,
-            payload: "",
-          });
-          taskDispatch({
-            type: TaskActionTypes.SET_TASK_DESC,
-            payload: "",
-          });
-        } catch (error) {
-          if (error instanceof Error) {
-            toast.error(error.message);
-            return;
-          }
-          toast.error("Unknown error");
-        }
-      })();
-    },
-    [taskState.taskName, taskState.taskDesc, dispatch]
-  );
 
   const saveProject = useCallback(() => {
     if (!userID) {
@@ -192,6 +125,119 @@ const Product = () => {
     })();
   }, [productState.productTitleOrName]);
 
+
+
+  const addBoard = useCallback(() => {
+    if (!currentUserProject) throw new Error("Current user doesn't exist");
+    const projectId = currentUserProject.id;
+    const projectName = currentUserProject.name;
+
+    if (
+      projectId == undefined ||
+      boardName.trim() === "" ||
+      projectName == undefined ||
+      projectName.trim() === ""
+    ) {
+      toast.error("Details are fulfilled properly")
+      return
+    }
+    let board: TypeBoard = {
+      projectId: projectId,
+      name: boardName,
+      projectIndex: currentUserProject?.index,
+      boardIndex: currentUserProject?.boards.length,
+      tasks: [],
+    };
+
+    (async () => {
+      try {
+        await dispatch<any>(addBoardUnderTheProject(board));
+        setBoardName("");
+        toast.success("New board added")
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("Some thing wrong");
+        }
+      }
+    })();
+  }, [boardName]);
+
+  const createNewTask = useCallback(
+    (boardIndex: number, projectIndex: number, boardId: number) => {
+
+      (async () => {
+        try {
+          // validations;
+          if (boardIndex <= -1) throw new Error("BoardIndex required");
+          if (boardId === -1) throw new Error("Board Id required");
+          if (taskState.taskName.trim() === "")
+            throw new Error("Task Name requried");
+          let task: Task = {
+            name: taskState.taskName,
+            content: taskState.taskDesc,
+            boardId: boardId,
+            boardIndex: boardIndex,
+            projectIndex: projectIndex,
+          };
+          // creating the new task both in the client and at the server
+          await dispatch<any>(createTask(task));
+          taskDispatch({
+            type: TaskActionTypes.SET_TASK_NAME,
+            payload: "",
+          });
+          taskDispatch({
+            type: TaskActionTypes.SET_TASK_DESC,
+            payload: "",
+          });
+        } catch (error) {
+          if (error instanceof Error) {
+            toast.error(error.message);
+            return;
+          }
+          toast.error("Unknown error");
+        }
+      })();
+    },
+    [taskState.taskName, taskState.taskDesc, dispatch]
+  );
+
+
+  const addTask = useCallback((name: string) => {
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_ADD_TASK,
+      payload: name,
+    });
+  }, []);
+
+  const cancleAddTask = useCallback(() => {
+    taskDispatch({
+      type: TaskActionTypes.DOES_USER_WANT_TO_ADD_TASK,
+      payload: "",
+    });
+  }, []);
+
+  const onChangeTask = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    // setTaskName(e.target.value);
+    taskDispatch({
+      type: TaskActionTypes.SET_TASK_NAME,
+      payload: e.target.value,
+    });
+  }, []);
+
+  const onChangeTaskDesc = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      taskDispatch({
+        type: TaskActionTypes.SET_TASK_DESC,
+        payload: e.target.value,
+      });
+    },
+    []
+  );
+
+
+
   const onChangeTitle = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       productDispatch({
@@ -221,41 +267,6 @@ const Product = () => {
     []
   );
 
-  const addBoard = useCallback(() => {
-    if (!currentUserProject) throw new Error("Current user doesn't exist");
-    const projectId = currentUserProject.id;
-    const projectName = currentUserProject.name;
-
-    if (
-      projectId == undefined ||
-      boardName.trim() === "" ||
-      projectName == undefined ||
-      projectName.trim() === ""
-    ) {
-      toast.error("Details are fulfilled properly")
-      return
-    }
-    let board: TypeBoard = {
-      projectId: projectId,
-      name: boardName,
-      projectIndex: currentUserProject?.index,
-      boardIndex: currentUserProject?.boards.length,
-      tasks: [],
-    };
-
-    (async () => {
-      try {
-        await dispatch<any>(addBoardUnderTheProject(board));
-        setBoardName("");
-      } catch (error) {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        } else {
-          toast.error("Some thing wrong");
-        }
-      }
-    })();
-  }, [boardName]);
 
   // const controls = useDragControls();
   const openBoardOptions = useCallback(
@@ -302,7 +313,6 @@ const Product = () => {
   );
 
   const saveNewBoardName = useCallback(async () => {
-    // alert(boardState.newBoardName);
     if (currentUserProject?.index === undefined)
       throw new Error("Project index requried");
     const updateBoardNameRequest: BoardIdAndName = {
@@ -341,7 +351,7 @@ const Product = () => {
           : "Sorry cannot delete the board something is wrong try again"
       );
     }
-  }, []);
+  }, [currentUserProject]);
 
   return (
     <div className="gogo__product__container">
