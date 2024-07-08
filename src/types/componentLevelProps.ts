@@ -35,3 +35,11 @@ export interface UpdateCompProps {
 
 
 }
+
+export interface SideBarProps {
+  onClickEditButton: () => void;
+  onChangeUserFullName: (e:React.ChangeEvent<HTMLInputElement>) => void;
+  isUserWantToChangeFullName: boolean;
+  changeSave : ()=> void;
+  userNewFullName: string;
+}

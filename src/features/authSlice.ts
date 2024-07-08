@@ -3,7 +3,7 @@ import { ReducerState } from "react";
 import { AuthState, LoginPayload } from "../types";
 
 const initialState: AuthState = {
-  isAuthenticated: false,
+  isAuthenticated: true,
   user: null,
   accessToken: null,
   refreshToken: null,

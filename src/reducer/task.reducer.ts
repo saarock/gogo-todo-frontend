@@ -28,7 +28,6 @@ type Action =
 export const taskReducer = (state: TaskState, action: Action): TaskState => {
   switch (action.type) {
     case TaskActionTypes.SET_TASK_NAME:
-      // alert("name case")
       return { ...state, taskName: action.payload };
     case TaskActionTypes.SET_TASK_DESC:
       return { ...state, taskDesc: action.payload };

@@ -1,5 +1,6 @@
 .gogo__product__container {
     display: flex;
+    overflow: hidden;
 
 }
 .gogo__product__page {
@@ -15,12 +16,11 @@
 }
 
 .gogo__product__boards::-webkit-scrollbar {
-    background-color: white;
     height: 0.5rem;
    
 }
 .gogo__product__boards::-webkit-scrollbar-thumb {
-    /* background-color: pink; */
+    background-color: gray;
     border-radius: 1rem;
 
 }

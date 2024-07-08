@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProjectHeaderProps } from '../../types';
 import "./projectHeader.css"
+import { useNavigate } from 'react-router-dom';
 
 /**
  * @note (Don't be the configue between the ProductHeader and ProductHeaders file one (## ProductHeaders ## ) is for when user visit at the project level where user can see 
@@ -11,12 +12,19 @@ import "./projectHeader.css"
  * @returns ProductHeader for more inmormation read the @note section;
  */
 
+
+
 const ProductHeaders: React.FC<ProjectHeaderProps> = ({next}) => {
+    const navigate = useNavigate();
+    const goToHome = (e:React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        navigate("/");
+    }
     return (
         <div>
             <nav className="flex items-center justify-between p-4 rounded-md gogo__project__level__header" >
                 <div>
-                    <a href="#" className="gogo__logo font-bold text-lg">GoGo.com</a>
+                    <a href="/" className="gogo__text__logo" onClick={goToHome}>GoGo.com</a>
                 </div>
                 <div>
                     <input onChange={next} type="text" placeholder="Filter...." className="gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:border-red-800" />

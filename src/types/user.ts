@@ -181,3 +181,4 @@ export interface TaskDeleteDetails {
   boardId: number;
   taskId: number
 }
+

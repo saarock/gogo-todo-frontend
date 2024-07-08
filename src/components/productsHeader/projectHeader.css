@@ -9,3 +9,13 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
 }
+
+.gogo__text__logo {
+    color: var(--gogo--primary--color);
+    font-weight: bold;
+    font-family: cursive;
+    font-size: 1.7rem;
+}
+.gogo__text__logo:active {
+    outline: 1px dashed green;
+}

@@ -215,7 +215,8 @@ const RegisterPage = () => {
         }
 
         setIsUserLoggedIn(true);
-        navigate("/dash");
+        // redirect to the projects page after signup
+        navigate("/dash/projects");
       }
     } catch (error) {
       if (error instanceof Error) {

@@ -29,6 +29,69 @@ body {
 
 
 
+/*  gogo input section css */
+.gogo__edit_input {
+  outline: 2px solid var(--gogo--primary--color);
+  border-radius: 1rem;
+  padding: 1rem;
+
+}
+/* gogo input section css end */
+
+/* gogo button section css start */
+
+
+.gogo__form__button {
+  margin: 1rem;
+}
+
+
+.gogo__save__button {
+  background-color: #28a745;
+  font-weight: 100;
+  color: white;
+  padding: 0.3rem;
+  width: 7rem;
+  margin: 0.5rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.gogo__form__button__login__and__register__button {
+  background-color: var(--login-and-register-button-backColor);
+  height: 2.6rem;
+  width: 15rem;
+  color: white;
+  border-radius: 0.4rem;
+}
+
+.gogo__form__button__login__and__register__button:hover {
+  background-color: var(--login-and-register-button-BackColor-hover);
+}
+
+.gogo__form__button__login__and__register__button:active {
+  width: 14.7rem;
+  height: 2.5rem;
+}
+
+.gogo__form__button__login__and__register__button__make__not__clickable {
+  cursor: not-allowed;
+}
+
+.gogo__form__button__login__and__register__button__make__not__clickable:hover {
+  background-color: var(--login-and-register-button-backColor);
+}
+
+.gogo__form__button__login__and__register__button__make__not__clickable:active {
+  height: 2.6rem;
+  width: 15rem;
+}
+
+
+/* gogo button section css end */
+
+
+
 /* form realated start */
 
 .gogo__form {
@@ -63,39 +126,6 @@ body {
 }
 
 
-.gogo__form__button {
-  margin: 1rem;
-}
-
-.gogo__form__button__login__and__register__button {
-  background-color: var(--login-and-register-button-backColor);
-  height: 2.6rem;
-  width: 15rem;
-  color: white;
-  border-radius: 0.4rem;
-}
-
-.gogo__form__button__login__and__register__button:hover {
-  background-color: var(--login-and-register-button-BackColor-hover);
-}
-
-.gogo__form__button__login__and__register__button:active {
-  width: 14.7rem;
-  height: 2.5rem;
-}
-
-.gogo__form__button__login__and__register__button__make__not__clickable {
-  cursor: not-allowed;
-}
-
-.gogo__form__button__login__and__register__button__make__not__clickable:hover {
-  background-color: var(--login-and-register-button-backColor);
-}
-
-.gogo__form__button__login__and__register__button__make__not__clickable:active {
-  height: 2.6rem;
-  width: 15rem;
-}
 
 
 /* form realated end */
@@ -281,3 +311,33 @@ body {
   color: green;
 }
 /*  gogo section heading end */
+
+
+
+/*  gogo edit section css start */
+.gogo__edit__icon {
+  font-size: 1.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.gogo__edit__icon:active  {
+  outline: 2px dotted green;
+}
+.gogo__edit__icon:focus {
+  outline: 2px dotted green;
+}
+.gogo__change__input__container {
+  position: absolute;
+  right: -20rem;
+  width: 18rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  border-radius: 2rem;
+  top: 0;
+}
+/* gogo edit section css end */

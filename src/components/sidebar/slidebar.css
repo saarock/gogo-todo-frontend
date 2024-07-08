@@ -69,7 +69,12 @@
     font-size: 1.3rem;
     text-align: center;
     margin: 0.3rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    position: relative;
 }
+
 .gogo__user__email {
     color: gray;
     text-align: center;

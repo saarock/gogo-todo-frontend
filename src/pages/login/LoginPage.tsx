@@ -52,8 +52,8 @@ const LoginPage = () => {
           localStore.setData(USER_LOCALSTORAGE_DATA_NAME, userResponseData.user);
         }
       }
-
-      navigate("/dash");
+      // redirect to the projects page after login
+      navigate("/dash/projects");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message)
