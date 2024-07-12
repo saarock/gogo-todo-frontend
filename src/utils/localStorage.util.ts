@@ -27,6 +27,14 @@ class LocalStorage {
     }
   }
 
+  updateFullName(newName: string) {
+    const data = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_DATA_NAME) || "null");
+    if (data && data !== "null") {
+      data.fullName = newName;
+      localStore.setData(USER_LOCALSTORAGE_DATA_NAME, data);      
+    }
+  }
+
   updateLocalStorageData(storageName:string) {
     // const data = localStore.getData(storageName) || [];
   }

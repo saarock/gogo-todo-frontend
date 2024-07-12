@@ -7,7 +7,7 @@
  * User types for register, login , Request and Resposne start.
  */
 export interface User {
-  id?: string;
+  id: number;
   fullName: string;
   email: string;
   role?: string;
@@ -182,3 +182,8 @@ export interface TaskDeleteDetails {
   taskId: number
 }
 
+
+export interface UserNewNameAndId {
+  id: number,
+  fullName: string;
+}

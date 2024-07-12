@@ -1,10 +1,9 @@
 import React, { useCallback } from "react";
-import { Profile, SideBar } from "../../components";
+import { Profile } from "../../components";
 import "./dash.css";
 import { useSelector } from "react-redux";
 import { RootState, User } from "../../types";
 import { TrophySpin } from "react-loading-indicators";
-import useTokenValidation from "../../hooks/useTokenValidation";
 import DashContainer from "../../components/DashContainer";
 import GoGoDashContainerBox from "../../components/gogoDashContainerBox/GoGoDashContainerBox";
 const DashBoard: React.FC = () => {

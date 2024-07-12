@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import "./slidebar.css";
 import { MdDashboardCustomize } from "react-icons/md";
-import { ImMenu } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import { FaChevronCircleLeft } from "react-icons/fa";
 import { FaCircleChevronRight } from "react-icons/fa6";
-import { CgProfile } from "react-icons/cg";
-import { FaDochub } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, SideBarProps } from "../../types";
@@ -24,19 +21,7 @@ const SideBar: React.FC<SideBarProps> = ({
   const [responsive, setResponsive] = useState<boolean>(false);
   const navigate = useNavigate();
   const sideNavs = [
-    // {
-    //     name: "Profile",
-    //     slug: "/dash",
-    //     active: responsive,
-    //     icon: <CgProfile />,
-    // },
-
-    // {
-    //     name: "Home",
-    //     slug: "/dash/console",
-    //     active: responsive,
-    //     icon: <MdDashboardCustomize />,
-    // },
+  
 
     {
       name: "Projects",
