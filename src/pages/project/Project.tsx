@@ -23,11 +23,12 @@ import {
   ProductNameandId,
   RootState,
   DeleteProduct,
+
 } from "../../types";
 
 import { TrophySpin } from "react-loading-indicators";
 import { AiOutlineReload } from "react-icons/ai";
-import { productServerService } from "../../services";
+import { authClient, productServerService } from "../../services";
 import {
   addProducts,
   updateProductName as UpdateProductInBothClientAndServer,
@@ -41,10 +42,14 @@ import { updateProduct as updatedProduct } from "../../features/ProductSlice";
 import toast from "react-hot-toast";
 import { Root } from "react-dom/client";
 import DashContainer from "../../components/DashContainer";
+import useFetchProductFromServer from "../../hooks/useFetchProductFromServer";
 
 const Project = () => {
   const [wantToCreateProduct, setwantToCreateProduct] =
     useState<boolean>(false);
+    const {isLast, setIsLast} = useFetchProductFromServer({page: 0});
+
+    // const [isLastProduct, setIsLastProduct] = useState<boolean>(false);
   const navigate = useNavigate();
   const projects: UserProjectType[] | undefined = useSelector(
     (state: UserProject) => state.projects
@@ -82,23 +87,60 @@ const Project = () => {
   }, []);
 
   const next = useCallback(() => {
+
     (async () => {
-      const data = await productServerService.getProducts("1", 2);
-      console.log(data);
-      const useProducts: UserProjectType[] = data.data;
+
+      const data = await productServerService.getProducts(user.user?.id!, 1);
+  
+      const useProducts: UserProjectType[] = data.content;
       await dispatch(addProducts(useProducts));
+      setIsLast(data.last)
     })();
-  }, []);
+  }, [user]);
+
+
+
+  
 
   const search = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUserDatas(
-        projects?.filter((project) =>
-          project.name.toLowerCase().includes(e.target.value.toLowerCase())
-        )
+     async function searchAndSave() {
+      // search from the database;
+      if (!user.isAuthenticated) authClient.logout();
+      if (user.user?.id) {
+  
+        try {
+      const searchProducts: UserProjectType[] =  await productServerService.searchProduct(
+     e.target.value,user.user?.id
       );
+
+      
+      dispatch(addProducts(searchProducts))
+      
+    } catch(error) {
+      toast.error(error instanceof Error ? error.message : "Error while search product")
+    }
+    } 
+      }
+      const products = projects?.filter((project) =>
+        project.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+      if (!products) {
+        
+
+        searchAndSave();
+        return;
+      }
+      if (products?.length >= 1) {
+      setUserDatas(
+       products
+      );
+    } else {
+      searchAndSave()
+
+    }
     },
-    [userDatas]
+    [userDatas, user]
   );
 
   const openOptions = useCallback(
@@ -270,7 +312,7 @@ const Project = () => {
                 No Projects Found...
               </div>
             )}
-            {projects && projects.length >= 1 && (
+            {projects && projects.length >= 1  && !isLast && (
               <div className="gogo__load__button__container">
                 <button className="gogo__load__more__button" onClick={next}>
                   {" "}

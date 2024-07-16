@@ -12,7 +12,7 @@ import useFetchProductFromServer from './hooks/useFetchProductFromServer';
 const Layout = () => {
   useWhenPageMount()
   useTokenValidation()
-  useFetchProductFromServer({page: 0})
+  // useFetchProductFromServer({page: 0})
 
   return (
     <>

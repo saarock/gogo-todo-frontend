@@ -27,7 +27,7 @@ const ProductHeaders: React.FC<ProjectHeaderProps> = ({next}) => {
                     <a href="/" className="gogo__text__logo" onClick={goToHome}>GoGo.com</a>
                 </div>
                 <div>
-                    <input onChange={next} type="text" placeholder="Filter...." className="gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:border-red-800" />
+                    <input onChange={next} type="text" placeholder="Search..." className="gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:border-red-800" />
                 </div>
                 <div>
                     <nav className="inline-flex">

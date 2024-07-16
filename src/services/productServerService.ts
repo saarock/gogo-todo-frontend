@@ -39,12 +39,12 @@ class ProductServerService {
     }
   }
 
-  public async getProducts(userID: string, page: number) {
+  public async getProducts(userID: number, page: number) {
     try {
-      const userNumberId = Number(userID);
-      // Make the API request to fetch products
+ 
+
       const response = await axiosInstance1.get(
-        `get-products?page=${page}&size=2&sortBy=updatedAt&direction=aesc&userId=${userNumberId}`
+        `get-products?page=${page}&size=2&sortBy=updatedAt&direction=aesc&userId=${userID}`
       );
       const data = await response.data;
 
@@ -52,8 +52,9 @@ class ProductServerService {
 
       console.log(data);
       if (data.status !== "OK") throw new Error(data.message);
+      console.log("this is also")
       console.log(data.data.content);
-      return data.data.content;
+      return await data.data;
     } catch (error) {
       // Handle any errors that occur during the API request
       throw new Error(
@@ -217,6 +218,39 @@ class ProductServerService {
         throw new Error(error instanceof Error ? error.message : "Unknown error while deleting the task");
       }
     }
+  }
+
+
+  public async searchProduct(productName:string, userId: number) {
+  try {
+    const response = await axiosInstance1.get(`/search`, {
+      params : {
+        userId: userId,
+        productName: productName
+      }
+    });
+    const data = await response.data;
+    console.log(data);
+    if (data.status === "OK") {
+      return data.data;
+    } else {
+      throw Error(data.message)
+    }
+ 
+  } catch(error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        throw new Error(error.response?.data.message);
+        } else if (error.request) {
+        throw new Error(error.request.error);
+        } else {
+          throw new Error("Unknown exception error");
+        }
+
+    } else {
+      throw new Error(error instanceof Error ? error.message : "Unknown error while deleting the task");
+    }
+  }
   }
 }
 
