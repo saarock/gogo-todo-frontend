@@ -34,6 +34,8 @@ const useWhenPageMount = () => {
       }
     })();
   }, []);
+
+  localStore.updateIsMore(true)
 };
 
 export default useWhenPageMount;

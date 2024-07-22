@@ -38,6 +38,7 @@ import {
   TypeOfBoard,
 } from "../../reducer/board.reducer";
 import ProductWrapper from "../../components/ProductWrapper";
+import ReactPaginate from "react-paginate";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -420,6 +421,7 @@ const Product = () => {
           </div>
         </ProjectProductContainer>
       }
+
     </div>
   );
 };

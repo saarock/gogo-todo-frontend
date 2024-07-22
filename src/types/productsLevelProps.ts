@@ -8,7 +8,7 @@ import { ProductState } from "../reducer/product.reducer";
  *  If you are searching the types of the client and server product, board , task as well as user types we can foudn at same DIR in ( user.ts ) file.
  */
 export interface ProductProps {
-  onClickEvent: () => void;
+  onClickEvent: (id: number) => void;
   product: Project;
   createAt?: string;
   openOptions: (e:React.MouseEvent<HTMLDivElement>, productId: number) => void;

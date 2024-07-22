@@ -1,8 +1,8 @@
-import { USER_LOCALSTORAGE_DATA_NAME } from "../constant";
+import { IS_MORE_P, USER_LOCALSTORAGE_DATA_NAME } from "../constant";
 import { Project, User } from "../types";
 
 class LocalStorage {
-  setData(storageName: string, data: User |Project[]) {
+  setData(storageName: string, data: User |Project[] | boolean) {
     localStore.deleteLocalStoreData(storageName);
     localStorage.setItem(storageName, JSON.stringify(data));
   }
@@ -37,6 +37,16 @@ class LocalStorage {
 
   updateLocalStorageData(storageName:string) {
     // const data = localStore.getData(storageName) || [];
+  }
+
+  updateIsMore(is: boolean) {
+    localStore.setData(IS_MORE_P ,is)
+  }
+
+  IsMoreProduct(): boolean  {
+    const data = localStorage.getItem(IS_MORE_P);
+    if (data == null || data == undefined) throw Error('Cannot track the pages')
+    return JSON.parse(data);
   }
 }
 

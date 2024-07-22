@@ -14,6 +14,7 @@ class JwtUtil {
     return true;
   }
 
+  
   getToken(tokenName: string): string | null {
     const decodedCookie = decodeURIComponent(document.cookie);
     const cookieArray = decodedCookie.split(";");

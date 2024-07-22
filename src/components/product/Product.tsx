@@ -22,7 +22,7 @@ const Product: React.FC<ProductProps> = ({
   ];
   if (!product.id) return <div>Error</div>;
   return (
-    <div className="gogo__product" onClick={onClickEvent}>
+    <div className="gogo__product" onClick={() => onClickEvent(product.id)}>
       <div className="gogo__product__options__section">
         <div
           className="gogo__select__options"

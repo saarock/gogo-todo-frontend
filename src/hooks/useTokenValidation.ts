@@ -15,6 +15,7 @@ const useTokenValidation = () => {
   );
   const userName = useSelector((state: RootState) => state.auth.user?.fullName);
   useEffect(() => {
+
     async function validateWithRefreshToken(refreshToken: string) {
       try {
     
@@ -70,7 +71,7 @@ const useTokenValidation = () => {
         authClient.logout();
       }
     })();
-  }, [isUserLogin]);
+  }, [isUserLogin, accessToken, refreshToken]);
 };
 
 export default useTokenValidation;

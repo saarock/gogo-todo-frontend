@@ -24,11 +24,11 @@ axiosInstance1.interceptors.request.use(
   const axiosInstance2 = axios.create({
     baseURL: "http://localhost:8002"
   })
+
   // Add a request interceptors
   axiosInstance2.interceptors.request.use(
       (config) => {
         const token = jwtUtil.getToken(REFRESH_TOKEN__NAME);
-        console.log(token + 'this is the token')
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }

@@ -7,6 +7,7 @@ import {
   RegisterResponseSuccess,
   User,
 } from "../types";
+import {errorUtil} from "../utils";
 
 // authService.js
 class AuthServer {
@@ -32,17 +33,8 @@ class AuthServer {
       if (responseData.status !== "CREATED") throw new Error(responseData.message);
       return responseData;
     }  catch(error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          return null;
-        } else if (error.request) {
-          return null;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
+      errorUtil.handelError()
+      return null
     }
    
   }
@@ -54,31 +46,21 @@ class AuthServer {
       if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
+      errorUtil.handelError()
       return null;
     }
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string):Promise<void> {
     try {
       const response = await axiosInstance1.post("/login", { email, password });
       const data = await response.data;
       if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          throw new Error(error.response.data.message)
+      errorUtil.handelError();
+      throw error;
 
-        } else if (error.request) {
-          throw new Error(error.request.data.message)
-    
-        } else {
-          throw new Error("Cannot login contact gogo teams")
-        }
-       
-     
-      } 
-      
     }
   }
 
@@ -89,21 +71,8 @@ class AuthServer {
       if (data.status !== "ACCEPTED") throw new Error(data.message);
       return data.status === "OK";
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          throw new Error(error.response.data.message || "Token validation failed");
-        } else if (error.request) {
-
-          throw new Error("No response received from the server");
-        } else {
-  
-          throw new Error("Error setting up the request");
-        }
-      } else {
-        // Handle non-Axios errors
-        console.error('Unexpected error:', error);
-        throw new Error("Unexpected error occurred hah");
-      }
+      errorUtil.handelError()
+      throw error;
     }
   }
 
@@ -119,11 +88,12 @@ class AuthServer {
       );
       const data = await response.data;
       if (data.status !== "OK") {
-        throw new Error("Token Needed");
+          throw new Error("Token Needed");
       }
       return data;
     } catch (error) {
-      throw new Error("Token expired");
+      errorUtil.handelError()
+      throw error;
     }
   }
 

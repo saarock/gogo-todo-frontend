@@ -17,7 +17,12 @@ class AuthClient {
       window.location.reload();
     }
   }
+
+  public unEthicLogout() {
+    window.location.reload();
+  }
 }
 
-const authClient = new AuthClient();
+const authClient= new AuthClient();
 export default authClient;
+

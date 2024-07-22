@@ -7,10 +7,9 @@ import React, {
   useReducer,
 } from "react";
 import {
-  CreateProduct,
+  CreateProduct, Loader,
   Product,
   ProductHeader,
-  SideBar,
   Update,
 } from "../../components";
 import "./project.css";
@@ -43,13 +42,13 @@ import toast from "react-hot-toast";
 import { Root } from "react-dom/client";
 import DashContainer from "../../components/DashContainer";
 import useFetchProductFromServer from "../../hooks/useFetchProductFromServer";
+import { localStore } from "../../utils";
+import {PaginationItem, PaginationLink, Pagination, Container} from "reactstrap";
 
 const Project = () => {
   const [wantToCreateProduct, setwantToCreateProduct] =
     useState<boolean>(false);
-    const {isLast, setIsLast} = useFetchProductFromServer({page: 0});
-
-    // const [isLastProduct, setIsLastProduct] = useState<boolean>(false);
+    const {isLast, setIsLast, pageSize, pageNumber, setPageNumber, isLoading} = useFetchProductFromServer({page: 0});
   const navigate = useNavigate();
   const projects: UserProjectType[] | undefined = useSelector(
     (state: UserProject) => state.projects
@@ -81,22 +80,27 @@ const Project = () => {
     navigate("new-project");
   }, [wantToCreateProduct]);
 
-  const goToProduct = useCallback((projectName: string) => {
-    // alert(projectName)
+  const goToProduct = useCallback((projectName: string, id: number) => {
+    productServerService.updateModifiedProduct(id);
     navigate(projectName);
   }, []);
 
+  useEffect(() => {
+    if (pageNumber === pageSize) {
+      setIsLast(true)
+    }
+  }, [pageNumber]);
+
   const next = useCallback(() => {
-
     (async () => {
-
-      const data = await productServerService.getProducts(user.user?.id!, 1);
-  
+      const data = await productServerService.getProducts(user.user?.id!, pageNumber+1);
       const useProducts: UserProjectType[] = data.content;
       await dispatch(addProducts(useProducts));
-      setIsLast(data.last)
+      localStore.updateIsMore(data.last);
+      setIsLast(localStore.IsMoreProduct);
+      setPageNumber((prev) => prev+1)
     })();
-  }, [user]);
+  }, [user, pageNumber, isLast, pageNumber]);
 
 
 
@@ -154,10 +158,8 @@ const Project = () => {
             productState.isUserWantToSeeOptions?.productId === -1
               ? productId
               : -1,
-          isWantToSeeOptions: productState.isUserWantToSeeOptions
-            ?.isWantToSeeOptions
-            ? false
-            : true,
+          isWantToSeeOptions: !productState.isUserWantToSeeOptions
+              ?.isWantToSeeOptions,
         },
       });
     },
@@ -255,6 +257,11 @@ const Project = () => {
     },
     [productName, productId]
   );
+
+  if (isLoading) {
+    return <Loader/>
+  }
+
   return (
     <>
       {productState.isUserWantToSeeOptions?.isUserWantToUpdate && (
@@ -280,8 +287,10 @@ const Project = () => {
           </div>
           <div className="gogo__product__products">
             <CreateProduct createProject={letsCreateNewProject} />
+
+
             {userAllProjects && userAllProjects.length >= 1 ? (
-              [...userAllProjects].reverse().map((project: UserProjectType) => (
+              [...userAllProjects].map((project: UserProjectType) => (
                 <div className="gogo__project" key={project.id}>
                   <Suspense
                     fallback={
@@ -294,8 +303,8 @@ const Project = () => {
                     }
                   >
                     <Product
-                      onClickEvent={() =>
-                        goToProduct(project.name || "newproject")
+                      onClickEvent={(id: number) =>
+                        goToProduct(project.name || "newproject", id)
                       }
                       options={productState}
                       openOptions={openOptions}
@@ -322,6 +331,10 @@ const Project = () => {
               </div>
             )}
           </div>
+
+
+
+
         </div>
 
         </DashContainer>
