@@ -1,0 +1,21 @@
+
+.gogo__project__level__header {
+    border-radius: 0.4rem;
+    position: sticky;
+    margin-left: 2rem;
+    top: 0;
+    left: 0;
+    background-color: rgb(247, 243, 243);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+}
+
+.gogo__text__logo {
+    color: var(--gogo--primary--color);
+    font-weight: bold;
+    font-family: cursive;
+    font-size: 1.7rem;
+}
+.gogo__text__logo:active {
+    outline: 1px dashed green;
+}

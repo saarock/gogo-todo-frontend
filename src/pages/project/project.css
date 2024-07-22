@@ -1,0 +1,45 @@
+.gogo__projects__container {
+    display: flex;
+
+}
+.gogo__products {
+    width: 100%;
+    padding: 1rem;
+}
+
+.gogo__product__products {
+    padding: 1rem;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    align-items: center;
+}
+.gogo__load__button__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gogo__load__more__button {
+    background-color: var(--gogo--primary--color);
+    font-size: 1rem;
+    padding: 0.6rem;
+    font-weight: bold;
+    margin: 1rem;
+    color: white;
+    border-radius: 10px;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gogo__no__project__foudn__title {
+    font-size: 1.5rem;
+    color: red;
+    text-align: center;
+    margin: 1rem;
+}
+
+

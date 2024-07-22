@@ -1,9 +1,12 @@
-import React from 'react'
+// src/components/Footer.tsx
+import React from 'react';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
-    <div>Footer</div>
-  )
-}
+    <footer className="bg-gray-100 text-white py-8">
+      
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;

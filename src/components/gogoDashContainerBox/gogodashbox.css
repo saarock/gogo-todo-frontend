@@ -1,0 +1,24 @@
+.gogo__dash__container__box {
+    height: 17rem;
+    width: 17rem;
+    /* background-color: red; */
+    margin: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: green;
+}
+.gogo__project__icon {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 4rem;
+    color: gray;
+}
+.gogo__imp__number {
+    font-size: 3rem;
+}

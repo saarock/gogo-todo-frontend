@@ -1,0 +1,87 @@
+/* 
+---------------------------------------------
+Services Style
+--------------------------------------------- 
+*/
+
+.gogo__our-services {
+  margin-top: 0px;
+  padding-top: 120px;
+}
+
+.gogo__our-services .gogo__left-image {
+  margin-right: 45px;
+}
+
+.gogo__our-services .gogo__section-heading h2 {
+  margin-right: 100px;
+}
+
+.gogo__our-services .gogo__section-heading p {
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
+
+.gogo__our-services .gogo__progress-skill-bar {
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.gogo__our-services .gogo__progress-skill-bar span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #03a4ed;
+}
+
+.gogo__our-services .gogo__progress-skill-bar h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2a2a2a;
+  margin-bottom: 14px;
+}
+
+.gogo__our-services .gogo__full-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #f7eff1;
+  position: relative;
+}
+
+.gogo__our-services .gogo__filled-bar {
+  height: 6px;
+  border-radius: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(255, 77, 30, 1) 0%,
+    rgba(255, 44, 109, 1) 100%
+  );
+}
+
+.gogo__our-services .gogo__first-bar .gogo__filled-bar {
+  width: 84%;
+}
+
+.gogo__our-services .gogo__second-bar .gogo__filled-bar {
+  width: 88%;
+}
+
+.gogo__our-services .gogo__third-bar .gogo__filled-bar {
+  width: 94%;
+}
+
+.gogo__left-image {
+  width: 37rem;
+}
+.gogo__row__service {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

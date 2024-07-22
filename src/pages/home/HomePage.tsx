@@ -1,11 +1,19 @@
-import React from "react";
-import { Container } from "../../components";
+import { Container, GoToTop, MainTop } from "../../components";
+import About from "../../components/about/About";
 
 const HomePage = () => {
   return (
+    <>
     <Container>
-      <h1>Home</h1>
+      <MainTop />
+      <section>
+        <About />
+      </section>
+
     </Container>
+    
+    </>
+  
   );
 };
 

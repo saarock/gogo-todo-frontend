@@ -1,5 +1,6 @@
-import React, { forwardRef } from "react";
+import  React, { forwardRef } from "react";
 import { InputProps } from "../../types";
+
 
 const Input: React.FC<InputProps> = forwardRef(
   (

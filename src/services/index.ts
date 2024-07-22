@@ -1,2 +1,4 @@
 import serverAuth from "./authServer";
-export {serverAuth}
+import authClient from "./authClient";
+import { productServerService } from "./productServerService";
+export {serverAuth, authClient, productServerService}

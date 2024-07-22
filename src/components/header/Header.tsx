@@ -10,6 +10,8 @@ import {
   MdDashboardCustomize,
 } from "react-icons/md";
 import { FcAbout } from "react-icons/fc";
+import { IoSettings } from "react-icons/io5"
+import { MdOutlineAddHomeWork } from "react-icons/md";
 
 const Header = () => {
   const authStates = useSelector(
@@ -33,7 +35,7 @@ const Header = () => {
 
     {
       name: "About",
-      slug: "/about",
+      slug: "#gogo__about",
       active: true,
       icon: <FcAbout />,
     },
@@ -50,20 +52,20 @@ const Header = () => {
       icon: <MdFollowTheSigns />,
     },
     {
-      name: "Dash",
-      slug: "/dash",
+      name: "Work Station",
+      slug: "/dash/projects",
       active: authStates,
-      icon: <MdDashboardCustomize />,
+      icon: <MdOutlineAddHomeWork /> ,
       
     },
     {
       name: "settings",
       slug: "#settings",
       active: authStates,
-      icon: <MdDashboardCustomize />,
+      icon: <IoSettings />,
       children: [
         {
-          name: "Manage details",
+          name: "Dark Mode",
           slug: "/settings/child1",
           active: authStates,
           icon: <MdDashboardCustomize />,
@@ -71,6 +73,23 @@ const Header = () => {
       ],
     },
   ];
+
+
+  const darkMode = () => {
+    document.body.classList.toggle("darkmode")
+  }
+  const handleNavigate = (slug:string) => {
+    if (slug.startsWith("#")) {
+      // Handle internal link navigation
+      const element = document.querySelector(slug);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // Handle external or route-based navigation
+      navigate(slug);
+    }
+  };
   return (
     <header className="gogo__header">
       <nav className="gogo__header__nav">
@@ -86,8 +105,8 @@ const Header = () => {
             nav.active ? (
               <li
                 key={nav.name}
-                onClick={() => navigate(nav.slug)}
-                className={`gogo__header__nav__navs__navbar ${nav.children && "gogo__settings"
+                onClick={() => handleNavigate(nav.slug)}
+                className={`gogo__header__nav__navs__navbar ${nav.name.toLowerCase()}__nav ${nav.children && "gogo__settings"
                   }`}
               >
                 <span>{nav.icon}</span>
@@ -99,9 +118,8 @@ const Header = () => {
                 {nav.children && (
                   <ul className="gogo__header__nav__child__navs" key={nav.name}>
                     {nav.children.map((childNav) => (
-                      <li className="gogo__header__nav__navs__child__navbar">
+                      <li className="gogo__header__nav__navs__child__navbar" key={childNav.name} onClick={childNav.name === "Dark Mode"? darkMode: undefined}>
                         <span>{nav.icon}</span>
-
                         {childNav.name}
                       </li>
                     ))}

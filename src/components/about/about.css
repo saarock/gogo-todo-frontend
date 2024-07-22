@@ -1,0 +1,52 @@
+/* 
+---------------------------------------------
+About Us Style
+--------------------------------------------- 
+*/
+
+#gogo__about {
+    margin-top: 120px;
+  }
+  
+  .gogo__about-us {
+    background-image: url(../images/about-bg.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding: 140px 0px 120px 0px;
+  }
+  
+  .gogo__about-us .gogo__left-image {
+    margin-right: 45px;
+  }
+  .gogo__row {
+    display: flex;
+  }
+  
+  .gogo__about-us .gogo__services .gogo__item {
+    margin-bottom: 30px;
+  }
+  
+  .gogo__about-us .gogo__services .gogo__item .gogo__icon {
+    float: left;
+    margin-right: 25px;
+  }
+  
+  .gogo__about-us .gogo__services .gogo__item .gogo__icon img {
+    max-width: 70px;
+  }
+  
+  .gogo__about-us .gogo__services .gogo__item h4 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  .gogo__about-us .gogo__services .gogo__item p {
+    color: #fff;
+  }
+.gogo__row_for__about {
+    display: flex;
+    flex-wrap: wrap;
+}

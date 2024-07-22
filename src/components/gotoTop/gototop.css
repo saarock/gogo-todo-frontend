@@ -1,0 +1,14 @@
+.gogo__go__to__top__button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.gogo__go__to__top__button span {
+    font-size: 4rem;
+    color: var(--gogo--primary--color);
+    cursor: pointer;
+}
+.gogo__go__to__top__button span:hover {
+color: rgba(255, 0, 0, 0.514);
+}

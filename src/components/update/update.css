@@ -1,0 +1,17 @@
+/*  product updated container */
+.gogo__update__container {
+    background-color: rgba(0, 0, 0, 0.808);
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    
+    left: 0%;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: crosshair;
+
+}
