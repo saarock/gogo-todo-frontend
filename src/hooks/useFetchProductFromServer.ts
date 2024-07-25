@@ -33,6 +33,7 @@ export default function useFetchProductFromServer(useFetchParams: UseFetchProduc
               dispatch(addProducts(product));
             }
             setIsLast(products.last)
+            localStore.updateIsMore(products.last)
             setPageSize(products.pageable.pageSize)
           } catch (error) {
             if (error instanceof Error) {

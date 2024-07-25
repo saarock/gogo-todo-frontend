@@ -76,7 +76,7 @@ const Header = () => {
 
 
   const darkMode = () => {
-    document.body.classList.toggle("darkmode")
+    // document.body.classList.toggle("darkmode")
   }
   const handleNavigate = (slug:string) => {
     if (slug.startsWith("#")) {

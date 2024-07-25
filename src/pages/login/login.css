@@ -5,4 +5,28 @@
     align-items: center;
     height: 90vh;
     padding: 2rem;
+    /*flex-direction: column; !* Stack elements vertically on small screens *!*/
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 1226px) {
+    .login__page {
+        padding: 1rem;
+        flex-direction: column;
+
+    }
+
+    .gogo__form {
+        padding: 0.5rem;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 638px) {
+    .login__page {
+        font-size: 0.5rem !important;
+        background: red;
+    }
 }

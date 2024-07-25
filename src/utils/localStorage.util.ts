@@ -48,6 +48,13 @@ class LocalStorage {
     if (data == null || data == undefined) throw Error('Cannot track the pages')
     return JSON.parse(data);
   }
+
+  setMode() {
+    localStorage.setItem("MODE", localStorage.getItem("MODE") ? "false" : 'true')
+  }
+  getMode():boolean {
+    return JSON.parse(localStorage.getItem("MODE"));
+  }
 }
 
 const localStore = new LocalStorage();

@@ -31,7 +31,7 @@ import { authClient, productServerService } from "../../services";
 import {
   addProducts,
   updateProductName as UpdateProductInBothClientAndServer,
-  deleteProduct as DeleteProductInBothClientAndServer,
+  deleteProduct as DeleteProductInBothClientAndServer, deleteProjects,
 } from "../../features/ProductSlice";
 import {
   ProductActionTypes,
@@ -39,7 +39,6 @@ import {
 } from "../../reducer/product.reducer";
 import { updateProduct as updatedProduct } from "../../features/ProductSlice";
 import toast from "react-hot-toast";
-import { Root } from "react-dom/client";
 import DashContainer from "../../components/DashContainer";
 import useFetchProductFromServer from "../../hooks/useFetchProductFromServer";
 import { localStore } from "../../utils";
@@ -53,6 +52,7 @@ const Project = () => {
   const projects: UserProjectType[] | undefined = useSelector(
     (state: UserProject) => state.projects
   );
+
   const user = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [userDatas, setUserDatas] = useState<UserProjectType[] | undefined>(
@@ -71,9 +71,11 @@ const Project = () => {
   // update state
   const [productName, setProductName] = useState<string>("");
   const [productId, setProductId] = useState<number>(-1);
+
   useEffect(() => {
     setUserDatas(projects);
   }, [projects]);
+
 
   const letsCreateNewProject = useCallback(() => {
     setwantToCreateProduct(true);
@@ -85,11 +87,6 @@ const Project = () => {
     navigate(projectName);
   }, []);
 
-  useEffect(() => {
-    if (pageNumber === pageSize) {
-      setIsLast(true)
-    }
-  }, [pageNumber]);
 
   const next = useCallback(() => {
     (async () => {
@@ -97,7 +94,7 @@ const Project = () => {
       const useProducts: UserProjectType[] = data.content;
       await dispatch(addProducts(useProducts));
       localStore.updateIsMore(data.last);
-      setIsLast(localStore.IsMoreProduct);
+      setIsLast(localStore.IsMoreProduct());
       setPageNumber((prev) => prev+1)
     })();
   }, [user, pageNumber, isLast, pageNumber]);
@@ -108,6 +105,7 @@ const Project = () => {
 
   const search = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      const cache = [...projects];
      async function searchAndSave() {
       // search from the database;
       if (!user.isAuthenticated) authClient.logout();
@@ -126,12 +124,14 @@ const Project = () => {
     }
     } 
       }
+
+
       const products = projects?.filter((project) =>
         project.name.toLowerCase().includes(e.target.value.toLowerCase())
       )
-      if (!products) {
-        
 
+
+      if (!products) {
         searchAndSave();
         return;
       }
@@ -250,13 +250,16 @@ const Project = () => {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Unknown eror while updating the product"
+            : "Unknown error while updating the product"
         );
       }
       setProductName("");
     },
     [productName, productId]
   );
+
+
+
 
   if (isLoading) {
     return <Loader/>
