@@ -5,7 +5,7 @@ import userService from "../services/userService";
 import { localStore } from "../utils";
 
 const initialState: AuthState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   accessToken: null,
   refreshToken: null,

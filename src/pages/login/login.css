@@ -24,9 +24,27 @@
     }
 }
 
-@media (max-width: 638px) {
-    .login__page {
-        font-size: 0.5rem !important;
-        background: red;
+@media (max-width: 651px) {
+    .gogo__login__content h1 {
+        font-size: 2rem;
     }
+    .gogo__login__content h3 {
+        font-size: 1rem;
+    }
+    .gogo__login__content p {
+        font-size: 1.5rem
+    ;
+    }
+}
+@media (max-width: 527px) {
+    .gogo__login__content p:after {
+        display: none;
+
+    }
+}
+
+@media (max-width: 417px) {
+   .gogo__form__inputs__input {
+       width: 20rem;
+   }
 }

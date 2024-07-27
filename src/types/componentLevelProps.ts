@@ -43,3 +43,12 @@ export interface SideBarProps {
   changeSave : ()=> void;
   userNewFullName: string;
 }
+
+
+
+export interface ContactCompProps {
+  onSubmit: (e:React.FormEvent<HTMLFormElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  message: string;
+
+}

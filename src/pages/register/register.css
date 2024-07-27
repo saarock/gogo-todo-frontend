@@ -4,3 +4,18 @@
     padding: 2rem;
   
 }
+
+
+/* Responsive Styles */
+@media (max-width: 1226px) {
+    .register__page {
+        padding: 1rem;
+        flex-direction: column;
+
+    }
+
+    .gogo__form {
+        padding: 0.5rem;
+        max-width: 100%;
+    }
+}
