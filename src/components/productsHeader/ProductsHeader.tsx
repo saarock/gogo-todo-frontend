@@ -2,6 +2,8 @@ import React from 'react';
 import { ProjectHeaderProps } from '../../types';
 import "./projectHeader.css"
 import { useNavigate } from 'react-router-dom';
+import useTheme from "../../context/modeContext.ts";
+import {Input} from "../index.ts";
 
 /**
  * @note (Don't be the configue between the ProductHeader and ProductHeaders file one (## ProductHeaders ## ) is for when user visit at the project level where user can see 
@@ -14,7 +16,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 const ProductHeaders: React.FC<ProjectHeaderProps> = ({next}) => {
+    const theme = useTheme();
     const navigate = useNavigate();
     const goToHome = (e:React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -22,12 +26,12 @@ const ProductHeaders: React.FC<ProjectHeaderProps> = ({next}) => {
     }
     return (
         <div>
-            <nav className="flex items-center justify-between p-4 rounded-md gogo__project__level__header" >
+            <nav className={`flex items-center justify-between p-4 rounded-md gogo__project__level__header gogo__little__dark__${theme.themeMode}`}>
                 <div>
                     <a href="/" className="gogo__text__logo" onClick={goToHome}>GoGo.com</a>
                 </div>
                 <div>
-                    <input onChange={next} type="text" placeholder="Search..." className="gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:border-red-800" />
+                    <Input onChange={next} type="text" placeholder="Search..." className={`gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-gogo-primary  ${theme.themeMode == "dark" ? "gogo__dark__input": ""}`} />
                 </div>
                 <div>
                     <nav className="inline-flex">

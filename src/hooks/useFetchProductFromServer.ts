@@ -32,8 +32,11 @@ export default function useFetchProductFromServer(useFetchParams: UseFetchProduc
               const product: Project[] = products.content;
               dispatch(addProducts(product));
             }
-            setIsLast(products.last)
+            console.log(products.last)
+            // setIsLast(products.last)
             localStore.updateIsMore(products.last)
+            console.log(products)
+            localStore.setTotalProject(products.totalElements)
             setPageSize(products.pageable.pageSize)
           } catch (error) {
             if (error instanceof Error) {
@@ -42,7 +45,6 @@ export default function useFetchProductFromServer(useFetchParams: UseFetchProduc
           }
           setIsLoading(false)
         })();
-
       }
 
 
@@ -50,8 +52,8 @@ export default function useFetchProductFromServer(useFetchParams: UseFetchProduc
     return () => {
 
     }
-  }, [userID]);
+  }, [userID, isLast]);
 
 
-  return {isLast, setIsLast, pageSize, setPageSize, pageNumber, setPageNumber, isLoading};
+  return {isLast, setIsLast, pageSize, setPageSize, pageNumber, setPageNumber, isLoading, setIsLoading};
 }

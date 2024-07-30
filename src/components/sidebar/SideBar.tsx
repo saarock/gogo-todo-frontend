@@ -10,6 +10,8 @@ import { RootState, SideBarProps } from "../../types";
 import { FaRegEdit } from "react-icons/fa";
 import Input from "../input/Input";
 import Button from "../button/Button";
+import {PiAperture} from "react-icons/pi";
+import useTheme from "../../context/modeContext.ts";
 
 const SideBar: React.FC<SideBarProps> = ({
   onChangeUserFullName,
@@ -20,15 +22,23 @@ const SideBar: React.FC<SideBarProps> = ({
 }) => {
   const [responsive, setResponsive] = useState<boolean>(false);
   const navigate = useNavigate();
+  const theme = useTheme()
+
   const sideNavs = [
-  
+    {
+      name: "Dash",
+      slug: "/dash/",
+      active: responsive,
+      icon: <MdDashboardCustomize />,
+    },
 
     {
       name: "Projects",
       slug: "/dash/projects",
       active: responsive,
-      icon: <MdDashboardCustomize />,
+      icon: <PiAperture />,
     },
+
 
   ];
 
@@ -39,7 +49,9 @@ const SideBar: React.FC<SideBarProps> = ({
     <div
       className={`gogo__side__navbar ${
         responsive ? "gogo__side__navbar__responsive" : ""
-      }`}
+      } 
+      gogo__little__dark__${theme.themeMode}
+      `}
     >
       <div className="gogo__top__details__of__user">
         <div className="gogo__user__img">
@@ -56,7 +68,7 @@ const SideBar: React.FC<SideBarProps> = ({
                 <div className="gogo__change__input__container">
                   <Input
                     placeholder="New FullName..."
-                    className="gogo__edit_input"
+                    className={`gogo__edit_input  ${theme.themeMode == "dark" ? "gogo__dark__input": ""}`}
                     value={userNewFullName}
                     onChange={onChangeUserFullName}
                   />
@@ -79,7 +91,7 @@ const SideBar: React.FC<SideBarProps> = ({
           sideNav.active ? (
             <div
               className={`gogo__side__nav ${
-                location.pathname === "/dash/projects"
+                location.pathname === "/dash"
                   ? "gogo__side__nav__active"
                   : ""
               }`}
@@ -91,11 +103,7 @@ const SideBar: React.FC<SideBarProps> = ({
             </div>
           ) : (
             <div
-              className={`gogo__side__nav ${
-                location.pathname === "/dash/projects"
-                  ? "gogo__side__nav__active"
-                  : ""
-              }`}
+              className={`gogo__side__nav`}
               key={sideNav.name}
               onClick={() => navigate(sideNav.slug)}
             >

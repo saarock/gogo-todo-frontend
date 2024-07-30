@@ -32,6 +32,8 @@ export const updateFullName = createAsyncThunk(
 )
 
 
+
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -45,9 +47,14 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthenticated = false;
-      (state.user = null), (state.accessToken = null);
+      state.user = null;
+      state.accessToken = null;
       state.refreshToken = null;
     },
+    userGitUserNameChange: (state, action :PayloadAction<string>) => {
+      state.user.userGithubUserName = action.payload;
+      localStore.updateGitUserName(action.payload);
+    }
 
 
     }
@@ -72,6 +79,6 @@ export const authSlice = createSlice({
  );
 
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, userGitUserNameChange } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -243,6 +243,33 @@ class ProductServerService {
       throw error;
     }
   }
+
+  public async  checkCompleteOrNotCompleteBoard(boardId: number, isCompleted: boolean): Promise<boolean> {
+    try {
+      const response = await axiosInstance1.put(`/check-complete-or-not/${boardId}`, {isCompleted});
+      const data = await response.data;
+      if (data.status !== "OK") throw new Error(data.message);
+      return data.data;
+    } catch (error) {
+      error.handelError(error);
+      return error;
+    }
+  }
+
+  public async checkCompleteOrNotCompleteTask(id: number, isCompleteTask: boolean): Promise<boolean> {
+    try {
+
+      const response = await axiosInstance1.put(`/check-complete-or-not-task/${id}`, {isCompleted: isCompleteTask});
+      const data = await response.data;
+      if (data.status !== "OK") throw new Error(data.message);
+      return data.data;
+    } catch (error) {
+      errorUtil.handelError(error);
+      throw error;
+    }
+  }
+
+
 }
 
 const productServerService = new ProductServerService();

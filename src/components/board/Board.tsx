@@ -1,17 +1,26 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import "./board.css";
 import Task from "../task/Task";
-import { BoardProps, TaskDeleteDetails, TaskUpdateDetails } from "../../types";
+import {BoardProps, Status, TaskDeleteDetails, TaskUpdateDetails} from "../../types";
 import Input from "../input/Input";
 import { color } from "../../utils";
 import { BsThreeDots } from "react-icons/bs";
 import Button from "../button/Button";
 import { FiDelete } from "react-icons/fi";
 import { TaskActionTypes, taskReducer } from "../../reducer/task.reducer";
-import { deleteBoardById, deleteTaskById, updateTaskById } from "../../features/ProductSlice";
+import {
+  changeCompleteStatusForBoard, changeCompleteStatusForTask,
+  deleteBoardById,
+  deleteTaskById,
+  updateTaskById
+} from "../../features/ProductSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import Loader from "../loader/Loader";
+import {Label} from "reactstrap";
+import useTheme from "../../context/modeContext.ts";
+import {FaEdit} from "react-icons/fa";
+import {MdDelete} from "react-icons/md";
 
 const Board: React.FC<BoardProps> = ({
   onWhichBoardUserWantToAddTheTask,
@@ -33,7 +42,8 @@ const Board: React.FC<BoardProps> = ({
   cancleUpdateBoardName,
   onChangeEventOfBoardName,
   saveNewBoardName,
-  deleteBoard
+  deleteBoard,
+    onCompleteOrNotCompleteCheck
 }) => {
   const [isTaskOptionOpened, setTaskOption] = useState(false);
   const [taskId, setTaskId] = useState<number>(-1);
@@ -46,6 +56,7 @@ const Board: React.FC<BoardProps> = ({
     isUserWantToUpdateTheTaskTitle: false,
      isUserWantToUpdateTheTaskDesc: false
   });
+
 
   const dispatch = useDispatch();
 
@@ -63,47 +74,6 @@ const Board: React.FC<BoardProps> = ({
       payload : false
     });
   };
-
-  const dragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.currentTarget as HTMLElement;
-    e.dataTransfer.effectAllowed = "move";
-    setBeingDragged(target);
-    target.style.backgroundColor = "pink";
-    setTimeout(() => {
-      target.style.display = "none";
-    });
-  };
-
-  const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const target = e.currentTarget as HTMLElement;
-    target.classList.add("highlight");
-  };
-
-  const dragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.currentTarget as HTMLElement;
-
-    target.classList.remove("highlight");
-  };
-
-  const dragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.currentTarget as HTMLElement;
-    target.classList.add("highlight");
-  };
-
-  const dragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.currentTarget as HTMLElement;
-    target.classList.remove("highlight");
-  };
-
-  const drop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (!beingDragged) return;
-    const target = e.currentTarget as HTMLElement;
-    target.appendChild(beingDragged);
-    target.classList.remove("highlight");
-  };
-
 
   const randomColor = useMemo(() => {
     return color.generateRandomColor();
@@ -123,8 +93,8 @@ const Board: React.FC<BoardProps> = ({
 
     await dispatch<any>(updateTaskById(updateDetails));
     toast.success("Task title updated successfully")
-    
-    
+
+
   } catch(error) {
     toast.error(error instanceof Error ? error.message : "Something wrong while updating the task details");
   } finally {
@@ -151,7 +121,7 @@ const Board: React.FC<BoardProps> = ({
 
     await dispatch<any>(updateTaskById(updateDetails));
     toast.success("Task content updated successfully");
-  
+
   } catch(error) {
     toast.error(error instanceof Error ? error.message : "Something wrong while updating the task details");
   } finally {
@@ -221,52 +191,67 @@ const Board: React.FC<BoardProps> = ({
       payload: e.target.value
     });
   }, [taskState.taskDesc]);
-  
+
   const hideTaskOption = useCallback(() => {
     setTaskOption(false)
   }, [isTaskOptionOpened])
 
- 
+
+  const handelCheckTask = useCallback(async (is: boolean, taskId: number, boardId: number) => {
+    try {
+      const details : Status  = {
+        taskId,
+        status : !is,
+        boardId
+      }
+      await dispatch<any>(changeCompleteStatusForTask(details));
+    } catch (error) {
+      toast.error(error instanceof  Error ? error.message : "Something wrong pleased try again by reloading the page")
+    }
+
+  }, []);
+
+  const theme = useTheme();
+
   if (loading) return <Loader/>
 
-
+  // style={{borderTop: `1rem solid ${randomColor}`, margin: "0.5rem"}}
   return (
     <div
-      className="gogo__board"
-      draggable
-      onDragStart={dragStart}
-      onDragOver={dragOver}
-      onDragEnd={dragEnd}
-      onDragEnter={dragEnter}
-      onDragLeave={dragLeave}
-      onDrop={drop}
-      style={{borderTop: `1rem solid ${randomColor}`, margin: "0.5rem"}}
+      className={`gogo__board ${board.complete ? "board-completed" : ""} ${theme.themeMode === "dark"? "gogo__dark__board": ""}`}
+
     >
+
       {whichBoardOptionsUserWantToSee == board.boardId &&
         isWantToSeeOptions && (
-          <div className="gogo__options__of__board">
-            <Button onClick={() => updateBoardName(board.boardId || -1)} text="Update"/>
-            <Button text="Delete" onClick={() => deleteBoard(board.boardId || -1)}/>
-          </div>
-        )}
+              <div className="gogo__options__of__board">
+                <Button onClick={() => updateBoardName(board.boardId || -1)} text="Update" icon = {<FaEdit/>} />
+                <Button text="Delete" onClick={() => deleteBoard(board.boardId || -1)} icon={<MdDelete/>}/>
+                <div className={`gogo__check_box`}>
+                  <label htmlFor={`check_box_${taskId}`}>{board.complete ? "not-completed": " completed"}</label>
+                  <input type="checkbox" onChange={() => onCompleteOrNotCompleteCheck(board.complete, board.boardId)}
+                         checked={board.complete}/>
+                </div>
+              </div>
+          )}
       <span onClick={() => openBoardOptions(board.boardId || -1)} className="gogo-bs-three-dots">
         <BsThreeDots/>
       </span>
       {userProjectDetails ? (
-        <div>
-          <div className="gogo__board__title" onClick={onBoardTitleClick}>
+          <div>
+            <div className="gogo__board__title" onClick={onBoardTitleClick}>
             <h2>
               {" "}
               {isUserWantToUpdateTheBoardName &&
               board.boardId === whichBoardOptionsUserWantToSee ? (
-                <div>
+                <div className={`gogo__board_update__buttons`}>
                   {" "}
-                  <Input type="text"  onChange={onChangeEventOfBoardName}/> 
+                  <Input type="text"  onChange={onChangeEventOfBoardName}/>
                   <Button onClick={saveNewBoardName} text="Saved" className="gogo__board__newname__saved__button"/>
                   <Button onClick={cancleUpdateBoardName} text="Cancel" className="gogo__board__delete__button"/>
                 </div>
               ) : (
-                board.name
+                  board.name
               )}
             </h2>
           </div>
@@ -291,11 +276,12 @@ const Board: React.FC<BoardProps> = ({
                   onChangeTaskNewDesc={onChangeTaskNewDesc}
                   hideOption={hideTaskOption}
                   deleteTask={deleteTask}
+                  onCheckOrUnCheck = {handelCheckTask}
                   boardId={board.boardId || -1}
 
                 />
               </div>
-              
+
             ))}
           {onWhichBoardUserWantToAddTheTask === board.name && (
             <div className="gogo__board__title">
@@ -309,7 +295,7 @@ const Board: React.FC<BoardProps> = ({
                 value={userNewTaskDescName}
                 placeholder="desc..."
               />
-              
+
               <Button
               text="Add"
                 onClick={() =>
@@ -320,9 +306,9 @@ const Board: React.FC<BoardProps> = ({
                   )
                 }
              />
-              
+
               <Button onClick={onClickListenerToCancelTheAddTask} text="cancle" />
-             
+
             </div>
           )}
           {onWhichBoardUserWantToAddTheTask !== board.name && (
@@ -330,7 +316,7 @@ const Board: React.FC<BoardProps> = ({
               className="gogo__board__add__task"
               onClick={() => onClickListenerToAddTask(board.name)}
             >
-              <Button text="Add New Task" className="gogo__add__button" />
+              <Button text="Add New Task" className="gogo__add__button"      disabled={board.complete} style={board.complete ? {cursor: "not-allowed", background: "gray"}: {}}/>
             </div>
           )}
         </div>

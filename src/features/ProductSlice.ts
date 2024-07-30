@@ -9,7 +9,7 @@ import {
   BoardIdAndName,
   BoardIdAndProjectIndex,
   TaskUpdateDetails,
-  TaskDeleteDetails,
+  TaskDeleteDetails, BoardStatus, Status,
 } from "../types";
 import { productServerService } from "../services";
 import { productUtil } from "../utils";
@@ -285,6 +285,43 @@ export const deleteTaskById = createAsyncThunk(
   }
 );
 
+
+export const changeCompleteStatusForBoard = createAsyncThunk(
+    "change-complete-status-for-board",
+    async (boardDetails: Status, thunkAPI) => {
+      try {
+
+        if (boardDetails.taskId <= -1) throw new Error("Invalid task id");
+        const isComplete = await productServerService.checkCompleteOrNotCompleteBoard(boardDetails.boardId, boardDetails.status);
+        return { isComplete, boardId: boardDetails.boardId };
+
+      } catch (error) {
+        return thunkAPI.rejectWithValue(
+            error instanceof Error
+                ? error.message
+                : "Something wrong while updating the bord status"
+        );
+      }
+    }
+);
+
+export const changeCompleteStatusForTask = createAsyncThunk(
+    "change-complete-status-for-task",
+    async (taskDetails: Status, thunkAPI) => {
+      try {
+        if (taskDetails.taskId <= -1) throw new Error("Invalid task id");
+        const isComplete= await productServerService.checkCompleteOrNotCompleteTask(taskDetails.taskId, taskDetails.status);
+        return { isComplete, boardId: taskDetails.boardId, taskId: taskDetails.taskId };
+      } catch (error) {
+        return thunkAPI.rejectWithValue(
+            error instanceof Error
+                ? error.message
+                : "Something wrong while updating the bord status"
+        );
+      }
+    }
+);
+
 export const userProjectSlice = createSlice({
   name: "projects",
   initialState,
@@ -477,7 +514,7 @@ export const userProjectSlice = createSlice({
       const findBoardById = project.boards.find(
         (board) => board.boardId === taskDetails.boardId
       );
-      if (!findBoardById) throw new Error("Can't found baord");
+      if (!findBoardById) throw new Error("Can't found board");
       findBoardById.tasks = findBoardById.tasks.filter(
         (task) => task.taskId !== taskDetails.taskId
       );
@@ -491,6 +528,62 @@ export const userProjectSlice = createSlice({
           : "Sorry can't delete the task try again"
       );
     });
+
+
+    builder.addCase(changeCompleteStatusForTask.fulfilled, (state, action) => {
+      const {isComplete, taskId, boardId} = action.payload;
+      const projectName = productUtil.getCurrentProductName();
+      const project = state.find(
+          (project) =>
+              project.name.toLowerCase().trim() === projectName.trim().toLowerCase()
+      );
+
+      if (!project)
+        throw new Error("Project doesn't found or incorrect project name");
+      const findBoardById = project.boards.find(
+          (board) => board.boardId === boardId
+      );
+      if (!findBoardById) throw new Error("Can't found board");
+
+
+      findBoardById.tasks = findBoardById.tasks.map((task) =>
+          task.taskId === taskId
+              ? { ...task, complete: isComplete }  // Return a new object with updated 'complete' status
+              : task  // Return the unchanged task
+      );
+
+
+    });
+
+    builder.addCase(changeCompleteStatusForTask.rejected, (state, action) => {
+      throw new Error(
+          action.payload
+              ? action.payload.toString()
+              : "Sorry Some thing wrong try again by reloading the page"
+      );
+    });
+
+    builder.addCase(changeCompleteStatusForBoard.fulfilled, (state, action) => {
+      const {isComplete, boardId} = action.payload;
+      const projectName = productUtil.getCurrentProductName();
+      const project = state.find(
+          (project) =>
+              project.name.toLowerCase().trim() === projectName.trim().toLowerCase()
+      );
+
+      if (!project)
+        throw new Error("Project doesn't found or incorrect project name");
+
+      project.boards = project.boards.map((board) =>
+          board.boardId === boardId
+              ? { ...board, complete: isComplete }  // Return a new object with updated 'complete' status
+              : board  // Return the unchanged task
+      );
+
+
+    });
+
+
   },
 });
 

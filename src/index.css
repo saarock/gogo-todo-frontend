@@ -4,6 +4,7 @@
 
 
 
+
 body {
   /* background-color: #1d1e22; */
   /* color: rgb(73, 60, 60); */
@@ -341,3 +342,45 @@ body {
   top: 0;
 }
 /* gogo edit section css end */
+
+/**
+dark mode css start
+ */
+.dark {
+  background-color: rgb(31, 41, 55);
+  color: white !important;
+}
+.light {
+  background-color: white;
+  color: black;
+}
+
+.gogo__little__dark__dark {
+  background-color: rgb(31, 41, 57) !important;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  color: floralwhite;
+}
+.gogo__little__dark__light {
+  color: black;
+}
+.gogo__dark__input {
+  background-color: #455a70 !important;
+}
+
+
+
+/**
+dark mode css end
+ */
+/**
+gogo tags css start
+ */
+.gogo__tag {
+  font-size: 0.7rem !important;
+  font-weight: bold;
+  background-color: var(--gogo--primary--color) ;
+
+}
+/**
+gogo tags css end
+ */

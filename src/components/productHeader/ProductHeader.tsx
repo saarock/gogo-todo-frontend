@@ -7,6 +7,7 @@ import { IoIosCreate } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { BiLeftArrow, BiLeftArrowCircle } from "react-icons/bi";
 import { color } from "../../utils";
+import useTheme from "../../context/modeContext.ts";
 /**
  * @note (Don't get confuse between the ProductHeader and ProductHeaders file one (## ProductHeaders ## ) is for when user visit at the project level where user can see
  *  all the Product/ Project and get the pagination, search features and another ProductHeader is for the only individual product where user can create the new Project/ Product
@@ -27,7 +28,7 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({
   userProject,
 }) => {
   const navigate = useNavigate();
-  const colorCache = useMemo(() => color.generateRandomColor(), [])
+  const theme = useTheme();
   return (
     <div>
       {/* Forward the ref to the div element */}
@@ -43,12 +44,12 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({
               </span>
             </button>
           </div>
-          <div className="gogo__product__title" style={{color: colorCache}}>
+          <div className="gogo__product__title">
             {userProject.name || "Project Title"}
           </div>
           <div className="gogo__product__create__div">
             <Input
-              className="gogo__create__product__input"
+              className={`gogo__create__product__input ${theme.themeMode == "dark" ? "gogo__dark__input": ""}`}
               onChange={boardInputOnChange}
               placeholder="Add Boards"
               value={boardName}

@@ -2,8 +2,6 @@ import React, { useCallback, useReducer, useState } from "react";
 import { ChildrenProps, RootState, User, UserNewNameAndId } from "../types";
 import SideBar from "./sidebar/SideBar";
 import { UserActionType, userInitialState, userReducer } from "../reducer/user.reducer";
-import userService from "../services/userService";
-import useSelection from "antd/es/table/hooks/useSelection";
 import { useSelector } from "react-redux";
 import { authClient } from "../services";
 import { localStore } from "../utils";

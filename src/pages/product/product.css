@@ -1,6 +1,7 @@
 .gogo__product__container {
     display: flex;
     overflow: hidden;
+    min-height: 100vh;
 
 }
 .gogo__product__page {
@@ -12,7 +13,6 @@
     display: flex;
     height: fit-content;
     overflow: scroll;
-    background-color: white;
 }
 
 .gogo__product__boards::-webkit-scrollbar {
@@ -33,3 +33,14 @@
     align-items: center;
     width: 100%;
 }
+
+/**
+dark mode start
+ */
+.product__board__dark__mode {
+    background-color: rgb(31, 41, 60);
+
+}
+/**
+dark mode end
+ */

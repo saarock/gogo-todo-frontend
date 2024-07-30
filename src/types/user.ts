@@ -14,6 +14,7 @@ export interface User {
   createdAt?: string;
   lastModifiedAt?: string;
   password?: string;
+  userGithubUserName?: string;
 }
 
 export interface UserResponse {
@@ -78,6 +79,7 @@ export interface Task {
   index?: number;
   createdAt? : string;
   updatedAt?:string;
+  complete?: boolean
 
   // Define properties for a task
 }
@@ -92,6 +94,7 @@ export interface Board {
   boardIndex?: number;
   createdAt?: string;
   updatedAt?: string;
+  complete?: boolean
   // projectName?: string;
 }
 
@@ -182,8 +185,19 @@ export interface TaskDeleteDetails {
   taskId: number
 }
 
+export interface Status {
+  taskId?: number;
+  status: boolean;
+  boardId?: number;
+}
 
 export interface UserNewNameAndId {
   id: number,
   fullName: string;
+}
+
+export interface Review {
+  fullName: string;
+  email: string;
+  message: string;
 }

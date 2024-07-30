@@ -6,10 +6,12 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
-    padding: 15px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     position: relative;
     overflow: hidden;
+    width: 22rem;
+    padding: 2rem
+;
 }
 
 .gogo__board__task:hover {
@@ -21,14 +23,23 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
     margin-bottom: 10px;
+
+
+}
+
+.gogo__board__task__top__title {
+    width: 100%;
+    padding: 0.2rem;
 }
 
 .gogo__board__task__top__title h3 {
+    width: 100%;
     margin: 0;
+    font-weight: bold;
     font-size: 1.2em;
     color: #343a40;
+    word-wrap: break-word;
 }
 
 .gogo__board__task__top__options {
@@ -45,6 +56,8 @@
 .gogo__board__task__content {
     font-size: 1em;
     color: #495057;
+    padding-left: 0.7rem;
+
 }
 
 /* Responsive Design */
@@ -159,9 +172,6 @@
     height: 100vh;
     top: 0;
     box-shadow: 0.1rem 0.1rem 0.9rem 0.1rem #455a70;
-
-
-
 }
 
 .d-no-title {
@@ -193,4 +203,40 @@
 }
 .active__task__option {
     background-color: var(--gogo--primary--color);
+}
+
+.task-completed .gogo__board__task__top__title  h3 {
+    color: white;
+}
+.task-completed .gogo__board__task__content  {
+    color: white;
+
+}
+
+.gogo__task__at__dark__mode .gogo__board__task__top__title  h3 {
+    color: white;
+}
+.gogo__task__at__dark__mode .gogo__board__task__content  {
+    color: white;
+
+}
+
+.gogo__check_box {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    align-items: center;
+}
+.gogo__check_box input {
+    margin: 1rem;
+}
+.gogo__task__at__dark__mode {
+    background: #455a70;
+    color: white;
+}
+
+.task-completed {
+    color: white;
+    background-color: #2a2a2a;
+
 }

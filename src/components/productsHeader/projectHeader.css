@@ -6,7 +6,7 @@
     top: 0;
     left: 0;
     background-color: rgb(247, 243, 243);
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /*box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;*/
 
 }
 
@@ -18,4 +18,7 @@
 }
 .gogo__text__logo:active {
     outline: 1px dashed green;
+}
+.gogo__project__search {
+    color: black;
 }

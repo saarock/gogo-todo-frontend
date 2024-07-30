@@ -28,6 +28,7 @@ export interface TaskProps {
   taskId: number;
   deleteTask: (boardId:number) => void;
   boardId: number;
+  onCheckOrUnCheck : (is: boolean, taskId: number, boardId: number) => void;
 }
 export interface BoardProps {
   onClickListenerToAddTask: (boardName: string) => void;
@@ -58,7 +59,9 @@ export interface BoardProps {
   cancleUpdateBoardName: () => void;
   onChangeEventOfBoardName: (e:React.ChangeEvent<HTMLInputElement>) => void;
   saveNewBoardName: () => void;
-  deleteBoard:(boardId: number) => void; 
+  deleteBoard:(boardId: number) => void;
+  onCompleteOrNotCompleteCheck: (is: boolean, boardId: number) => void;
+
 
 }
 

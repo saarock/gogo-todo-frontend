@@ -42,7 +42,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
 }
 
 .gogo-main-banner .gogo-left-content {
@@ -59,7 +59,6 @@
 .gogo-main-banner .gogo-left-content h2 {
   font-size: 55px;
   font-weight: bold;
-  color: #2a2a2a;
   line-height: 72px;
 }
 
@@ -121,29 +120,32 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 992px) {
+@media (max-width: 1425px) {
   .gogo-main-banner .gogo-left-content {
     margin-right: 0;
     text-align: center;
   }
 
   .gogo-main-banner .gogo-left-content form {
-    margin-top: 20px;
+    margin-top: 27px;
   }
 
   .gogo-main-banner .gogo-left-content h2 {
-    font-size: 40px;
+    font-size: 46px;
     line-height: 50px;
   }
 
   .gogo-main-banner .gogo-left-content h6 {
-    font-size: 16px;
+    font-size: 26px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1145px) {
   .gogo-main-banner {
     padding: 2rem;
+  }
+  .gogo-row {
+    flex-wrap: wrap;
   }
 
   .gogo-container {

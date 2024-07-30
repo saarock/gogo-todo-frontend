@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 // import { addProject } from "../../features/ProductSlice";
 import {
+  changeCompleteStatusForBoard,
   createProject,
   createTask,
   deleteBoardById,
@@ -23,7 +24,7 @@ import {
   Task,
   RootState,
   BoardIdAndName,
-  BoardIdAndProjectIndex,
+  BoardIdAndProjectIndex, Status,
 } from "../../types";
 import toast from "react-hot-toast";
 import useCheckProductsAndReturnIfExist from "../../hooks/useCheckProductsAndReturnIfExist";
@@ -39,6 +40,7 @@ import {
 } from "../../reducer/board.reducer";
 import ProductWrapper from "../../components/ProductWrapper";
 import ReactPaginate from "react-paginate";
+import useTheme from "../../context/modeContext.ts";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -354,8 +356,30 @@ const Product = () => {
     }
   }, [currentUserProject]);
 
+
+
+
+  const handelOnCompleteOrNotCompleteCheck = useCallback(async (is: boolean, boardId: number) => {
+    try {
+      const boardDetails : Status = {
+        status: !is,
+        boardId
+      }
+      await dispatch<any>(changeCompleteStatusForBoard(boardDetails));
+
+    } catch (error) {
+      toast.error(
+          error instanceof Error
+              ? error.message
+              : "Sorry cannot delete the board something is wrong try again"
+      );
+    }
+    },[]);
+
+  const theme = useTheme();
+
   return (
-    <div className="gogo__product__container">
+    <div className={`gogo__product__container ${theme.themeMode === "dark"? "product__board__dark__mode": ""}` }>
       {loading && <Loader />}
       {
         <ProjectProductContainer>
@@ -407,6 +431,7 @@ const Product = () => {
                         onChangeEventOfBoardName={onChangeEventOfBoardName}
                         saveNewBoardName={saveNewBoardName}
                         deleteBoard={deleteBoard}
+                        onCompleteOrNotCompleteCheck = {handelOnCompleteOrNotCompleteCheck}
                       />
                     </div>
                   ))

@@ -33,7 +33,7 @@ class AuthServer {
       if (responseData.status !== "CREATED") throw new Error(responseData.message);
       return responseData;
     }  catch(error) {
-      errorUtil.handelError()
+      errorUtil.handelError(error)
       return null
     }
    
@@ -46,7 +46,7 @@ class AuthServer {
       if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
-      errorUtil.handelError()
+      errorUtil.handelError(error)
       return null;
     }
   }
@@ -58,7 +58,7 @@ class AuthServer {
       if (data.status !== "OK") throw new Error(data.message);
       return data;
     } catch (error) {
-      errorUtil.handelError();
+      errorUtil.handelError(error);
       throw error;
 
     }
@@ -71,7 +71,7 @@ class AuthServer {
       if (data.status !== "ACCEPTED") throw new Error(data.message);
       return data.status === "OK";
     } catch (error) {
-      errorUtil.handelError()
+      errorUtil.handelError(error)
       throw error;
     }
   }
@@ -92,7 +92,7 @@ class AuthServer {
       }
       return data;
     } catch (error) {
-      errorUtil.handelError()
+      errorUtil.handelError(error)
       throw error;
     }
   }

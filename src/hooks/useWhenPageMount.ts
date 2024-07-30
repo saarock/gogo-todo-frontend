@@ -20,6 +20,7 @@ const useWhenPageMount = () => {
         const userData: User | null | Project[] = localStore.getData(
             USER_LOCALSTORAGE_DATA_NAME
         );
+        console.log(userData)
         const refreshToken = jwtUtil.getToken(REFRESH_TOKEN__NAME);
         const accessToken = jwtUtil.getToken(ACCESS_TOKEN_NAME);
 
@@ -43,7 +44,6 @@ const useWhenPageMount = () => {
     })();
   }, []);
 
-  localStore.updateIsMore(true)
   return {isLoading, setIsLoading}
 };
 

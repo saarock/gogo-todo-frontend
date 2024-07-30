@@ -52,3 +52,10 @@ export interface ContactCompProps {
   message: string;
 
 }
+
+export interface HeaderProps {
+ lightTheme: () => void;
+darkTheme : () =>void;
+  themeMode: string;
+
+}

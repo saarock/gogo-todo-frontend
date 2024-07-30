@@ -35,6 +35,14 @@ class LocalStorage {
     }
   }
 
+  updateGitUserName(newName: string) {
+    const data = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_DATA_NAME) || "null");
+    if (data && data !== "null") {
+      data.userGithubUserName = newName;
+      localStore.setData(USER_LOCALSTORAGE_DATA_NAME, data);
+    }
+  }
+
   updateLocalStorageData(storageName:string) {
     // const data = localStore.getData(storageName) || [];
   }
@@ -49,11 +57,18 @@ class LocalStorage {
     return JSON.parse(data);
   }
 
-  setMode() {
-    localStorage.setItem("MODE", localStorage.getItem("MODE") ? "false" : 'true')
+  setTotalProject(totalNumberOfProjects: number) {
+    localStorage.setItem("TOTAL", JSON.stringify(totalNumberOfProjects));
   }
-  getMode():boolean {
-    return JSON.parse(localStorage.getItem("MODE"));
+  getProjectNumber(){
+    return JSON.parse(localStorage.getItem("TOTAL"));
+  }
+
+  setMode(mode: string) {
+    localStorage.setItem("mode", JSON.stringify(mode));
+  }
+  getMode() {
+    return JSON.parse(localStorage.getItem("mode"))  || "light";
   }
 }
 

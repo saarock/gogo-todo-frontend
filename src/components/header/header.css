@@ -1,7 +1,6 @@
 .gogo__header {
     position: sticky;
     top: 0;
-    background-color: white;
     z-index: 1000;
 }
 
@@ -15,6 +14,7 @@
 .gogo__header__logo {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .gogo__header__logo img {
@@ -100,12 +100,28 @@
     color: white;
     padding: 1rem;
 }
+.gogo__nav__menu {
+    display: none;
+    font-size: 2rem;
+}
 
 /* Responsive Styles */
 @media (max-width: 768px) {
     .gogo__header__nav {
         flex-direction: column;
         padding: 0.5rem;
+        transition: 1s ease-in-out;
+        height: 4rem;
+        overflow: hidden;
+    }
+
+    .gogo__nav__menu {
+        display: block;
+        position: absolute;
+        left: 0;
+    }
+    .showNav {
+        height: fit-content;
     }
 
     .gogo__header__nav__navs {

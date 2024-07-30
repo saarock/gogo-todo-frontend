@@ -89,14 +89,18 @@ const Project = () => {
 
 
   const next = useCallback(() => {
-    (async () => {
-      const data = await productServerService.getProducts(user.user?.id!, pageNumber+1);
-      const useProducts: UserProjectType[] = data.content;
-      await dispatch(addProducts(useProducts));
-      localStore.updateIsMore(data.last);
-      setIsLast(localStore.IsMoreProduct());
-      setPageNumber((prev) => prev+1)
-    })();
+    try {
+      (async () => {
+        const data = await productServerService.getProducts(user.user?.id!, pageNumber + 1);
+        const useProducts: UserProjectType[] = data.content;
+        await dispatch(addProducts(useProducts));
+        localStore.updateIsMore(data.last);
+        setIsLast(localStore.IsMoreProduct());
+        setPageNumber((prev) => prev + 1)
+      })();
+    } catch (error) {
+      toast.error(error instanceof  Error ? error.message :"Sorry cannot load more projects");
+    }
   }, [user, pageNumber, isLast, pageNumber]);
 
 
@@ -262,6 +266,7 @@ const Project = () => {
 
 
   if (isLoading) {
+
     return <Loader/>
   }
 
