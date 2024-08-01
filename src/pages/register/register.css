@@ -2,16 +2,13 @@
     z-index: 999;
     height: 90vh;
     padding: 2rem;
-  
 }
-
 
 /* Responsive Styles */
 @media (max-width: 1226px) {
     .register__page {
         padding: 1rem;
         flex-direction: column;
-
     }
 
     .gogo__form {

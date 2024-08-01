@@ -1,9 +1,8 @@
 class JwtService {
-    validateAccessToken() : boolean {
+    validateAccessToken(): boolean {
         return true
     }
-
 }
 
-const jwtService = new JwtService();
-export default jwtService;
+const jwtService = new JwtService()
+export default jwtService

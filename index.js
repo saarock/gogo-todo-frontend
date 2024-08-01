@@ -1,8 +1,8 @@
 const a = {
-    name : "aayush",
-    caste: "basnet",
-    school:"self learner"
+    name: 'aayush',
+    caste: 'basnet',
+    school: 'self learner',
 }
 
-const {name, ...all} = a;
-console.log(all);
+const { name, ...all } = a
+console.log(all)

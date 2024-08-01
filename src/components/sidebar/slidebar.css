@@ -5,7 +5,7 @@
     position: sticky;
     top: -2rem;
     border-top-right-radius: 2rem;
-    width:15rem;
+    width: 15rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,7 +43,7 @@
     cursor: pointer;
     top: 0;
 }
-.gogo__side__navbar__toggle:active  {
+.gogo__side__navbar__toggle:active {
     outline: 2px dotted green;
 }
 .gogo__side__navbar__responsive {
@@ -86,5 +86,8 @@
     border-radius: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center
+    justify-content: center;
+}
+.gogo__user__fullname {
+    word-break: break-all;
 }

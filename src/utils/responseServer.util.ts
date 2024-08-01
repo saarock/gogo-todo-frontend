@@ -1,10 +1,12 @@
-import {UN_AUTHORIZED_NAME} from "../constant.ts";
+import { UN_AUTHORIZED_NAME } from '../constant.ts'
 
 class ResponseServerUtil {
-    public checkIsUnauthorized(currentMessageFromServiceServer: string): boolean {
+    public checkIsUnauthorized(
+        currentMessageFromServiceServer: string
+    ): boolean {
         return currentMessageFromServiceServer === UN_AUTHORIZED_NAME
     }
 }
 
-const responseServerUtil = new ResponseServerUtil();
-export { responseServerUtil };
+const responseServerUtil = new ResponseServerUtil()
+export { responseServerUtil }

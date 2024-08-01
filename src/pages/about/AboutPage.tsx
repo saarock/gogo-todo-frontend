@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaGithub, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import React from 'react'
+import { FaGithub, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
 const teamMembers = [
     {
@@ -21,45 +21,85 @@ const teamMembers = [
         twitter: 'https://twitter.com/janesmith',
     },
     // Add more team members as needed
-];
+]
 
 const AboutPage = () => {
     return (
         <div className="min-h-screen text-gray-900">
-
             <main className="container mx-auto px-4 py-16">
                 <section id="about" className="text-center mb-12">
-                    <h2 className="text-4xl font-bold mb-4 text-gogo-primary">About Us</h2>
+                    <h2 className="text-4xl font-bold mb-4 text-gogo-primary">
+                        About Us
+                    </h2>
                     <p className="text-lg text-gray-400">
-                        Our mission is to create the best products for our customers. We are a team of dedicated professionals committed to delivering high-quality solutions.
+                        Our mission is to create the best products for our
+                        customers. We are a team of dedicated professionals
+                        committed to delivering high-quality solutions.
                     </p>
                 </section>
 
                 <section className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4 text-gogo-primary">Our Team</h2>
+                    <h2 className="text-3xl font-bold mb-4 text-gogo-primary">
+                        Our Team
+                    </h2>
                     <div className="flex flex-wrap justify-center space-x-8">
                         {teamMembers.map((member, index) => (
-                            <div key={index} className="max-w-sm bg-white rounded-lg shadow-lg overflow-hidden m-4">
+                            <div
+                                key={index}
+                                className="max-w-sm bg-white rounded-lg shadow-lg overflow-hidden m-4"
+                            >
                                 <img
                                     src={member.image}
                                     alt={member.name}
                                     className="w-full h-48 object-cover"
                                 />
                                 <div className="p-6">
-                                    <h3 className="text-2xl font-bold mb-2">{member.name}</h3>
-                                    <p className="text-gogo-primary mb-4">{member.role}</p>
+                                    <h3 className="text-2xl font-bold mb-2">
+                                        {member.name}
+                                    </h3>
+                                    <p className="text-gogo-primary mb-4">
+                                        {member.role}
+                                    </p>
                                     <div className="flex justify-center space-x-4">
-                                        <a href={member.github} target="_blank" rel="noopener noreferrer">
-                                            <FaGithub size={30} className="hover:text-gogo-primary transition-colors duration-300" />
+                                        <a
+                                            href={member.github}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <FaGithub
+                                                size={30}
+                                                className="hover:text-gogo-primary transition-colors duration-300"
+                                            />
                                         </a>
-                                        <a href={member.instagram} target="_blank" rel="noopener noreferrer">
-                                            <FaInstagram size={30} className="hover:text-gogo-primary transition-colors duration-300" />
+                                        <a
+                                            href={member.instagram}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <FaInstagram
+                                                size={30}
+                                                className="hover:text-gogo-primary transition-colors duration-300"
+                                            />
                                         </a>
-                                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
-                                            <FaLinkedin size={30} className="hover:text-gogo-primary transition-colors duration-300" />
+                                        <a
+                                            href={member.linkedin}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <FaLinkedin
+                                                size={30}
+                                                className="hover:text-gogo-primary transition-colors duration-300"
+                                            />
                                         </a>
-                                        <a href={member.twitter} target="_blank" rel="noopener noreferrer">
-                                            <FaTwitter size={30} className="hover:text-gogo-primary transition-colors duration-300" />
+                                        <a
+                                            href={member.twitter}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <FaTwitter
+                                                size={30}
+                                                className="hover:text-gogo-primary transition-colors duration-300"
+                                            />
                                         </a>
                                     </div>
                                 </div>
@@ -69,7 +109,7 @@ const AboutPage = () => {
                 </section>
             </main>
         </div>
-    );
-};
+    )
+}
 
-export default React.memo(AboutPage);
+export default React.memo(AboutPage)

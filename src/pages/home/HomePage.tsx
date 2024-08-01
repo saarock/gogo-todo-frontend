@@ -1,16 +1,15 @@
-import { Container, GoToTop, MainTop } from "../../components";
-
+import { Container, MainTop } from '../../components'
 
 const HomePage = () => {
-  return (
-    <>
-    <Container>
-      <MainTop />
-    </Container>
-    
-    </>
-  
-  );
-};
+    return (
+        <>
+            <Container>
+                <section>
+                <MainTop />
+                </section>
+            </Container>
+        </>
+    )
+}
 
-export default HomePage;
+export default HomePage

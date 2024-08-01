@@ -12,7 +12,7 @@
     font-weight: 600;
 }
 .gogo__product__title::before {
-    content: "Product Name: ";
+    content: 'Product Name: ';
 }
 
 .gogo__product__create__div {
@@ -25,7 +25,6 @@
     border-radius: 1rem;
     margin: 0 1rem;
 }
-
 
 .gogo__create__product__input:focus {
     outline: 3px solid var(--gogo--primary--color);
@@ -46,8 +45,6 @@
     justify-content: center;
     align-items: center;
     height: 68vh;
-
-
 }
 .gogo__show__to__create__newproduct__button {
     font-size: 2rem;
@@ -70,7 +67,6 @@
     width: 7rem;
     border-radius: 1rem;
     box-shadow: 0.3rem 0.3rem 0.4rem var(--gogo--primary--color);
-
 }
 
 /**
@@ -81,3 +77,10 @@
 
 dark mode css end
  */
+
+@media (max-width: 814px) {
+    .gogo__product__level__header {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}

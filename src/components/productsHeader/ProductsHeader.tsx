@@ -1,12 +1,12 @@
-import React from 'react';
-import { ProjectHeaderProps } from '../../types';
-import "./projectHeader.css"
-import { useNavigate } from 'react-router-dom';
-import useTheme from "../../context/modeContext.ts";
-import {Input} from "../index.ts";
+import React from 'react'
+import { ProjectHeaderProps } from '../../types'
+import './projectHeader.css'
+import { useNavigate } from 'react-router-dom'
+import useTheme from '../../context/modeContext.ts'
+import { Input } from '../index.ts'
 
 /**
- * @note (Don't be the configue between the ProductHeader and ProductHeaders file one (## ProductHeaders ## ) is for when user visit at the project level where user can see 
+ * @note (Don't be the configue between the ProductHeader and ProductHeaders file one (## ProductHeaders ## ) is for when user visit at the project level where user can see
  *  all the Product/ Project and get the pagination, search features and another ProductHeader is for the only individual product where user can create the new Project/ Product
  *  and can get the update the product name feature as well as search also;
  *  )
@@ -14,24 +14,30 @@ import {Input} from "../index.ts";
  * @returns ProductHeader for more inmormation read the @note section;
  */
 
-
-
-
-const ProductHeaders: React.FC<ProjectHeaderProps> = ({next}) => {
-    const theme = useTheme();
-    const navigate = useNavigate();
-    const goToHome = (e:React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        navigate("/");
+const ProductHeaders: React.FC<ProjectHeaderProps> = ({ next }) => {
+    const theme = useTheme()
+    const navigate = useNavigate()
+    const goToHome = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault()
+        navigate('/')
     }
     return (
         <div>
-            <nav className={`flex items-center justify-between p-4 rounded-md gogo__project__level__header gogo__little__dark__${theme.themeMode}`}>
-                <div>
-                    <a href="/" className="gogo__text__logo" onClick={goToHome}>GoGo.com</a>
+            <nav
+                className={`flex items-center justify-between p-4 rounded-md gogo__project__level__header gogo__little__dark__${theme.themeMode}`}
+            >
+                <div className={`gogo__logo`}>
+                    <a href="/" className="gogo__text__logo" onClick={goToHome}>
+                        GoGo.com
+                    </a>
                 </div>
                 <div>
-                    <Input onChange={next} type="text" placeholder="Search..." className={`gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-gogo-primary  ${theme.themeMode == "dark" ? "gogo__dark__input": ""}`} />
+                    <Input
+                        onChange={next}
+                        type="text"
+                        placeholder="Search..."
+                        className={`gogo__project__search py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-gogo-primary  ${theme.themeMode == 'dark' ? 'gogo__dark__input' : ''}`}
+                    />
                 </div>
                 <div>
                     <nav className="inline-flex">
@@ -41,7 +47,7 @@ const ProductHeaders: React.FC<ProjectHeaderProps> = ({next}) => {
                 </div>
             </nav>
         </div>
-    );
-};
+    )
+}
 
-export default ProductHeaders;
+export default ProductHeaders

@@ -7,12 +7,11 @@
     border-radius: 0.6rem;
     margin: 0.4rem;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     position: relative;
 }
-
 
 /* .gogo__product:hover {
     outline: 2px solid var(--border--color)
@@ -20,7 +19,6 @@
 .gogo__product:active {
     height: 15.8rem;
     width: 21.8rem;
-
 }
 .gogo__product__name {
     display: flex;
@@ -75,7 +73,6 @@
     border-radius: 0.7rem;
     right: -5rem;
     z-index: 999;
-    
 }
 .options_nav span {
     width: 100%;

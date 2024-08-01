@@ -1,3 +1,3 @@
 export interface UseFetchProductFromServerParameterTypes {
-    page?: number;
+    page?: number
 }

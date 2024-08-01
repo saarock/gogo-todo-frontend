@@ -2,60 +2,59 @@
  * @note : At this file we can found all the types related to the user, include product, boards and task also;
  */
 
-
 /**
  * User types for register, login , Request and Resposne start.
  */
 export interface User {
-  id: number;
-  fullName: string;
-  email: string;
-  role?: string;
-  createdAt?: string;
-  lastModifiedAt?: string;
-  password?: string;
-  userGithubUserName?: string;
+    id: number
+    fullName: string
+    email: string
+    role?: string
+    createdAt?: string
+    lastModifiedAt?: string
+    password?: string
+    userGithubUserName?: string
 }
 
 export interface UserResponse {
-  type: string;
-  message: string;
-  status: number;
-  user: User;
+    type: string
+    message: string
+    status: number
+    user: User
 }
 
 export interface Email {
-  email: string;
+    email: string
 }
 
 export interface Otp {
-  otp: bigint;
+    otp: bigint
 }
 
 export interface RegisterRequest {
-  user: User;
-  otp: bigint;
+    user: User
+    otp: bigint
 }
 
 export interface Tokens {
-  accessToken: string;
-  refreshToken: string;
+    accessToken: string
+    refreshToken: string
 }
 
 // also works for the error response;
 export interface GlobalResponseHelper {
-  status: number;
-  type: string;
-  message: string;
+    status: number
+    type: string
+    message: string
 }
 
 export interface OtpResponse extends GlobalResponseHelper {
-  email?: string;
+    email?: string
 }
 
 export interface RegisterResponseSuccess extends GlobalResponseHelper {
-  user?: User;
-  tokens?: Tokens;
+    user?: User
+    tokens?: Tokens
 }
 
 /**
@@ -65,48 +64,48 @@ export interface RegisterResponseSuccess extends GlobalResponseHelper {
 /**
  * (CLIENT TYPES)
  *  @note : types for product include board and task start
- * 
+ *
  */
 // Define the Task interface
 export interface Task {
-  taskId?: number;
-  name: string;
-  content? :string;
-  boardId: number;
-  taskIndex?: number;
-  boardIndex: number;
-  projectIndex: number;
-  index?: number;
-  createdAt? : string;
-  updatedAt?:string;
-  complete?: boolean
+    taskId?: number
+    name: string
+    content?: string
+    boardId: number
+    taskIndex?: number
+    boardIndex: number
+    projectIndex: number
+    index?: number
+    createdAt?: string
+    updatedAt?: string
+    complete?: boolean
 
-  // Define properties for a task
+    // Define properties for a task
 }
 
 // Define the Board interface which contains tasks
 export interface Board {
-  boardId? : number;
-  projectId?: number;
-  name: string;
-  tasks: Task[];
-  projectIndex? :number;
-  boardIndex?: number;
-  createdAt?: string;
-  updatedAt?: string;
-  complete?: boolean
-  // projectName?: string;
+    boardId?: number
+    projectId?: number
+    name: string
+    tasks: Task[]
+    projectIndex?: number
+    boardIndex?: number
+    createdAt?: string
+    updatedAt?: string
+    complete?: boolean
+    // projectName?: string;
 }
 
 // Define the Project interface which contains boards
 export interface Project {
-  id?: number;
-  name:string;
-  boards: Board[];
-  index? :number;
-  createdDate?: string;
-  updatedAt?:string;
-  userId?:string;
+    id?: number
+    name: string
+    boards: Board[]
+    index?: number
+    createdDate?: string
+    updatedAt?: string
+    userId?: string
 }
 
 // // Define the UserProject interface which extends Project
@@ -116,88 +115,75 @@ export interface Project {
 // }
 
 export interface UserProject {
-  projects?: Project[];
+    projects?: Project[]
 }
-
 
 // productUpdateTypes
 export interface ProductUpdateTypes {
-  id: number,
-  name: string,
+    id: number
+    name: string
 }
-
 
 /**
  * (CLIENT TYPES)
  *  @note : types for product include board and task end
- * 
+ *
  */
-
-
-
 
 /**
  * (SERVER MODELS)
  *  @note : types for product include board and task start
  */
 
-
 /**
  * (SERVER TYPES)
  * @note : types for product include board and task end
  */
 
-
 export interface ProductNameandId {
-  productName: string;
-  productId: number;
-
+    productName: string
+    productId: number
 }
 export interface DeleteProduct {
-  productId: number;
-
+    productId: number
 }
 
 export interface BoardIdAndName {
-  boardId: number;
-  boardName: string;
-  projectIndex: number;
+    boardId: number
+    boardName: string
+    projectIndex: number
 }
-
 
 export interface BoardIdAndProjectIndex {
-  boardId:number;
-  projectIndex: number;
+    boardId: number
+    projectIndex: number
 }
-
-
 
 export interface TaskUpdateDetails {
-  taskTitle: string;
-  taskContent: string;
-  taskId: number;
-  boardId: number;
+    taskTitle: string
+    taskContent: string
+    taskId: number
+    boardId: number
 }
 
-
 export interface TaskDeleteDetails {
-  boardId: number;
-  taskId: number
+    boardId: number
+    taskId: number
 }
 
 export interface Status {
-  taskId?: number;
-  status: boolean;
-  boardId?: number;
+    taskId?: number
+    status: boolean
+    boardId?: number
 }
 
 export interface UserNewNameAndId {
-  id: number,
-  fullName: string;
+    id: number
+    fullName: string
 }
 
 export interface Review {
-  fullName: string;
-  email: string;
-  message: string;
+    fullName: string
+    email: string
+    message: string
 }

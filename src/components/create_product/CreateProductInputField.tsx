@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-const CreateProductInputField : React.FC<any> = ({ onCreate }) => {
-    const [productName, setProductName] = useState('');
-    const [productDescription, setProductDescription] = useState('');
+const CreateProductInputField: React.FC<any> = ({ onCreate }) => {
+    const [productName, setProductName] = useState('')
+    const [productDescription, setProductDescription] = useState('')
 
     const handleCreate = () => {
         // Validate input fields
         if (!productName || !productDescription) {
-            alert('Please fill in all fields.');
-            return;
+            alert('Please fill in all fields.')
+            return
         }
 
         // Create product object
         const newProduct = {
             name: productName,
-            description: productDescription
-        };
+            description: productDescription,
+        }
 
         // Pass the new product to the parent component for further processing
-        onCreate(newProduct);
+        onCreate(newProduct)
 
         // Clear input fields
-        setProductName('');
-        setProductDescription('');
-    };
+        setProductName('')
+        setProductDescription('')
+    }
 
     return (
         <div className="mt-4">
@@ -50,7 +50,7 @@ const CreateProductInputField : React.FC<any> = ({ onCreate }) => {
                 </button>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CreateProductInputField;
+export default CreateProductInputField

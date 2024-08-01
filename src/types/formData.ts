@@ -1,6 +1,6 @@
 export interface FormData {
-  fullName: string;
-  email: string;
-  password: string;
-  otp?: string;
+    fullName: string
+    email: string
+    password: string
+    otp?: string
 }

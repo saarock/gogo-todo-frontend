@@ -1,6 +1,5 @@
 .gogo__projects__container {
     display: flex;
-
 }
 .gogo__products {
     width: 100%;
@@ -11,6 +10,7 @@
     padding: 1rem;
     width: fit-content;
     display: flex;
+    justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
     position: relative;
@@ -41,5 +41,3 @@
     text-align: center;
     margin: 1rem;
 }
-
-

@@ -2,14 +2,13 @@
     display: flex;
     overflow: hidden;
     min-height: 100vh;
-
 }
 .gogo__product__page {
     width: 100vw;
     overflow: hidden;
 }
 
-.gogo__product__boards{
+.gogo__product__boards {
     display: flex;
     height: fit-content;
     overflow: scroll;
@@ -17,12 +16,10 @@
 
 .gogo__product__boards::-webkit-scrollbar {
     height: 0.5rem;
-   
 }
 .gogo__product__boards::-webkit-scrollbar-thumb {
     background-color: gray;
     border-radius: 1rem;
-
 }
 .gogo__product__boards::-webkit-scrollbar-thumb:hover {
     background-color: var(--gogo--primary--color);
@@ -39,7 +36,6 @@ dark mode start
  */
 .product__board__dark__mode {
     background-color: rgb(31, 41, 60);
-
 }
 /**
 dark mode end
