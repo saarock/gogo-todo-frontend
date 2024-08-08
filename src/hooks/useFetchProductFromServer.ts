@@ -38,10 +38,8 @@ export default function useFetchProductFromServer(
                         const product: Project[] = products.content
                         dispatch(addProducts(product))
                     }
-                    console.log(products.last)
                     // setIsLast(products.last)
                     localStore.updateIsMore(products.last)
-                    console.log(products)
                     localStore.setTotalProject(products.totalElements)
                     setPageSize(products.pageable.pageSize)
                 } catch (error) {

@@ -67,6 +67,14 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({
                 </div>
             ) : (
                 <div className="gogo__create__new__product__container">
+                    <button className="gogo__product__header__nav">
+                        <span
+                            onClick={() => navigate('/dash/projects')}
+                            className="gogo__back__icon"
+                        >
+                            <BiLeftArrowCircle /> Back
+                        </span>
+                    </button>
                     <button
                         className="gogo__show__to__create__newproduct__button"
                         onClick={addProduct}
@@ -84,7 +92,7 @@ const ProductHeader: React.FC<ProductHeaderProps> = ({
                                 onClick={saveProject}
                                 className="gogo__new__project__save__button"
                             >
-                                Save
+                                {<IoIosCreate />}Save
                             </button>
                         </div>
                     ) : (

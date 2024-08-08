@@ -106,6 +106,10 @@
     font-size: 2rem;
 }
 
+.gogo__header__logo img {
+    filter: contrast(156%);
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .gogo__header__nav {

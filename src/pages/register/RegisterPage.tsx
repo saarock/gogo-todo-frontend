@@ -190,8 +190,6 @@ const RegisterPage = () => {
                 throw new Error('Something went wrong, try again')
             }
 
-            console.log('UserData:', userData) // Debugging: Log the response
-
             if (userData.type === 'error') {
                 throw new Error(userData.message)
             } else if (userData.type === 'success') {

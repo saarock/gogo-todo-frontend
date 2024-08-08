@@ -25,7 +25,7 @@ const Product: React.FC<ProductProps> = ({
         <div className="gogo__product" onClick={() => onClickEvent(product.id)}>
             <div className="gogo__product__options__section">
                 <div
-                    className="gogo__select__options"
+                    className="gogo__select__options "
                     onClick={(e) => openOptions(e, product.id || -1)}
                 >
                     <BsThreeDots />
@@ -37,6 +37,8 @@ const Product: React.FC<ProductProps> = ({
                         <div className="options_nav">
                             {optionsNav.map((currentNav) => (
                                 <span
+                                    className={'gogo__options__of__project'}
+                                    key={currentNav.name}
                                     onClick={(e) =>
                                         currentNav.name === 'update'
                                             ? updateProduct(e, product.id || -1)
@@ -56,8 +58,14 @@ const Product: React.FC<ProductProps> = ({
                 <GrProjects />
             </div>
             <div className="gogo__extra__details">
-                <h3>Created At: {product.createdDate?.toString()}</h3>
-                <h3>Updated At: {product.updatedAt}</h3>
+                <h3>
+                    Created At:{' '}
+                    {new Date(product.createdDate).toLocaleDateString()}
+                </h3>
+                <h3>
+                    Updated At:{' '}
+                    {new Date(product.updatedAt).toLocaleDateString()}
+                </h3>
             </div>
         </div>
     )

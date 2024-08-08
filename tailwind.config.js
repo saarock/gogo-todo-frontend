@@ -10,7 +10,7 @@ export default {
                 'gogo-border': 'rgb(172, 47, 47)',
                 'gogo-input-bg': 'rgba(97, 70, 70, 0.555)',
                 gogo__input__focus: 'rgba(97, 70, 70, 0.555)',
-                'gogo-green': '#00FF00', // Adjust as needed for your green
+                'gogo-green': '#00FF00',
             },
         },
     },

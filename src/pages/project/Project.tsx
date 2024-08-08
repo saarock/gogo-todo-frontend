@@ -43,6 +43,7 @@ import toast from 'react-hot-toast'
 import DashContainer from '../../components/DashContainer'
 import useFetchProductFromServer from '../../hooks/useFetchProductFromServer'
 import { localStore } from '../../utils'
+import { TypeOfBoard } from '../../reducer/board.reducer.ts'
 
 const Project = () => {
     const [wantToCreateProduct, setwantToCreateProduct] =
@@ -92,6 +93,31 @@ const Project = () => {
         productServerService.updateModifiedProduct(id)
         navigate(projectName)
     }, [])
+
+    useEffect(() => {
+        function removeCurrentAction(event) {
+            // Check if the click was inside the event options
+            const optionsElement = document.getElementsByClassName(
+                'gogo__options__of__project'
+            ) // Change to your actual options element ID
+            if (optionsElement.length >= 1) {
+                productDispatch({
+                    type: ProductActionTypes.IS_USER_WANT_TO_SEE_THE_OPTIONS_OF_THE_PRODUCT,
+                    payload: {
+                        isWantToSeeOptions: false,
+                    },
+                })
+            }
+        }
+
+        // Add the click event listener
+        window.addEventListener('click', removeCurrentAction, true)
+
+        // Cleanup the event listener when the component is unmounted or the dependency changes
+        return () => {
+            window.removeEventListener('click', removeCurrentAction, true)
+        }
+    }, [productState.IS_USER_WANT_TO_SEE_THE_OPTIONS_OF_THE_PRODUCT])
 
     const next = useCallback(() => {
         try {
@@ -162,8 +188,8 @@ const Project = () => {
     const openOptions = useCallback(
         (e: React.MouseEvent<HTMLDivElement>, productId: number) => {
             e.stopPropagation()
-            if (productId.toString().trim() === '' || productId === undefined)
-                return
+            if (productId.toString().trim() === '') return
+
             productDispatch({
                 type: ProductActionTypes.IS_USER_WANT_TO_SEE_THE_OPTIONS_OF_THE_PRODUCT,
                 payload: {

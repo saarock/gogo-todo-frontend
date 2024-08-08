@@ -16,7 +16,9 @@ import authClient from './authClient'
 
 //  handel all the error very correctly;
 class ProductServerService {
-    public async createNewProduct(newProduct: Project): Promise<null | Project> {
+    public async createNewProduct(
+        newProduct: Project
+    ): Promise<null | Project> {
         try {
             const response = await axiosInstance1.post('/create-new-product', {
                 ...newProduct,
@@ -43,8 +45,6 @@ class ProductServerService {
             const data = await response.data
 
             if (data.status !== 'OK') throw new Error(data.message)
-            console.log('this is also')
-            console.log(data.data.content)
             return await data.data
         } catch (error) {
             errorUtil.handelError(error)
@@ -139,13 +139,11 @@ class ProductServerService {
         boardIdAndNewName: BoardIdAndName
     ): Promise<Board | null> {
         try {
-            console.log({ boardName: boardIdAndNewName.boardName })
             const response = await axiosInstance1.put(
                 `/update-board/${boardIdAndNewName.boardId}`,
                 { boardName: boardIdAndNewName.boardName }
             )
             const data = await response.data
-            console.log(data)
             if (data.status !== 'OK') throw new Error(data.message)
             return data.data
         } catch (error) {
@@ -177,7 +175,6 @@ class ProductServerService {
                 { ...taskDetails }
             )
             const data = await response.data
-            console.log(data)
 
             if (data.status !== 'OK') throw new Error(data.message)
             return data.data as Task
@@ -210,7 +207,6 @@ class ProductServerService {
                 },
             })
             const data = await response.data
-            console.log(data)
             if (data.status === 'OK') {
                 return data.data
             } else {

@@ -1,10 +1,4 @@
-import {
-    createAsyncThunk,
-    createSlice,
-    nanoid,
-    PayloadAction,
-} from '@reduxjs/toolkit'
-import { act, ReducerState } from 'react'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthState, LoginPayload, UserNewNameAndId } from '../types'
 import userService from '../services/userService'
 import { localStore } from '../utils'
@@ -24,6 +18,7 @@ export const updateFullName = createAsyncThunk(
                 boardIdAndProjectIndex.id,
                 boardIdAndProjectIndex.fullName
             )
+            if (!user) throw new Error('Something wrong pleased try again.')
             localStore.updateFullName(user.fullName)
             return user
         } catch (error) {
@@ -54,6 +49,8 @@ export const authSlice = createSlice({
             state.refreshToken = null
         },
         userGitUserNameChange: (state, action: PayloadAction<string>) => {
+            if (!state.user)
+                throw new Error('Some thing wrong pleased try again.')
             state.user.userGithubUserName = action.payload
             localStore.updateGitUserName(action.payload)
         },

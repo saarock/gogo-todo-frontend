@@ -1,4 +1,4 @@
-import  React, { useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Input, LoginAndRegisterSideDiv } from '../../components'
 import { useForm } from 'react-hook-form'
 import './login.css'
@@ -187,7 +187,7 @@ const ResetPasswordForm = () => {
     const [message, setMessage] = useState('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
     }
 

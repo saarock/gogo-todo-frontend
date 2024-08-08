@@ -1,4 +1,3 @@
-
 import { axiosInstance1, axiosInstance2 } from '../api/axiosInstance'
 import {
     Email,
@@ -18,7 +17,7 @@ class AuthServer {
         const reigsterData: RegisterRequest = {
             user: {
                 // it will get overwrite;
-                id : 0,
+                id: 0,
                 fullName: data.fullName,
                 email: data.email,
                 password: data.password,

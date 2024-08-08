@@ -5,7 +5,7 @@ const HomePage = () => {
         <>
             <Container>
                 <section>
-                <MainTop />
+                    <MainTop />
                 </section>
             </Container>
         </>

@@ -8,7 +8,7 @@ import {
 } from '../../components'
 import './product.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 // import { addProject } from "../../features/ProductSlice";
 import {
     changeCompleteStatusForBoard,
@@ -47,6 +47,7 @@ const Product = () => {
     const dispatch = useDispatch()
     const { productname } = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
     const userID = useSelector((state: RootState) => state.auth.user?.id)
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -79,6 +80,27 @@ const Product = () => {
             })
         }
     }, [productname && navigate])
+
+    // useEffect(() => {
+    //     function removeCurrentAction(event) {
+    //         // Check if the click was inside the event options
+    //         const optionsElement = document.getElementsByClassName('gogo__options__of__board'); // Change to your actual options element ID
+    //         if (optionsElement.length >= 1) {
+    //             boardDispatch({
+    //                 type: TypeOfBoard.IS_WANT_TO_SEE_OPTIONS,
+    //                 payload: false,
+    //             });
+    //         }
+    //     }
+    //
+    //     // Add the click event listener
+    //     window.addEventListener("click", removeCurrentAction, true);
+    //
+    //     // Cleanup the event listener when the component is unmounted or the dependency changes
+    //     return () => {
+    //         window.removeEventListener("click", removeCurrentAction, true);
+    //     };
+    // }, [boardState.isWantToSeeOptions]);
 
     const saveProject = useCallback(() => {
         if (!userID) {
@@ -140,7 +162,7 @@ const Product = () => {
             projectName == undefined ||
             projectName.trim() === ''
         ) {
-            toast.error('Details are fulfilled properly')
+            toast.error('Board Name required')
             return
         }
         let board: TypeBoard = {
@@ -160,7 +182,7 @@ const Product = () => {
                 if (error instanceof Error) {
                     toast.error(error.message)
                 } else {
-                    toast.error('Some thing wrong')
+                    toast.error('Some thing is wrong')
                 }
             }
         })()
@@ -259,7 +281,6 @@ const Product = () => {
     }, [])
 
     const [currentUserProject] = useCheckProductsAndReturnIfExist()
-    console.log(currentUserProject)
 
     const boardInputOnChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -328,7 +349,6 @@ const Product = () => {
                 payload: false,
             })
         } catch (error) {
-            console.log(error)
             toast.error(
                 error instanceof Error
                     ? error.message
@@ -353,6 +373,11 @@ const Product = () => {
                         ? error.message
                         : 'Sorry cannot delete the board something is wrong try again'
                 )
+            } finally {
+                boardDispatch({
+                    type: TypeOfBoard.IS_WANT_TO_SEE_OPTIONS,
+                    payload: false,
+                })
             }
         },
         [currentUserProject]
@@ -406,77 +431,81 @@ const Product = () => {
                         <ProductWrapper>
                             <div className="gogo__product__boards">
                                 {currentUserProject?.boards &&
-                                currentUserProject.boards.length >= 1 ? (
-                                    currentUserProject?.boards.map((board) => (
-                                        <div>
-                                            <Board
-                                                openBoardOptions={
-                                                    openBoardOptions
-                                                }
-                                                key={board.boardId}
-                                                onClickListenerToAddTask={
-                                                    addTask
-                                                }
-                                                // passing the board name which is unique where user want to create the task
-                                                onWhichBoardUserWantToAddTheTask={
-                                                    taskState.isUserWantToAddTask
-                                                }
-                                                onClickListenerToCancelTheAddTask={
-                                                    cancleAddTask
-                                                }
-                                                userProjectDetails={
-                                                    currentUserProject
-                                                }
-                                                board={board}
-                                                createNewTask={createNewTask}
-                                                userNewTaskName={
-                                                    taskState.taskName
-                                                }
-                                                whenUserTextForCreatingNewTask={
-                                                    onChangeTask
-                                                }
-                                                whenUserTextForCreatingNewTaskDesc={
-                                                    onChangeTaskDesc
-                                                }
-                                                userNewTaskDescName={
-                                                    taskState.taskDesc
-                                                }
-                                                isWantToSeeOptions={
-                                                    boardState.isWantToSeeOptions
-                                                }
-                                                whichBoardOptionsUserWantToSee={
-                                                    boardState.idOfBoard
-                                                }
-                                                updateBoardName={
-                                                    LetsupdateBoardName
-                                                }
-                                                isUserWantToUpdateTheBoardName={
-                                                    boardState.isWantToUpdateBoardName
-                                                }
-                                                cancleUpdateBoardName={
-                                                    LetscancleUpdateBoardName
-                                                }
-                                                onChangeEventOfBoardName={
-                                                    onChangeEventOfBoardName
-                                                }
-                                                saveNewBoardName={
-                                                    saveNewBoardName
-                                                }
-                                                deleteBoard={deleteBoard}
-                                                onCompleteOrNotCompleteCheck={
-                                                    handelOnCompleteOrNotCompleteCheck
-                                                }
-                                            />
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="gogo__no__board__found__container">
-                                        {' '}
-                                        <strong>
-                                            "No Boards found create Board"
-                                        </strong>{' '}
-                                    </div>
-                                )}
+                                currentUserProject.boards.length >= 1
+                                    ? currentUserProject?.boards.map(
+                                          (board) => (
+                                              <div key={board.boardId}>
+                                                  <Board
+                                                      openBoardOptions={
+                                                          openBoardOptions
+                                                      }
+                                                      onClickListenerToAddTask={
+                                                          addTask
+                                                      }
+                                                      // passing the board name which is unique where user want to create the task
+                                                      onWhichBoardUserWantToAddTheTask={
+                                                          taskState.isUserWantToAddTask
+                                                      }
+                                                      onClickListenerToCancelTheAddTask={
+                                                          cancleAddTask
+                                                      }
+                                                      userProjectDetails={
+                                                          currentUserProject
+                                                      }
+                                                      board={board}
+                                                      createNewTask={
+                                                          createNewTask
+                                                      }
+                                                      userNewTaskName={
+                                                          taskState.taskName
+                                                      }
+                                                      whenUserTextForCreatingNewTask={
+                                                          onChangeTask
+                                                      }
+                                                      whenUserTextForCreatingNewTaskDesc={
+                                                          onChangeTaskDesc
+                                                      }
+                                                      userNewTaskDescName={
+                                                          taskState.taskDesc
+                                                      }
+                                                      isWantToSeeOptions={
+                                                          boardState.isWantToSeeOptions
+                                                      }
+                                                      whichBoardOptionsUserWantToSee={
+                                                          boardState.idOfBoard
+                                                      }
+                                                      updateBoardName={
+                                                          LetsupdateBoardName
+                                                      }
+                                                      isUserWantToUpdateTheBoardName={
+                                                          boardState.isWantToUpdateBoardName
+                                                      }
+                                                      cancleUpdateBoardName={
+                                                          LetscancleUpdateBoardName
+                                                      }
+                                                      onChangeEventOfBoardName={
+                                                          onChangeEventOfBoardName
+                                                      }
+                                                      saveNewBoardName={
+                                                          saveNewBoardName
+                                                      }
+                                                      deleteBoard={deleteBoard}
+                                                      onCompleteOrNotCompleteCheck={
+                                                          handelOnCompleteOrNotCompleteCheck
+                                                      }
+                                                  />
+                                              </div>
+                                          )
+                                      )
+                                    : location.pathname !=
+                                          '/dash/projects/new-project' && (
+                                          <div className="gogo__no__board__found__container">
+                                              {' '}
+                                              <strong>
+                                                  "No Boards found create Board"
+                                              </strong>{' '}
+                                          </div>
+                                      )}
                             </div>
                         </ProductWrapper>
                     </div>

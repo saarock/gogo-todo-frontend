@@ -15,7 +15,10 @@ const LoginAndRegisterSideDiv = () => {
     return (
         <div className="gogo__login__content">
             <h1>gogo.com</h1>
-            <h3>The Powerfull kanban board for your daily projects</h3>
+            <h3>
+                The Powerful tool for managing task, routine, project's for your
+                daily life.
+            </h3>
             <p>Trusted By {trustNumbers}+</p>
         </div>
     )
