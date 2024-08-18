@@ -74,7 +74,7 @@ class AuthServer {
             const response = await axiosInstance1.post('/is-token-valid')
             const data = await response.data
             if (data.status !== 'ACCEPTED') throw new Error(data.message)
-            return data.status === 'OK'
+            return data.status === 'ACCEPTED'
         } catch (error) {
             errorUtil.handelError(error)
             throw error
