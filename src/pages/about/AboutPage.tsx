@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaGithub, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import useTokenValidation from "../../hooks/useTokenValidation.ts";
 
 const teamMembers = [
     {
@@ -16,9 +17,9 @@ const teamMembers = [
         role: 'CTO',
         image: 'https://www.npmjs.com/npm-avatar/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXJVUkwiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9lNmE2MjliMjU3M2M5ODBkN2Q3NzM1ZjI0NWVjZmE5ZT9zaXplPTQ5NiZkZWZhdWx0PXJldHJvIn0.r83sm6QN8RI9T2gD91JHpYygbNgmoMFOB7jNF5c2D9I',
         github: 'https://github.com/janesmith',
-        instagram: 'https://instagram.com/janesmith',
-        linkedin: 'https://linkedin.com/in/janesmith',
-        twitter: 'https://twitter.com/janesmith',
+        instagram: 'https://instagram.com/saarock',
+        linkedin: 'https://linkedin.com/in/saarock',
+        twitter: 'https://twitter.com/saarock',
     },
     // Add more team members as needed
 ]

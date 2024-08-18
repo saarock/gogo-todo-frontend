@@ -116,22 +116,25 @@
         flex-direction: column;
         padding: 0.5rem;
         transition: 1s ease-in-out;
-        height: 4rem;
-        overflow: hidden;
+
     }
+
 
     .gogo__nav__menu {
         display: block;
         position: absolute;
-        left: 0;
-    }
-    .showNav {
-        height: fit-content;
+        right: 0;
     }
 
     .gogo__header__nav__navs {
         flex-direction: column;
+        display: none;
     }
+
+    .showNav {
+        display: block;
+    }
+
 
     .gogo__header__nav__navs__navbar {
         margin: 0.5rem 0;

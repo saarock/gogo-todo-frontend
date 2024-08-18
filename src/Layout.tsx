@@ -9,11 +9,11 @@ import { ThemeProvider } from './context/modeContext.ts'
 import { localStore } from './utils'
 import { useSelector } from 'react-redux'
 
-// import useServerSideTokenValidate from './hooks/useServerSideTokenValidate'
+
 
 const Layout = () => {
+    useTokenValidation()
     const user = useSelector((state) => state.auth)
-
     // dark / light mode change;
     const [themeMode, setThemeMode] = useState(localStore.getMode())
 

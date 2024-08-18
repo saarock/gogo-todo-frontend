@@ -44,6 +44,7 @@ import DashContainer from '../../components/DashContainer'
 import useFetchProductFromServer from '../../hooks/useFetchProductFromServer'
 import { localStore } from '../../utils'
 import { TypeOfBoard } from '../../reducer/board.reducer.ts'
+import useTokenValidation from "../../hooks/useTokenValidation.ts";
 
 const Project = () => {
     const [wantToCreateProduct, setwantToCreateProduct] =
@@ -94,30 +95,6 @@ const Project = () => {
         navigate(projectName)
     }, [])
 
-    useEffect(() => {
-        function removeCurrentAction(event) {
-            // Check if the click was inside the event options
-            const optionsElement = document.getElementsByClassName(
-                'gogo__options__of__project'
-            ) // Change to your actual options element ID
-            if (optionsElement.length >= 1) {
-                productDispatch({
-                    type: ProductActionTypes.IS_USER_WANT_TO_SEE_THE_OPTIONS_OF_THE_PRODUCT,
-                    payload: {
-                        isWantToSeeOptions: false,
-                    },
-                })
-            }
-        }
-
-        // Add the click event listener
-        window.addEventListener('click', removeCurrentAction, true)
-
-        // Cleanup the event listener when the component is unmounted or the dependency changes
-        return () => {
-            window.removeEventListener('click', removeCurrentAction, true)
-        }
-    }, [productState.IS_USER_WANT_TO_SEE_THE_OPTIONS_OF_THE_PRODUCT])
 
     const next = useCallback(() => {
         try {

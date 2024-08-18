@@ -228,3 +228,20 @@
     color: white;
     background-color: #2a2a2a;
 }
+
+@media (max-width: 688px) {
+    .gogo__task__options__whole__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gogo__task__options__body {
+        position: fixed;
+        bottom: 0;
+        height: 10rem;
+        width: 100%;
+        bottom: 0;
+    }
+}

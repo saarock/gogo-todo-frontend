@@ -42,6 +42,7 @@ import {
 import ProductWrapper from '../../components/ProductWrapper'
 import ReactPaginate from 'react-paginate'
 import useTheme from '../../context/modeContext.ts'
+import useTokenValidation from "../../hooks/useTokenValidation.ts";
 
 const Product = () => {
     const dispatch = useDispatch()

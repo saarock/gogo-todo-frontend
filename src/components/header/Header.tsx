@@ -12,9 +12,10 @@ import {
 import { FcAbout } from 'react-icons/fc'
 import { IoSettings } from 'react-icons/io5'
 import { MdOutlineAddHomeWork } from 'react-icons/md'
-import React, { useRef } from 'react'
+import React, {useCallback, useRef} from 'react'
 import useTheme from '../../context/modeContext.ts'
 import { TiThMenu } from 'react-icons/ti'
+import {CgRowFirst} from "react-icons/cg";
 const Header: React.FC<HeaderProps> = ({
     darkTheme,
     lightTheme,
@@ -23,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
     const authStates = useSelector(
         (state: RootState) => state.auth.isAuthenticated
     )
-    const nav = useRef<HTMLNavElement>()
+    const nav = useRef<HTMLUListElement>()
     const theme = useTheme()
     const navigate = useNavigate()
 
@@ -89,21 +90,24 @@ const Header: React.FC<HeaderProps> = ({
         nav.current.classList.toggle('showNav')
     }
 
+    const  updateProfile = useCallback(() => {
+        toast.message("Features coming soon")
+    }, [])
     return (
         <header className={`gogo__header ${theme.themeMode}`}>
-            <nav className="gogo__header__nav" ref={nav}>
-                <span className={`gogo__nav__menu`} onClick={hideShowNav}>
-                    {<TiThMenu />}
+               <span className={`gogo__nav__menu`} onClick={hideShowNav}>
+                    {<CgRowFirst/>}
                 </span>
+            <nav className="gogo__header__nav">
                 <Link to={'/'}>
-                    <div className="gogo__header__logo">
-                        <img src="./images/gogo_logo.jpeg" alt="" />
+                    <div className="gogo__header__logo" onClick={updateProfile}>
+                        <img src="./images/gogo_logo.jpeg" alt=""/>
                         <h1 className="gogo__header__logo__text__logo">
                             gogo.com
                         </h1>
                     </div>
                 </Link>
-                <ul className="gogo__header__nav__navs">
+                <ul className="gogo__header__nav__navs" ref={nav}>
                     {navItems.map((nav) =>
                         nav.active ? (
                             <li
@@ -133,16 +137,16 @@ const Header: React.FC<HeaderProps> = ({
                                                     'dark Mode'
                                                         ? darkTheme
                                                         : childNav.name ===
-                                                            'light Mode'
-                                                          ? lightTheme
-                                                          : undefined
+                                                        'light Mode'
+                                                            ? lightTheme
+                                                            : undefined
                                                 }
                                             >
                                                 <span>{nav.icon}</span>
                                                 {childNav.name}
                                             </li>
                                         ))}
-                                        {authStates ? <LogoutBtn /> : ''}
+                                        {authStates ? <LogoutBtn/> : ''}
                                     </ul>
                                 )}
                             </li>

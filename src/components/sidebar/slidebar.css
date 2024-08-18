@@ -47,7 +47,7 @@
     outline: 2px dotted green;
 }
 .gogo__side__navbar__responsive {
-    width: 5rem;
+    width: 4rem;
 }
 
 .gogo__top__details__of__user {
@@ -90,4 +90,15 @@
 }
 .gogo__user__fullname {
     word-break: break-all;
+}
+
+@media (max-width: 483px) {
+    .gogo__change__input__container {
+        position: absolute;
+        left: 0;
+    }
+    .gogo__edit_input {
+        width: 13rem;
+    }
+
 }

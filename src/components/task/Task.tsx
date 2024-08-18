@@ -7,6 +7,7 @@ import Input from '../input/Input'
 import { BiCross, BiCut } from 'react-icons/bi'
 import { theme } from 'antd'
 import useTheme from '../../context/modeContext.ts'
+import {CgRowFirst} from "react-icons/cg";
 const Task: React.FC<TaskProps & TaskToptions> = ({
     task,
     onClickEvent,
@@ -55,7 +56,7 @@ const Task: React.FC<TaskProps & TaskToptions> = ({
 
                     <div className="gogo__task__options__body">
                         <div className="gogo__task__cut">
-                            <span onClick={hideOption}>{<BiCut />}</span>
+                            <span onClick={hideOption}>{<CgRowFirst />}</span>
                         </div>
                         <div
                             className={`gogo__task__title__update ${
